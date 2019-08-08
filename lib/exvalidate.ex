@@ -2,11 +2,21 @@ defmodule Exvalidate do
   @moduledoc """
 
   """
+  alias Exvalidate.Rules.Type
 
-  @spec validate(map, map) :: {:ok, map} | {:error, String.t()}
   def validate(data, schema) do
     IO.puts "DATA :: #{inspect data}"
     IO.puts "SCHEMA :: #{inspect schema}"
+    case Type.validate(schema) do
+      {:ok, module} ->
+        validate_schema(data, schema, module)
+
+      {:error, msg} ->
+        {:error, msg}
+    end
+  end
+
+  defp validate_schema(data, schema, module) do
     {:ok, data}
   end
 
