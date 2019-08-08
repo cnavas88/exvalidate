@@ -4,26 +4,25 @@ defmodule Exvalidate.Plug do
   def init(opts), do: opts
 
   def call(conn, opts) do
-    result = conn
-    |> Plug.Conn.fetch_query_params()
-    |> validate_params()
+    conn = Plug.Conn.fetch_query_params(conn)
 
-    case result do
-      {:ok, conn} -> conn
-      {:error, message} -> opts[:on_error].(conn, message)
+    case validate_params(conn) do
+      {:ok, conn} ->
+        conn
+
+      {:error, message} ->
+        opts[:on_error].(conn, message)
     end
   end
 
-  defp validate_params(conn = %Plug.Conn{private: %{validate_query: schema}}) do
+  defp validate_params(conn = %Plug.Conn{private: %{validate_query: _schema}}) do
     IO.puts "VALIDATE QUERY PARAMS"
     {:ok, conn}
   end
-
-  defp validate_params(conn = %Plug.Conn{private: %{validate_body: schema}}) do
+  defp validate_params(conn = %Plug.Conn{private: %{validate_body: _schema}}) do
     IO.puts "VALIDATE BODY PARAMS"
     {:ok, conn}
   end
-
   defp validate_params(conn), do: {:ok, conn}
 
 end
