@@ -1,5 +1,7 @@
 defmodule Exvalidate.Plug do
-  @moduledoc false
+  @moduledoc """
+
+  """
 
   def init(opts), do: opts
 
@@ -15,9 +17,11 @@ defmodule Exvalidate.Plug do
     end
   end
 
-  defp validate_params(conn = %Plug.Conn{private: %{validate_query: _schema}}) do
-    IO.puts "VALIDATE QUERY PARAMS"
-    {:ok, conn}
+  defp validate_params(conn = %Plug.Conn{private: %{validate_query: schema}}) do
+    case Exvalidate.validate(conn.query_params, schema) do
+      {:ok, new_params} -> {:ok, %Plug.Conn{conn | query_params: new_params}}
+      {:error, message} -> {:error, message}
+    end
   end
   defp validate_params(conn = %Plug.Conn{private: %{validate_body: _schema}}) do
     IO.puts "VALIDATE BODY PARAMS"
