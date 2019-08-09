@@ -23,8 +23,8 @@ defmodule Exvalidate.PlugTest do
     plug(:dispatch)
 
     @schema %{
-      "id" => %{
-        required: true
+      "identified" => %{
+        "required" => true
       }
     }
 
@@ -44,12 +44,13 @@ defmodule Exvalidate.PlugTest do
     #   |> Plug.Test.conn("/test?id=123")
     #   |> TestRouter.call([])
 
-    result = Exvalidate.validate(%{"id" => 123}, %{
+    result = Exvalidate.validate(%{"id" => 123, "name" => "Carlos"}, %{
       "id" => %{
-        type: "string",
-        required: true
+        "required" => true,
+        "prueba" => false
       }
     })
+
     IO.puts "RESULT :: #{inspect result}"
 
     assert true

@@ -2,46 +2,36 @@ defmodule Exvalidate do
   @moduledoc """
 
   """
-  alias Exvalidate.Rules.Type
+  alias Exvalidate.Validate
 
   def validate(data, schema) do
-    IO.puts "DATA :: #{inspect data}"
-    IO.puts "SCHEMA :: #{inspect schema}"
-    case Type.validate(schema) do
-      {:ok, module} ->
-        validate_schema(data, schema, module)
-
-      {:error, msg} ->
-        {:error, msg}
+    with :ok              <- validate_allowed_params(data, schema),
+         {:ok, new_data}  <- validate_schema(data, schema)
+    do
+      {:ok, new_data}
+    else
+      {:error, msg} -> {:error, msg}
     end
   end
 
-  defp validate_schema(data, schema, module) do
-    {:ok, data}
+  defp validate_allowed_params(data, schema) do
+    result = Map.keys(schema) -- Map.keys(data)
+
+    case result do
+      [] -> :ok
+      [field | _rest] -> {:error, "#{field} is not allowed"}
+    end
   end
 
-  # @spec validate_allowed_params(map, map) :: :ok | {:error, String.t()}
-  # defp validate_allowed_params(data, schema) do
-  #   result = Map.keys(data) -- Map.keys(schema)
-  #   IO.puts "MAP KEYS :: #{inspect Map.keys(data)}"
-  #   IO.puts "MAP SCHEMA :: #{inspect Map.keys(schema)}"
+  defp validate_schema(data, schema) do
+    Enum.reduce_while(schema, {:ok, data}, fn {field, rules}, {:ok, modified_data} ->
+      case Validate.rules(field, rules, modified_data) do
+        {:ok, new_data} ->
+          {:cont, {:ok, new_data}}
 
-  #   case result do
-  #     [] -> :ok
-  #     [field | _rest] -> {:error, "#{field} is not allowed"}
-  #   end
-  # end
-
-  # @spec validate_schema(map, map) :: {:ok, map} | {:error, String.t()}
-  # defp validate_schema(data, schema) do
-  #   Enum.reduce_while(schema, {:ok, data}, fn {field, type}, {:ok, modified_data} ->
-  #     case Type.validate(type, field, modified_data) do
-  #       {:error, msg} ->
-  #         {:halt, {:error, msg}}
-
-  #       {:ok, new_data} ->
-  #         {:cont, {:ok, new_data}}
-  #     end
-  #   end)
-  # end
+        {:error, msg} ->
+          {:halt, {:error, msg}}
+      end
+    end)
+  end
 end
