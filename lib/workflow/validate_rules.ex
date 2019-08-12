@@ -2,11 +2,10 @@ defmodule Exvalidate.Validate do
   @moduledoc """
 
   """
-  alias __MODULE__
   alias Exvalidate.Rules.Mapping
 
   def rules(field, rules, data) do
-    Enum.reduce_while(rules, %{}, fn {key, value}, acc ->
+    Enum.reduce_while(rules, %{}, fn {key, _value}, acc ->
       case Mapping.get_module(key) do
         {:ok, module} ->
           execute_module(rules, field, data, module)
