@@ -9,10 +9,10 @@ defmodule Exvalidate.Rules.Mapping do
 
   def get_mapping, do: @mapping
 
-  def get_module(rules) do
+  def get_module(key) do
     case Map.get(@mapping, key) do
       nil    ->
-        {:error, "The rule #{key} doesn't exists."}
+        {:error, "The rule '#{key}' doesn't exists."}
 
       module ->
         {:ok, module}
