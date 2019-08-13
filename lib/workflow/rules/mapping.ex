@@ -7,7 +7,8 @@ defmodule Exvalidate.Rules.Mapping do
   """
 
   @mapping %{
-    "required" => Exvalidate.Rules.Required
+    "required" => Exvalidate.Rules.Required,
+    "default"  => Exvalidate.Rules.Default
   }
 
   @spec get_mapping :: map

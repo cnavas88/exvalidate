@@ -20,6 +20,12 @@ defmodule Exvalidate.Rules.MappingTest do
       assert result == {:ok, Exvalidate.Rules.Required}
     end
 
+    test "The key 'default' exists." do
+      result = Mapping.get_module("default")
+
+      assert result == {:ok, Exvalidate.Rules.Default}
+    end
+
     test "The key doesn't exists." do
       result = Mapping.get_module("noooooooop")
 
