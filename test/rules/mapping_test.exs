@@ -26,6 +26,12 @@ defmodule Exvalidate.Rules.MappingTest do
       assert result == {:ok, Exvalidate.Rules.Default}
     end
 
+    test "The key 'min_length' exists." do
+      result = Mapping.get_module("min_length")
+
+      assert result == {:ok, Exvalidate.Rules.MinLength}
+    end
+
     test "The key doesn't exists." do
       result = Mapping.get_module("noooooooop")
 

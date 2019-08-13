@@ -5,46 +5,41 @@ defmodule Exvalidate.PlugTest do
   alias Exvalidate.Plug, as: PlugValidate
   alias Exvalidate.PlugError
 
-  # defmodule TestRouter do
-  #   use Plug.Router
+  defmodule TestRouter do
+    use Plug.Router
 
-  #   plug(Plug.Parsers, parsers: [:urlencoded, :multipart])
+    plug(Plug.Parsers, parsers: [:urlencoded, :multipart])
 
-  #   plug(:match)
+    plug(:match)
 
-  #   plug(PlugValidate, on_error: &PlugError.json_error/2)
+    plug(PlugValidate, on_error: &PlugError.json_error/2)
 
-  #   plug(:dispatch)
+    plug(:dispatch)
 
-  #   @schema %{
-  #     "identified" => %{
-  #       "required" => true
-  #     }
-  #   }
-
-  #   get "/test", private: %{validate_query: @schema} do
-  #     Plug.Conn.send_resp(conn, 200, "items")
-  #   end
-
-  #   post "/test", private: %{validate_body: @schema} do
-  #     Plug.Conn.send_resp(conn, 200, "items")
-  #   end
-
-  # end
-
-  test "applies validation with valid query params" do
-    # conn =
-    #   :get
-    #   |> Plug.Test.conn("/test?id=123")
-    #   |> TestRouter.call([])
-
-    result = Exvalidate.validate(%{"id" => nil, "name" => "Carlos"}, %{
+    @schema %{
       "id" => %{
         "required" => true
       }
-    })
+    }
 
-    IO.puts "RESULT :: #{inspect result}"
+    get "/test", private: %{validate_query: @schema} do
+      Plug.Conn.send_resp(conn, 200, "items")
+    end
+
+    post "/test", private: %{validate_body: @schema} do
+      Plug.Conn.send_resp(conn, 200, "items")
+    end
+
+  end
+
+  test "applies validation with valid query params" do
+    conn =
+      :get
+      |> Plug.Test.conn("/test?id=123")
+      |> TestRouter.call([])
+
+
+    IO.puts "CONN :: #{inspect conn}"
 
     assert true
     # assert conn.state == :sent
