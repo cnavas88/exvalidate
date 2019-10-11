@@ -4,6 +4,18 @@ defmodule Exvalidate.Rules.MinLengthTest do
 
   alias Exvalidate.Rules.MinLength
 
+  describe "validating/3 min_length is not a number" do
+    test "is a string" do
+      rules = %{"min_length" => "6"}
+      data  = %{"name" => "Vegeta"}
+      field = "name"
+
+      result = MinLength.validating(rules, field, data)
+
+      assert result == {:error, "The rules min_length is wrong."}          
+    end
+  end
+
   describe "validating/3 min_length string." do
     test "string length is more than minlength field." do
       rules = %{"min_length" => 2}

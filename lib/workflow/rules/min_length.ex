@@ -30,7 +30,7 @@ defmodule Exvalidate.Rules.MinLength do
     when is_list(value) do
       {:ok, Enum.count(value) >= min}
   end
-  defp is_greater_than(min, value) do
+  defp is_greater_than(_min, _value) do
     {:error, "The field has to be a String or list."}
   end
 end

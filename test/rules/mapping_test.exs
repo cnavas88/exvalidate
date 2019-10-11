@@ -32,6 +32,12 @@ defmodule Exvalidate.Rules.MappingTest do
       assert result == {:ok, Exvalidate.Rules.MinLength}
     end
 
+    test "The key 'max_length' exists." do
+      result = Mapping.get_module("max_length")
+
+      assert result == {:ok, Exvalidate.Rules.MaxLength}
+    end
+
     test "The key doesn't exists." do
       result = Mapping.get_module("noooooooop")
 

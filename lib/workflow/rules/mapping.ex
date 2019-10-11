@@ -9,7 +9,8 @@ defmodule Exvalidate.Rules.Mapping do
   @mapping %{
     "required"    => Exvalidate.Rules.Required,
     "default"     => Exvalidate.Rules.Default,
-    "min_length"  => Exvalidate.Rules.MinLength
+    "min_length"  => Exvalidate.Rules.MinLength,
+    "max_length"  => Exvalidate.Rules.MaxLength
   }
 
   @spec get_mapping :: map
