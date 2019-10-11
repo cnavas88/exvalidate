@@ -38,9 +38,6 @@ defmodule Exvalidate.PlugTest do
       |> Plug.Test.conn("/test?id=123")
       |> TestRouter.call([])
 
-
-    IO.puts "CONN :: #{inspect conn}"
-
     assert true
     # assert conn.state == :sent
     # assert conn.status == 200

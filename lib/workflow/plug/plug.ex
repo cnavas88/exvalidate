@@ -24,7 +24,7 @@ defmodule Exvalidate.Plug do
     end
   end
   defp validate_params(conn = %Plug.Conn{private: %{validate_body: _schema}}) do
-    IO.puts "VALIDATE BODY PARAMS"
+    IO.puts "TODO - VALIDATE BODY PARAMS"
     {:ok, conn}
   end
   defp validate_params(conn), do: {:ok, conn}

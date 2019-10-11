@@ -1,6 +1,6 @@
 defmodule Exvalidate.Rules.MinLength do
   @moduledoc """
-
+  This module validate the length of list and strings
   """
 
   @spec validating(map, String.t, map) :: {:ok, map} | {:error, String.t}
@@ -24,9 +24,13 @@ defmodule Exvalidate.Rules.MinLength do
 
   defp is_greater_than(min, value)
     when is_binary(value) do
-      {:ok, String.length(value) > min}
+      {:ok, String.length(value) >= min}
+  end
+  defp is_greater_than(min, value)
+    when is_list(value) do
+      {:ok, Enum.count(value) >= min}
   end
   defp is_greater_than(min, value) do
-    {:error, "The field has to be a String."}
+    {:error, "The field has to be a String or list."}
   end
 end
