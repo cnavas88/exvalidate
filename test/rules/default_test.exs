@@ -7,7 +7,7 @@ defmodule Exvalidate.Rules.DefaultTest do
   describe "validating/3." do
     test "without default value in map." do
       rules = %{"default" => "Son goku"}
-      data  = %{}
+      data = %{}
       field = "name"
 
       result = Default.validating(rules, field, data)
@@ -17,7 +17,7 @@ defmodule Exvalidate.Rules.DefaultTest do
 
     test "With value in map." do
       rules = %{"default" => "Son goku"}
-      data  = %{"name" => "Son gohan"}
+      data = %{"name" => "Son gohan"}
       field = "name"
 
       result = Default.validating(rules, field, data)

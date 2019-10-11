@@ -29,7 +29,6 @@ defmodule Exvalidate.PlugTest do
     post "/test", private: %{validate_body: @schema} do
       Plug.Conn.send_resp(conn, 200, "items")
     end
-
   end
 
   test "applies validation with valid query params" do

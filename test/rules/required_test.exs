@@ -7,7 +7,7 @@ defmodule Exvalidate.Rules.RequiredTest do
   describe "validating/3." do
     test "Required with FALSE value." do
       rules = %{"required" => false}
-      data  = %{"id" => 1234}
+      data = %{"id" => 1234}
       field = "id"
 
       result = Required.validating(rules, field, data)
@@ -17,7 +17,7 @@ defmodule Exvalidate.Rules.RequiredTest do
 
     test "Required with TRUE value and good field." do
       rules = %{"required" => true}
-      data  = %{"id" => 1234}
+      data = %{"id" => 1234}
       field = "id"
 
       result = Required.validating(rules, field, data)
@@ -27,7 +27,7 @@ defmodule Exvalidate.Rules.RequiredTest do
 
     test "Required with TRUE value and field id nil." do
       rules = %{"required" => true}
-      data  = %{"id" => nil}
+      data = %{"id" => nil}
       field = "id"
 
       result = Required.validating(rules, field, data)
@@ -37,7 +37,7 @@ defmodule Exvalidate.Rules.RequiredTest do
 
     test "Required with TRUE value and field id empty string." do
       rules = %{"required" => true}
-      data  = %{"id" => ""}
+      data = %{"id" => ""}
       field = "id"
 
       result = Required.validating(rules, field, data)
@@ -47,7 +47,7 @@ defmodule Exvalidate.Rules.RequiredTest do
 
     test "Required with TRUE value and field id doesnt exists." do
       rules = %{"required" => true}
-      data  = %{"name" => "Son goku"}
+      data = %{"name" => "Son goku"}
       field = "id"
 
       result = Required.validating(rules, field, data)
@@ -57,7 +57,7 @@ defmodule Exvalidate.Rules.RequiredTest do
 
     test "Required with a wrong value." do
       rules = %{"required" => "yes"}
-      data  = %{"name" => "Son goku"}
+      data = %{"name" => "Son goku"}
       field = "id"
 
       result = Required.validating(rules, field, data)

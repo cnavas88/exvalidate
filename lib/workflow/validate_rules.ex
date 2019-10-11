@@ -1,6 +1,6 @@
 defmodule Exvalidate.Validate do
   @moduledoc """
-
+  This module validate the data map with the schema map structure.
   """
   alias Exvalidate.Rules.Mapping
 
@@ -25,5 +25,4 @@ defmodule Exvalidate.Validate do
         {:halt, {:error, msg}}
     end
   end
-
 end

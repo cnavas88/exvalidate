@@ -1,6 +1,6 @@
 defmodule Exvalidate.PlugError do
   @moduledoc """
-
+  This module contains the error functions for the plug
   """
   def json_error(conn, error_message) do
     conn

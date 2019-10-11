@@ -7,19 +7,19 @@ defmodule Exvalidate.Rules.MinLengthTest do
   describe "validating/3 min_length is not a number" do
     test "is a string" do
       rules = %{"min_length" => "6"}
-      data  = %{"name" => "Vegeta"}
+      data = %{"name" => "Vegeta"}
       field = "name"
 
       result = MinLength.validating(rules, field, data)
 
-      assert result == {:error, "The rules min_length is wrong."}          
+      assert result == {:error, "The rules min_length is wrong."}
     end
   end
 
   describe "validating/3 min_length string." do
     test "string length is more than minlength field." do
       rules = %{"min_length" => 2}
-      data  = %{"name" => "Vegeta"}
+      data = %{"name" => "Vegeta"}
       field = "name"
 
       result = MinLength.validating(rules, field, data)
@@ -29,7 +29,7 @@ defmodule Exvalidate.Rules.MinLengthTest do
 
     test "string length is equal than minlength field." do
       rules = %{"min_length" => 3}
-      data  = %{"name" => "Boo"}
+      data = %{"name" => "Boo"}
       field = "name"
 
       result = MinLength.validating(rules, field, data)
@@ -39,7 +39,7 @@ defmodule Exvalidate.Rules.MinLengthTest do
 
     test "string validation is wrong." do
       rules = %{"min_length" => 20}
-      data  = %{"name" => "Vegeta"}
+      data = %{"name" => "Vegeta"}
       field = "name"
 
       result = MinLength.validating(rules, field, data)
@@ -49,7 +49,7 @@ defmodule Exvalidate.Rules.MinLengthTest do
 
     test "The field isn't string or list." do
       rules = %{"min_length" => 2}
-      data  = %{"id" => 67}
+      data = %{"id" => 67}
       field = "id"
 
       result = MinLength.validating(rules, field, data)
@@ -57,10 +57,11 @@ defmodule Exvalidate.Rules.MinLengthTest do
       assert result == {:error, "The field has to be a String or list."}
     end
   end
+
   describe "validating/3 min_length list." do
     test "list length is equal min length." do
       rules = %{"min_length" => 2}
-      data  = %{"name" => ["Vegeta", "Picolo"]}
+      data = %{"name" => ["Vegeta", "Picolo"]}
       field = "name"
 
       result = MinLength.validating(rules, field, data)
@@ -70,7 +71,7 @@ defmodule Exvalidate.Rules.MinLengthTest do
 
     test "list legnth is more than min length." do
       rules = %{"min_length" => 2}
-      data  = %{"name" => ["Vegeta", "Picolo", "Bulma"]}
+      data = %{"name" => ["Vegeta", "Picolo", "Bulma"]}
       field = "name"
 
       result = MinLength.validating(rules, field, data)
@@ -80,7 +81,7 @@ defmodule Exvalidate.Rules.MinLengthTest do
 
     test "list validation is wrong." do
       rules = %{"min_length" => 20}
-      data  = %{"name" => ["Vegeta"]}
+      data = %{"name" => ["Vegeta"]}
       field = "name"
 
       result = MinLength.validating(rules, field, data)
@@ -90,7 +91,7 @@ defmodule Exvalidate.Rules.MinLengthTest do
 
     test "The field isn't string or list." do
       rules = %{"min_length" => 2}
-      data  = %{"id" => 67}
+      data = %{"id" => 67}
       field = "id"
 
       result = MinLength.validating(rules, field, data)

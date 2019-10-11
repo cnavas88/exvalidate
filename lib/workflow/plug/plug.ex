@@ -1,6 +1,6 @@
 defmodule Exvalidate.Plug do
   @moduledoc """
-
+  Plug for validate request into the router file.
   """
 
   def init(opts), do: opts
@@ -23,10 +23,11 @@ defmodule Exvalidate.Plug do
       {:error, message} -> {:error, message}
     end
   end
+
   defp validate_params(conn = %Plug.Conn{private: %{validate_body: _schema}}) do
-    IO.puts "TODO - VALIDATE BODY PARAMS"
+    IO.puts("TODO - VALIDATE BODY PARAMS")
     {:ok, conn}
   end
-  defp validate_params(conn), do: {:ok, conn}
 
+  defp validate_params(conn), do: {:ok, conn}
 end

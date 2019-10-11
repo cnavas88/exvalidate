@@ -7,21 +7,21 @@ defmodule Exvalidate.Rules.Mapping do
   """
 
   @mapping %{
-    "required"    => Exvalidate.Rules.Required,
-    "default"     => Exvalidate.Rules.Default,
-    "min_length"  => Exvalidate.Rules.MinLength,
-    "max_length"  => Exvalidate.Rules.MaxLength
+    "required" => Exvalidate.Rules.Required,
+    "default" => Exvalidate.Rules.Default,
+    "min_length" => Exvalidate.Rules.MinLength,
+    "max_length" => Exvalidate.Rules.MaxLength
   }
 
   @spec get_mapping :: map
 
   def get_mapping, do: @mapping
 
-  @spec get_module(String.t) :: {:ok, module} | {:error, String.t}
+  @spec get_module(String.t()) :: {:ok, module} | {:error, String.t()}
 
   def get_module(key) do
     case Map.get(@mapping, key) do
-      nil    ->
+      nil ->
         {:error, "The rule '#{key}' doesn't exists."}
 
       module ->

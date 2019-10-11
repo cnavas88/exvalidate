@@ -1,13 +1,12 @@
 defmodule Exvalidate do
   @moduledoc """
-
+  Enter point for validate data structure.
   """
   alias Exvalidate.Validate
 
   def validate(data, schema) do
-    with :ok              <- validate_allowed_params(data, schema),
-         {:ok, new_data}  <- validate_schema(data, schema)
-    do
+    with :ok <- validate_allowed_params(data, schema),
+         {:ok, new_data} <- validate_schema(data, schema) do
       {:ok, new_data}
     else
       {:error, msg} -> {:error, msg}
