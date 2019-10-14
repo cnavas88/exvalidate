@@ -4,15 +4,6 @@ defmodule Exvalidate.Rules.MappingTest do
 
   alias Exvalidate.Rules.Mapping
 
-  # describe "get_mapping/0." do
-  #   test "Get the all map." do
-  #     result = Mapping.get_mapping()
-
-  #     assert is_map(result)
-  #     assert Map.size(result) > 0
-  #   end
-  # end
-
   describe "get_module/1." do
     test "The key 'required' exists." do
       result = Mapping.get_module("required")
