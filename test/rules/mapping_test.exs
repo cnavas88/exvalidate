@@ -4,14 +4,14 @@ defmodule Exvalidate.Rules.MappingTest do
 
   alias Exvalidate.Rules.Mapping
 
-  describe "get_mapping/0." do
-    test "Get the all map." do
-      result = Mapping.get_mapping()
+  # describe "get_mapping/0." do
+  #   test "Get the all map." do
+  #     result = Mapping.get_mapping()
 
-      assert is_map(result)
-      assert Map.size(result) > 0
-    end
-  end
+  #     assert is_map(result)
+  #     assert Map.size(result) > 0
+  #   end
+  # end
 
   describe "get_module/1." do
     test "The key 'required' exists." do
@@ -42,6 +42,12 @@ defmodule Exvalidate.Rules.MappingTest do
       result = Mapping.get_module("in")
 
       assert result == {:ok, Exvalidate.Rules.In}
+    end
+
+    test "The key 'numeric' exists." do
+      result = Mapping.get_module("numeric")
+
+      assert result == {:ok, Exvalidate.Rules.Numeric}
     end
 
     test "The key doesn't exists." do
