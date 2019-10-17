@@ -4,14 +4,22 @@ defmodule Exvalidate do
   """
   alias Exvalidate.Validate
 
-  def validate(data, schema) do
+  @deps %{
+    validate: &Validate.rules/3
+  }
+
+  @spec validate(map(), map(), map()) :: {:ok, map()} | {:error, String.t()}
+
+  def validate(data, schema, deps \\ @deps) do
     with :ok <- validate_allowed_params(data, schema),
-         {:ok, new_data} <- validate_schema(data, schema) do
+         {:ok, new_data} <- validate_schema(data, schema, deps) do
       {:ok, new_data}
     else
       {:error, msg} -> {:error, msg}
     end
   end
+
+  @spec validate_allowed_params(map(), map()) :: :ok | {:error, String.t()}
 
   defp validate_allowed_params(data, schema) do
     result = Map.keys(schema) -- Map.keys(data)
@@ -22,9 +30,12 @@ defmodule Exvalidate do
     end
   end
 
-  defp validate_schema(data, schema) do
+  @spec validate_schema(map(), map(), map()) ::
+          {:ok, map()} | {:error, String.t()}
+
+  defp validate_schema(data, schema, deps) do
     Enum.reduce_while(schema, {:ok, data}, fn {field, rules}, {:ok, modified_data} ->
-      case Validate.rules(field, rules, modified_data) do
+      case deps.validate.(field, rules, modified_data) do
         {:ok, new_data} ->
           {:cont, {:ok, new_data}}
 

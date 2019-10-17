@@ -35,15 +35,21 @@ defmodule Exvalidate.Plug do
 
   defp validate_params(conn = %Plug.Conn{private: %{validate_query: schema}}) do
     case Exvalidate.validate(conn.query_params, schema) do
-      {:ok, new_params} -> {:ok, %Plug.Conn{conn | query_params: new_params}}
-      {:error, message} -> {:error, message}
+      {:ok, new_params} ->
+        {:ok, %Plug.Conn{conn | query_params: new_params}}
+
+      {:error, message} ->
+        {:error, message}
     end
   end
 
   defp validate_params(conn = %Plug.Conn{private: %{validate_body: schema}}) do
     case Exvalidate.validate(conn.body_params, schema) do
-      {:ok, new_params} -> {:ok, %Plug.Conn{conn | query_params: new_params}}
-      {:error, message} -> {:error, message}
+      {:ok, new_params} ->
+        {:ok, %Plug.Conn{conn | query_params: new_params}}
+
+      {:error, message} ->
+        {:error, message}
     end
   end
 
