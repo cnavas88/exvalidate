@@ -23,25 +23,32 @@ defmodule Exvalidate.PlugTest do
     }
 
     get "/test", private: %{validate_query: @schema} do
-      Plug.Conn.send_resp(conn, 200, "items")
-    end
-
-    post "/test", private: %{validate_body: @schema} do
-      Plug.Conn.send_resp(conn, 200, "items")
+      Plug.Conn.send_resp(conn, 200, "")
     end
   end
 
-  test "applies validation with valid query params" do
+  test "Applies validation with valid query params" do
     conn =
       :get
       |> Plug.Test.conn("/test?id=123")
       |> TestRouter.call([])
 
-    # assert true
+    assert conn.state == :sent
+    assert conn.status == 200
+    assert conn.query_params == %{"id" => "123"}
+    assert conn.resp_body == ""
+  end
+
+  test "Validation error" do
+    conn =
+      :get
+      |> Plug.Test.conn("/test?id=&name=Boo")
+      |> TestRouter.call([])
 
     assert conn.state == :sent
-    # assert conn.status == 200
-    # assert conn.query_params == %{"id" => "123"}
+    assert conn.status == 400
+    assert conn.query_params == %{"id" => "", "name" => "Boo"}
+    assert Jason.decode!(conn.resp_body) == %{ "error" => "id is required."}
   end
 
   # # test "calls the on_error function with invalid query params" do
