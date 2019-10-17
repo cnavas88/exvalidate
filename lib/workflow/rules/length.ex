@@ -26,13 +26,13 @@ defmodule Exvalidate.Rules.Length do
   @spec exact_length(number, any) :: {:ok, boolean} | {:error, String.t()}
 
   defp exact_length(length, value)
-    when is_binary(value) do
-      {:ok, String.length(value) == length}
+       when is_binary(value) do
+    {:ok, String.length(value) == length}
   end
 
   defp exact_length(length, value)
-    when is_list(value) do
-      {:ok, Enum.count(value) == length}
+       when is_list(value) do
+    {:ok, Enum.count(value) == length}
   end
 
   defp exact_length(_length, _value) do

@@ -5,6 +5,9 @@ defmodule Exvalidate do
   alias Exvalidate.Validate
 
   def validate(data, schema) do
+    IO.puts("DATA :: #{inspect(data)}")
+    IO.puts("SCHEMA :: #{inspect(schema)}")
+
     with :ok <- validate_allowed_params(data, schema),
          {:ok, new_data} <- validate_schema(data, schema) do
       {:ok, new_data}
