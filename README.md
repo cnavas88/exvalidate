@@ -44,3 +44,86 @@ Finish: for finish you have add the next line in the router api:
 ```elixir
   get "/test", private: %{validate_body: @schema}
 ```
+
+## Validate dates
+
+if you only want validate a data. You follow the next steps:
+
+- add the alias to the file: 
+```elixir
+  alias Exvalidate
+```
+
+- call to the function validate, where data is a map with the data to validate,
+and the schema is the validate schema to use for validate data:
+```elixir
+  Exvalidate.validate(data, schema)
+```
+
+## VALIDATE RULES
+
+You can use the next rules for validate params:
+
+- required: Setting `:required` to `true` will cause a validation error
+when a field is not present or the value is `nil` or `""`. 
+
+```elixir
+%{
+  "id" => %{
+    "required" => true
+  }
+}
+```
+
+- default: if this rule has a value, find the content into the param, if is not
+present adding this value into the param assing.
+
+```elixir
+%{
+  "id" => %{
+    "default" => 5
+  }
+}
+```
+
+- in: Validate that the value or list of values are into the list.
+
+```elixir
+%{
+  "id" => %{
+    "in" => [1, 2, 3]
+  }
+}
+```
+
+- length: Validate that the param has the exact length. (Is for lists or string)
+
+```elixir
+%{
+  "name" => %{
+    "length" => 5
+  }
+}
+```
+
+- max_length: Validate that the param must be lower than or equal to min 
+length value.
+
+```elixir
+%{
+  "name" => %{
+    "max_length" => 5
+  }
+}
+```
+
+- min_length: Validate that the param must be greater than or equal to min 
+length value.
+
+```elixir
+%{
+  "name" => %{
+    "min_length" => 5
+  }
+}
+```
