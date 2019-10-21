@@ -43,7 +43,7 @@ defmodule ExvalidateTest do
     test "Validate allowed params and validate schema" do
       data = %{
         "id" => 12_345,
-        "name" => "Carlos"
+        "name" => "Vegeta"
       }
 
       schema = %{
