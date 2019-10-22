@@ -4,7 +4,7 @@ defmodule ExvalidateTest do
 
   alias Exvalidate
 
-  # TODO - HACER TEST DE INTEGRACION MEJORES PARA TODOS LOS CASOS POSIBLES
+  # HACER TEST DE INTEGRACION MEJORES PARA TODOS LOS CASOS POSIBLES
 
   describe "Unit tests." do
     test "Not validate allowed params." do
