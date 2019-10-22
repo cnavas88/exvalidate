@@ -24,6 +24,9 @@ defmodule Exvalidate.Rules.Type do
       {:ok, false} ->
         {:error, "#{field} must be type #{type}."}
 
+      {:ok, value} ->
+        {:ok, Map.put(data, field, value)}
+
       {:error, msg} ->
         {:error, msg}
     end
@@ -34,6 +37,9 @@ defmodule Exvalidate.Rules.Type do
   @spec is_this_type(atom, any) :: {:ok, boolean} | {:error, String.t()}
 
   defp is_this_type(:atom, value) when is_atom(value), do: {:ok, true}
+  defp is_this_type(:atom, value) when is_binary(value) do
+    {:ok, String.to_atom(value)}
+  end
   defp is_this_type(:atom, _value), do: {:ok, false}
 
   defp is_this_type(:string, value) when is_binary(value), do: {:ok, true}
