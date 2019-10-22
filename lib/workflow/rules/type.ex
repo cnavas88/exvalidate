@@ -14,6 +14,28 @@ defmodule Exvalidate.Rules.Type do
 
   @spec validating(map, String.t(), map) :: {:ok, map} | {:error, String.t()}
 
+  @doc """
+  # Validate the atom
+    if you want validate an atom you use the :atom. 
+    For :atom validation you can send an atom or a binary (for the request plug)
+    if send a binary the validation type :atom converts the binary to atom and
+    return this value.
+
+  ## Examples
+    > validating(%{"type" => :atom}, "name", %{"name" => :saiyajin})
+    {:ok, %{"name" => :saiyajin}}
+
+    > validating(%{"type" => :atom}, "name", %{"name" => "saiyajin"})
+    {:ok, %{"name" => :saiyajin}}
+
+  # Validate the string
+    if you want validate an atom you use the :string. 
+    For :string validation you can send an binary.
+
+  ## Examples
+    > validating(%{"type" => :string}, "name", %{"name" => "saiyajin"})
+    {:ok, %{"name" => "saiyajin"}}
+  """
   def validating(%{"type" => type}, field, data)
       when is_atom(type) do
     case is_this_type(type, Map.get(data, field)) do
@@ -35,19 +57,12 @@ defmodule Exvalidate.Rules.Type do
 
   @spec is_this_type(atom, any) :: {:ok, boolean} | {:error, String.t()}
 
-  @doc """
-  Validate the atom, if you want validate an atom you use the :atom. 
-  For :atom validation you can send an atom or a binary (for the request plug)
-  if send a binary the validation type :atom converts the binary to atom and
-  return this value.
-  Examples:
-  - :sayan ---> {:ok, true}
-  - "sayan" ---> {:ok, :sayan}
-  """
   defp is_this_type(:atom, value) when is_atom(value), do: {:ok, true}
+
   defp is_this_type(:atom, value) when is_binary(value) do
     {:ok, String.to_atom(value)}
   end
+
   defp is_this_type(:atom, _value), do: {:ok, false}
 
   defp is_this_type(:string, value) when is_binary(value), do: {:ok, true}
