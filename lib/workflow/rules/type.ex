@@ -1,7 +1,6 @@
 defmodule Exvalidate.Rules.Type do
   @moduledoc """
-  This validation check the type of variable. The checked types are the next:
-  - :atom => :name, :address, :language, 
+  This validation check the type of variable. The checked types are the next: 
   - :string => "name", "address", "language", 
   - :list => ["name", "address", "language"], 
   - :map => %{name: "Vegeta", address: "Vegeta planet"}, 
@@ -36,6 +35,15 @@ defmodule Exvalidate.Rules.Type do
 
   @spec is_this_type(atom, any) :: {:ok, boolean} | {:error, String.t()}
 
+  @doc """
+  Validate the atom, if you want validate an atom you use the :atom. 
+  For :atom validation you can send an atom or a binary (for the request plug)
+  if send a binary the validation type :atom converts the binary to atom and
+  return this value.
+  Examples:
+  - :sayan ---> {:ok, true}
+  - "sayan" ---> {:ok, :sayan}
+  """
   defp is_this_type(:atom, value) when is_atom(value), do: {:ok, true}
   defp is_this_type(:atom, value) when is_binary(value) do
     {:ok, String.to_atom(value)}
