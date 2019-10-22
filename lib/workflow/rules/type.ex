@@ -1,8 +1,6 @@
 defmodule Exvalidate.Rules.Type do
   @moduledoc """
   :atom, :boolean, :number and :string,
-
-  TODO - FALTARIA EL IS_INTEGER Y IS_FLOAT Y IS_BOOLEAN
   """
 
   @spec validating(map, String.t(), map) :: {:ok, map} | {:error, String.t()}
@@ -40,6 +38,18 @@ defmodule Exvalidate.Rules.Type do
 
   defp is_this_type(:tuple, value) when is_tuple(value), do: {:ok, true}
   defp is_this_type(:tuple, value), do: {:ok, false}
+
+  defp is_this_type(:boolean, value) when is_boolean(value), do: {:ok, true}
+  defp is_this_type(:boolean, value), do: {:ok, false}
+
+  defp is_this_type(:number, value) when is_number(value), do: {:ok, true}
+  defp is_this_type(:number, value), do: {:ok, false}
+
+  defp is_this_type(:integer, value) when is_integer(value), do: {:ok, true}
+  defp is_this_type(:integer, value), do: {:ok, false}
+
+  defp is_this_type(:float, value) when is_float(value), do: {:ok, true}
+  defp is_this_type(:float, value), do: {:ok, false}
 
   defp is_this_type(_min, _value) do
     {:error, "The field has to be a String or list."}
