@@ -39,10 +39,10 @@ defmodule Exvalidate.Rules.Type do
   def validating(%{"type" => type}, field, data)
       when is_atom(type) do
     case is_this_type(type, Map.get(data, field)) do
-      {:ok, true} ->
+      {:ok, :valid} ->
         {:ok, data}
 
-      {:ok, false} ->
+      {:ok, :not_valid} ->
         {:error, "#{field} must be type #{type}."}
 
       {:ok, value} ->
@@ -57,28 +57,44 @@ defmodule Exvalidate.Rules.Type do
 
   @spec is_this_type(atom, any) :: {:ok, boolean} | {:error, String.t()}
 
-  defp is_this_type(:atom, value) when is_atom(value), do: {:ok, true}
+  defp is_this_type(:atom, value) when is_atom(value), do: {:ok, :valid}
 
   defp is_this_type(:atom, value) when is_binary(value) do
     {:ok, String.to_atom(value)}
   end
 
-  defp is_this_type(:atom, _value), do: {:ok, false}
+  defp is_this_type(:atom, _value), do: {:ok, :not_valid}
 
-  defp is_this_type(:string, value) when is_binary(value), do: {:ok, true}
-  defp is_this_type(:string, _value), do: {:ok, false}
+  defp is_this_type(:string, value) when is_binary(value), do: {:ok, :valid}
+  defp is_this_type(:string, _value), do: {:ok, :not_valid}
 
-  defp is_this_type(:list, value) when is_list(value), do: {:ok, true}
-  defp is_this_type(:list, _value), do: {:ok, false}
+  defp is_this_type(:list, value) when is_list(value), do: {:ok, :valid}
+  defp is_this_type(:list, _value), do: {:ok, :not_valid}
 
-  defp is_this_type(:map, value) when is_map(value), do: {:ok, true}
-  defp is_this_type(:map, _value), do: {:ok, false}
+  defp is_this_type(:map, value) when is_map(value), do: {:ok, :valid}
+  defp is_this_type(:map, _value), do: {:ok, :not_valid}
 
-  defp is_this_type(:tuple, value) when is_tuple(value), do: {:ok, true}
-  defp is_this_type(:tuple, _value), do: {:ok, false}
+  defp is_this_type(:tuple, value) when is_tuple(value), do: {:ok, :valid}
+  defp is_this_type(:tuple, _value), do: {:ok, :not_valid}
 
-  # defp is_this_type(:boolean, value) when is_boolean(value), do: {:ok, true}
-  # defp is_this_type(:boolean, _value), do: {:ok, false}
+  defp is_this_type(:boolean, value) when is_boolean(value), do: {:ok, :valid}
+  defp is_this_type(:boolean, value) when is_binary(value) do
+    case String.downcase(value) do
+      "0"     -> {:ok, false}
+      "1"     -> {:ok, true}
+      "false" -> {:ok, false}
+      "true"  -> {:ok, true}
+      _       -> {:ok, :not_valid}
+    end
+  end
+  defp is_this_type(:boolean, value) when is_integer(value) do
+    case value do
+      0 -> {:ok, false}
+      1 -> {:ok, true}
+      _ -> {:ok, :not_valid}
+    end
+  end
+  defp is_this_type(:boolean, _value), do: {:ok, :not_valid}
 
   # defp is_this_type(:number, value) when is_number(value), do: {:ok, true}
   # defp is_this_type(:number, _value), do: {:ok, false}
