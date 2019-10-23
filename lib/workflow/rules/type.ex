@@ -87,13 +87,8 @@ defmodule Exvalidate.Rules.Type do
       _       -> {:ok, :not_valid}
     end
   end
-  defp is_this_type(:boolean, value) when is_integer(value) do
-    case value do
-      0 -> {:ok, false}
-      1 -> {:ok, true}
-      _ -> {:ok, :not_valid}
-    end
-  end
+  defp is_this_type(:boolean, 0), do: {:ok, false}
+  defp is_this_type(:boolean, 1), do: {:ok, true}
   defp is_this_type(:boolean, _value), do: {:ok, :not_valid}
 
   # defp is_this_type(:number, value) when is_number(value), do: {:ok, true}
