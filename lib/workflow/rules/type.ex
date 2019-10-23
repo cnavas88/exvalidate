@@ -71,23 +71,23 @@ defmodule Exvalidate.Rules.Type do
   defp is_this_type(:list, value) when is_list(value), do: {:ok, true}
   defp is_this_type(:list, _value), do: {:ok, false}
 
-  defp is_this_type(:map, value) when is_map(value), do: {:ok, true}
-  defp is_this_type(:map, _value), do: {:ok, false}
+  # defp is_this_type(:map, value) when is_map(value), do: {:ok, true}
+  # defp is_this_type(:map, _value), do: {:ok, false}
 
-  defp is_this_type(:tuple, value) when is_tuple(value), do: {:ok, true}
-  defp is_this_type(:tuple, _value), do: {:ok, false}
+  # defp is_this_type(:tuple, value) when is_tuple(value), do: {:ok, true}
+  # defp is_this_type(:tuple, _value), do: {:ok, false}
 
-  defp is_this_type(:boolean, value) when is_boolean(value), do: {:ok, true}
-  defp is_this_type(:boolean, _value), do: {:ok, false}
+  # defp is_this_type(:boolean, value) when is_boolean(value), do: {:ok, true}
+  # defp is_this_type(:boolean, _value), do: {:ok, false}
 
-  defp is_this_type(:number, value) when is_number(value), do: {:ok, true}
-  defp is_this_type(:number, _value), do: {:ok, false}
+  # defp is_this_type(:number, value) when is_number(value), do: {:ok, true}
+  # defp is_this_type(:number, _value), do: {:ok, false}
 
-  defp is_this_type(:integer, value) when is_integer(value), do: {:ok, true}
-  defp is_this_type(:integer, _value), do: {:ok, false}
+  # defp is_this_type(:integer, value) when is_integer(value), do: {:ok, true}
+  # defp is_this_type(:integer, _value), do: {:ok, false}
 
-  defp is_this_type(:float, value) when is_float(value), do: {:ok, true}
-  defp is_this_type(:float, _value), do: {:ok, false}
+  # defp is_this_type(:float, value) when is_float(value), do: {:ok, true}
+  # defp is_this_type(:float, _value), do: {:ok, false}
 
   defp is_this_type(_min, _value) do
     {:error, "The field must be the next type: :atom, :string, :list, :map, 
