@@ -71,11 +71,11 @@ defmodule Exvalidate.Rules.Type do
   defp is_this_type(:list, value) when is_list(value), do: {:ok, true}
   defp is_this_type(:list, _value), do: {:ok, false}
 
-  # defp is_this_type(:map, value) when is_map(value), do: {:ok, true}
-  # defp is_this_type(:map, _value), do: {:ok, false}
+  defp is_this_type(:map, value) when is_map(value), do: {:ok, true}
+  defp is_this_type(:map, _value), do: {:ok, false}
 
-  # defp is_this_type(:tuple, value) when is_tuple(value), do: {:ok, true}
-  # defp is_this_type(:tuple, _value), do: {:ok, false}
+  defp is_this_type(:tuple, value) when is_tuple(value), do: {:ok, true}
+  defp is_this_type(:tuple, _value), do: {:ok, false}
 
   # defp is_this_type(:boolean, value) when is_boolean(value), do: {:ok, true}
   # defp is_this_type(:boolean, _value), do: {:ok, false}

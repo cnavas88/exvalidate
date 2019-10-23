@@ -79,4 +79,48 @@ defmodule Exvalidate.Rules.TypeTest do
       assert result == {:error, "type_characters must be type list."}
     end
   end
+
+  describe "Type is a map." do
+    test "Map validation pass." do
+      rules = %{"type" => :map}
+      data = %{"type_characters" => %{"Saiyajin" => "Vegetta"}}
+      field = "type_characters"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"type_characters" => %{"Saiyajin" => "Vegetta"}}}
+    end
+
+    test "Map validation get wrong." do
+      rules = %{"type" => :map}
+      data = %{"type_characters" => "Saiyajin"}
+      field = "type_characters"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:error, "type_characters must be type map."}
+    end
+  end
+
+  describe "Type is a tuple." do
+    test "Tuple validation pass." do
+      rules = %{"type" => :tuple}
+      data = %{"type_characters" => {"Saiyajin", "Namek"}}
+      field = "type_characters"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"type_characters" => {"Saiyajin", "Namek"}}}
+    end
+
+    test "Tuple validation get wrong." do
+      rules = %{"type" => :tuple}
+      data = %{"type_characters" => "Saiyajin"}
+      field = "type_characters"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:error, "type_characters must be type tuple."}
+    end
+  end
 end
