@@ -4,8 +4,8 @@ defmodule Exvalidate.Rules.TypeTest do
 
   alias Exvalidate.Rules.Type
 
-  describe "Type is atom." do
-    test "Atom and validation pass." do
+  describe "Type is an atom." do
+    test "Atom validation pass." do
       rules = %{"type" => :atom}
       data = %{"type_character" => :Saiyajin}
       field = "type_character"
@@ -15,7 +15,7 @@ defmodule Exvalidate.Rules.TypeTest do
       assert result == {:ok, %{"type_character" => :Saiyajin}}
     end
 
-    test "Atom and validation get wrong." do
+    test "Atom validation get wrong." do
       rules = %{"type" => :atom}
       data = %{"type_character" => 33}
       field = "type_character"
@@ -25,7 +25,7 @@ defmodule Exvalidate.Rules.TypeTest do
       assert result == {:error, "type_character must be type atom."}
     end
 
-    test "String and validation pass." do
+    test "String validation pass." do
       rules = %{"type" => :atom}
       data = %{"type_character" => "Saiyajin"}
       field = "type_character"
@@ -36,8 +36,8 @@ defmodule Exvalidate.Rules.TypeTest do
     end
   end
 
-  describe "Type is string." do
-    test "String and validation pass." do
+  describe "Type is a string." do
+    test "String validation pass." do
       rules = %{"type" => :string}
       data = %{"type_character" => "Saiyajin"}
       field = "type_character"
@@ -47,7 +47,7 @@ defmodule Exvalidate.Rules.TypeTest do
       assert result == {:ok, %{"type_character" => "Saiyajin"}}
     end
 
-    test "String and validation get wrong." do
+    test "String validation get wrong." do
       rules = %{"type" => :string}
       data = %{"type_character" => 33}
       field = "type_character"
@@ -55,6 +55,28 @@ defmodule Exvalidate.Rules.TypeTest do
       result = Type.validating(rules, field, data)
 
       assert result == {:error, "type_character must be type string."}
+    end
+  end
+
+  describe "Type is a list." do
+    test "List validation pass." do
+      rules = %{"type" => :list}
+      data = %{"type_characters" => ["Saiyajin", "Namek"]}
+      field = "type_characters"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"type_characters" => ["Saiyajin", "Namek"]}}
+    end
+
+    test "List validation get wrong." do
+      rules = %{"type" => :list}
+      data = %{"type_characters" => "Saiyajin"}
+      field = "type_characters"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:error, "type_characters must be type list."}
     end
   end
 end
