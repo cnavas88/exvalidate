@@ -123,4 +123,105 @@ defmodule Exvalidate.Rules.TypeTest do
       assert result == {:error, "type_characters must be type tuple."}
     end
   end
+
+  describe "Type is a boolean." do
+    test "Boolean true validation pass." do
+      rules = %{"type" => :boolean}
+      data = %{"is_saiyajin" => true}
+      field = "is_saiyajin"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"is_saiyajin" => true}}
+    end
+
+    test "Boolean false validation pass." do
+      rules = %{"type" => :boolean}
+      data = %{"is_saiyajin" => false}
+      field = "is_saiyajin"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"is_saiyajin" => false}}
+    end
+
+    test "String 'true' validation pass and convert." do
+      rules = %{"type" => :boolean}
+      data = %{"is_saiyajin" => "true"}
+      field = "is_saiyajin"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"is_saiyajin" => true}}
+    end
+
+    test "String 'false' validation pass and convert." do
+      rules = %{"type" => :boolean}
+      data = %{"is_saiyajin" => "false"}
+      field = "is_saiyajin"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"is_saiyajin" => false}}
+    end
+
+    test "String 'TRUE' validation pass and convert." do
+      rules = %{"type" => :boolean}
+      data = %{"is_saiyajin" => "TRUE"}
+      field = "is_saiyajin"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"is_saiyajin" => true}}
+    end
+
+    test "String 'FALSE' validation pass and convert." do
+      rules = %{"type" => :boolean}
+      data = %{"is_saiyajin" => "FALSE"}
+      field = "is_saiyajin"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"is_saiyajin" => false}}
+    end
+
+    test "String '1' validation pass and convert." do
+      rules = %{"type" => :boolean}
+      data = %{"is_saiyajin" => "1"}
+      field = "is_saiyajin"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"is_saiyajin" => true}}
+    end
+
+    test "String '0' validation pass and convert." do
+      rules = %{"type" => :boolean}
+      data = %{"is_saiyajin" => "0"}
+      field = "is_saiyajin"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"is_saiyajin" => false}}
+    end
+
+    test "Other String validation wrong." do
+      rules = %{"type" => :boolean}
+      data = %{"is_saiyajin" => "kakarot"}
+      field = "is_saiyajin"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:error, "is_saiyajin must be type boolean."}
+    end
+    # test "Boolean validation get wrong." do
+    #   rules = %{"type" => :tuple}
+    #   data = %{"type_characters" => "Saiyajin"}
+    #   field = "type_characters"
+
+    #   result = Type.validating(rules, field, data)
+
+    #   assert result == {:error, "type_characters must be type tuple."}
+    # end
+  end
 end
