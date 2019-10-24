@@ -55,7 +55,8 @@ defmodule Exvalidate.Rules.Type do
 
   def validating(_, _, _), do: {:error, "The type rule must be an atom."}
 
-  @spec is_this_type(atom, any) :: {:ok, boolean} | {:error, String.t()}
+  @spec is_this_type(atom, any) ::
+          {:ok, :valid} | {:ok, :not_valid} | {:ok, any} | {:error, String.t()}
 
   defp is_this_type(:atom, value) when is_atom(value), do: {:ok, :valid}
 
@@ -78,15 +79,17 @@ defmodule Exvalidate.Rules.Type do
   defp is_this_type(:tuple, _value), do: {:ok, :not_valid}
 
   defp is_this_type(:boolean, value) when is_boolean(value), do: {:ok, :valid}
+
   defp is_this_type(:boolean, value) when is_binary(value) do
     case String.downcase(value) do
-      "0"     -> {:ok, false}
-      "1"     -> {:ok, true}
+      "0" -> {:ok, false}
+      "1" -> {:ok, true}
       "false" -> {:ok, false}
-      "true"  -> {:ok, true}
-      _       -> {:ok, :not_valid}
+      "true" -> {:ok, true}
+      _ -> {:ok, :not_valid}
     end
   end
+
   defp is_this_type(:boolean, 0), do: {:ok, false}
   defp is_this_type(:boolean, 1), do: {:ok, true}
   defp is_this_type(:boolean, _value), do: {:ok, :not_valid}
