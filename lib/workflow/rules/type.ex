@@ -97,8 +97,8 @@ defmodule Exvalidate.Rules.Type do
   # defp is_this_type(:number, value) when is_number(value), do: {:ok, true}
   # defp is_this_type(:number, _value), do: {:ok, false}
 
-  # defp is_this_type(:integer, value) when is_integer(value), do: {:ok, true}
-  # defp is_this_type(:integer, _value), do: {:ok, false}
+  defp is_this_type(:integer, value) when is_integer(value), do: {:ok, :valid}
+  defp is_this_type(:integer, _value), do: {:ok, :not_valid}
 
   # defp is_this_type(:float, value) when is_float(value), do: {:ok, true}
   # defp is_this_type(:float, _value), do: {:ok, false}
