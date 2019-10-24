@@ -214,14 +214,35 @@ defmodule Exvalidate.Rules.TypeTest do
 
       assert result == {:error, "is_saiyajin must be type boolean."}
     end
-    # test "Boolean validation get wrong." do
-    #   rules = %{"type" => :tuple}
-    #   data = %{"type_characters" => "Saiyajin"}
-    #   field = "type_characters"
 
-    #   result = Type.validating(rules, field, data)
+    test "Number 1 validation pass and convert." do
+      rules = %{"type" => :boolean}
+      data = %{"is_saiyajin" => 1}
+      field = "is_saiyajin"
 
-    #   assert result == {:error, "type_characters must be type tuple."}
-    # end
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"is_saiyajin" => true}}
+    end
+
+    test "Number 0 validation pass and convert." do
+      rules = %{"type" => :boolean}
+      data = %{"is_saiyajin" => 0}
+      field = "is_saiyajin"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"is_saiyajin" => false}}
+    end
+
+    test "Boolean validation get wrong." do
+      rules = %{"type" => :boolean}
+      data = %{"is_saiyajin" => %{}}
+      field = "is_saiyajin"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:error, "is_saiyajin must be type boolean."}
+    end
   end
 end
