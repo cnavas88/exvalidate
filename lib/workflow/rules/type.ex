@@ -98,10 +98,26 @@ defmodule Exvalidate.Rules.Type do
   # defp is_this_type(:number, _value), do: {:ok, false}
 
   defp is_this_type(:integer, value) when is_integer(value), do: {:ok, :valid}
+
+  defp is_this_type(:integer, value) when is_binary(value) do
+    case Integer.parse(value) do
+      {num, ""} -> {:ok, num}
+      _ -> {:ok, :not_valid}
+    end
+  end
+
   defp is_this_type(:integer, _value), do: {:ok, :not_valid}
 
-  # defp is_this_type(:float, value) when is_float(value), do: {:ok, true}
-  # defp is_this_type(:float, _value), do: {:ok, false}
+  defp is_this_type(:float, value) when is_float(value), do: {:ok, :valid}
+
+  defp is_this_type(:float, value) when is_binary(value) do
+    case Float.parse(value) do
+      {num, ""} -> {:ok, num}
+      _ -> {:ok, :not_valid}
+    end
+  end
+
+  defp is_this_type(:float, _value), do: {:ok, :not_valid}
 
   defp is_this_type(_min, _value) do
     {:error, "The field must be the next type: :atom, :string, :list, :map, 
