@@ -94,8 +94,17 @@ defmodule Exvalidate.Rules.Type do
   defp is_this_type(:boolean, 1), do: {:ok, true}
   defp is_this_type(:boolean, _value), do: {:ok, :not_valid}
 
-  # defp is_this_type(:number, value) when is_number(value), do: {:ok, true}
-  # defp is_this_type(:number, _value), do: {:ok, false}
+  defp is_this_type(:number, value) when is_number(value), do: {:ok, true}
+
+  defp is_this_type(:number, value) when is_binary(value) do
+    cond do
+      is_float(value) -> is_this_type(:float, value)
+      is_integer(value) -> is_this_type(:integer, value)
+      true -> {:ok, :not_valid}
+    end
+  end
+
+  defp is_this_type(:number, _value), do: {:ok, false}
 
   defp is_this_type(:integer, value) when is_integer(value), do: {:ok, :valid}
 
