@@ -331,8 +331,18 @@ defmodule Exvalidate.Rules.TypeTest do
   end
 
   describe "Type is a :number." do
+    test "Integer validation pass." do
+      rules = %{"type" => :number}
+      data = %{"num_characters" => 3}
+      field = "num_characters"
+
+      result = Type.validating(rules, field, data)
+
+      assert result == {:ok, %{"num_characters" => 3}}
+    end
+
     test "Float validation pass." do
-      rules = %{"type" => :float}
+      rules = %{"type" => :number}
       data = %{"num_characters" => 3.5}
       field = "num_characters"
 
@@ -341,34 +351,24 @@ defmodule Exvalidate.Rules.TypeTest do
       assert result == {:ok, %{"num_characters" => 3.5}}
     end
 
-    test "Float validation get wrong." do
-      rules = %{"type" => :float}
-      data = %{"num_characters" => [3]}
+    test "String validation integer pass." do
+      rules = %{"type" => :number}
+      data = %{"num_characters" => "3"}
       field = "num_characters"
 
       result = Type.validating(rules, field, data)
 
-      assert result == {:error, "num_characters must be type float."}
+      assert result == {:ok, %{"num_characters" => 3}}
     end
 
-    test "String validation pass." do
-      rules = %{"type" => :float}
-      data = %{"num_characters" => "3.3"}
-      field = "num_characters"
+    # test "String validation get wrong." do
+    #   rules = %{"type" => :float}
+    #   data = %{"num_characters" => "Three"}
+    #   field = "num_characters"
 
-      result = Type.validating(rules, field, data)
+    #   result = Type.validating(rules, field, data)
 
-      assert result == {:ok, %{"num_characters" => 3.3}}
-    end
-
-    test "String validation get wrong." do
-      rules = %{"type" => :float}
-      data = %{"num_characters" => "Three"}
-      field = "num_characters"
-
-      result = Type.validating(rules, field, data)
-
-      assert result == {:error, "num_characters must be type float."}
-    end
+    #   assert result == {:error, "num_characters must be type float."}
+    # end
   end
 end

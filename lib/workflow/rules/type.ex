@@ -94,13 +94,13 @@ defmodule Exvalidate.Rules.Type do
   defp is_this_type(:boolean, 1), do: {:ok, true}
   defp is_this_type(:boolean, _value), do: {:ok, :not_valid}
 
-  defp is_this_type(:number, value) when is_number(value), do: {:ok, true}
+  defp is_this_type(:number, value) when is_number(value), do: {:ok, :valid}
 
   defp is_this_type(:number, value) when is_binary(value) do
-    cond do
-      is_float(value) -> is_this_type(:float, value)
-      is_integer(value) -> is_this_type(:integer, value)
-      true -> {:ok, :not_valid}
+    if String.contains?(value, ".") do
+      is_this_type(:float, value)
+    else
+      is_this_type(:integer, value)
     end
   end
 
