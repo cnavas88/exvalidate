@@ -113,5 +113,21 @@ defmodule ExvalidateTest do
 
       assert result == {:error, "The rule 'mmmmmm' doesn't exists."}
     end
+
+    test "Validate the rule 'type'." do
+      data = %{
+        "id" => 12_345,
+        "name" => "Carlos"
+      }
+
+      schema = %{
+        "id" => %{"required" => true, "type" => :integer},
+        "name" => %{"type" => :number}
+      }
+
+      result = Exvalidate.validate(data, schema)
+
+      assert result == {:error, "name must be type number."}
+    end
   end
 end
