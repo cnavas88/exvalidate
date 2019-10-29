@@ -18,7 +18,7 @@ defmodule Exvalidate.Validate do
   - data: map with the all validate data.
   """
   def rules(field, rules, data) do
-    Enum.reduce_while(rules, %{}, fn {key, _value}, _acc ->
+    Enum.reduce_while(ordering_rules(rules), %{}, fn {key, _value}, _acc ->
       case get_module(key) do
         {:ok, module} ->
           execute_module(rules, field, data, module)
@@ -28,6 +28,15 @@ defmodule Exvalidate.Validate do
       end
     end)
   end
+
+  @spec ordering_rules(map) :: map
+
+  defp ordering_rules(%{"type" => type} = map) do
+    map = Map.delete(map, "type")
+    unordered_list = Map.to_list(map)
+    List.insert_at(unordered_list, 0, {"type", type})
+  end
+  defp ordering_rules(map), do: Map.to_list(map)
 
   @spec get_module(String.t()) :: {:ok, module} | {:error, String.t()}
 
