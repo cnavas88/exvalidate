@@ -29,13 +29,14 @@ defmodule Exvalidate.Validate do
     end)
   end
 
-  @spec ordering_rules(map) :: map
+  @spec ordering_rules(map) :: list
 
-  defp ordering_rules(%{"type" => type} = map) do
-    map = Map.delete(map, "type")
-    unordered_list = Map.to_list(map)
+  defp ordering_rules(map = %{"type" => type}) do
+    new_map = Map.delete(map, "type")
+    unordered_list = Map.to_list(new_map)
     List.insert_at(unordered_list, 0, {"type", type})
   end
+
   defp ordering_rules(map), do: Map.to_list(map)
 
   @spec get_module(String.t()) :: {:ok, module} | {:error, String.t()}
