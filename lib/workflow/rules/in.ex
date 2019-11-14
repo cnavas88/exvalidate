@@ -2,7 +2,8 @@ defmodule Exvalidate.Rules.In do
   @moduledoc """
   This module validate that the value or list of values are into the list
   """
-
+  @behaviour Exvalidate.Rules.IRules
+  
   @spec validating(map, String.t(), map) :: {:ok, map} | {:error, String.t()}
 
   def validating(%{"in" => list}, field, data)

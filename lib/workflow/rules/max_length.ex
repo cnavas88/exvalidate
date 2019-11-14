@@ -2,7 +2,8 @@ defmodule Exvalidate.Rules.MaxLength do
   @moduledoc """
   This module validate the length of list and strings
   """
-
+  @behaviour Exvalidate.Rules.IRules
+  
   @spec validating(map, String.t(), map) :: {:ok, map} | {:error, String.t()}
 
   def validating(%{"max_length" => max}, field, data)
