@@ -33,25 +33,29 @@ defmodule Exvalidate.Validate do
 
   defp ordering_rules(map) do
     map
-    |> ordering_type()
     # |> ordering_required()
+    # |> ordering_type()    
   end
 
-  @spec ordering_type(map) :: list
+  # @spec ordering_required(map) :: list
 
-  defp ordering_type(map = %{"type" => type}) do
-    new_map = Map.delete(map, "type")
-    unordered_list = Map.to_list(new_map)
-    List.insert_at(unordered_list, 0, {"type", type})
-  end
-  defp ordering_type(map), do: Map.to_list(map)
+  # defp ordering_required(map = %{"required" => required}) do
+  #   new_map = Map.delete(map, "required")
+  #   unordered_list = Map.to_list(new_map)
+  #   List.insert_at(unordered_list, 0, {"required", required})
+  # end
+  # defp ordering_required(map), do: Map.to_list(map)
 
-  # @spec ordering_required(list) :: list
+  # @spec ordering_type(list) :: list
 
-  # defp ordering_required(rules = [{"required", _required}]) do
+  # defp ordering_type(rules) do
+  #   # new_map = Map.delete(map, "type")
+  #   # unordered_list = Map.to_list(new_map)
+  #   # List.insert_at(unordered_list, 0, {"type", type})
+  #   IO.puts "#{inspect rules}"
   #   rules
   # end
-  # defp ordering_required(rules), do: rules
+  # defp ordering_type(rules), do: rules
 
   @spec get_module(String.t()) :: {:ok, module} | {:error, String.t()}
 
