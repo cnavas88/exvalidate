@@ -31,31 +31,12 @@ defmodule Exvalidate.Validate do
 
   @spec ordering_rules(map) :: list
 
-  defp ordering_rules(map) do
-    map
-    # |> ordering_required()
-    # |> ordering_type()    
+  defp ordering_rules(map = %{"type" => type}) do
+    new_map = Map.delete(map, "type")
+    unordered_list = Map.to_list(new_map)
+    List.insert_at(unordered_list, 0, {"type", type})
   end
-
-  # @spec ordering_required(map) :: list
-
-  # defp ordering_required(map = %{"required" => required}) do
-  #   new_map = Map.delete(map, "required")
-  #   unordered_list = Map.to_list(new_map)
-  #   List.insert_at(unordered_list, 0, {"required", required})
-  # end
-  # defp ordering_required(map), do: Map.to_list(map)
-
-  # @spec ordering_type(list) :: list
-
-  # defp ordering_type(rules) do
-  #   # new_map = Map.delete(map, "type")
-  #   # unordered_list = Map.to_list(new_map)
-  #   # List.insert_at(unordered_list, 0, {"type", type})
-  #   IO.puts "#{inspect rules}"
-  #   rules
-  # end
-  # defp ordering_type(rules), do: rules
+  defp ordering_rules(map), do: Map.to_list(map)
 
   @spec get_module(String.t()) :: {:ok, module} | {:error, String.t()}
 
