@@ -2,9 +2,7 @@ defmodule Exvalidate.Rules.MinLength do
   @moduledoc """
   This module validate the length of list and strings
   """
-  @behaviour Exvalidate.Rules.IRules
-  
-  @spec validating(map, String.t(), map) :: {:ok, map} | {:error, String.t()}
+  use Exvalidate.Rules.IRules
 
   def validating(%{"min_length" => min}, field, data)
       when is_integer(min) do

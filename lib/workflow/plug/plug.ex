@@ -52,6 +52,6 @@ defmodule Exvalidate.Plug do
         {:error, message}
     end
   end
-
-  defp validate_params(conn), do: {:ok, conn}
+  
+  defp validate_params(conn), do: {:error, :invalid_validate}
 end

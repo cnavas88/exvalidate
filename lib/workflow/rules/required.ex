@@ -6,9 +6,7 @@ defmodule Exvalidate.Rules.Required do
 
   For see the example go to the tests: test/rules/required_test.exs
   """
-  @behaviour Exvalidate.Rules.IRules
-  
-  @spec validating(map, String.t(), map) :: {:ok, map} | {:error, String.t()}
+  use Exvalidate.Rules.IRules
 
   def validating(%{"required" => true}, field, data) do
     if conditions(field, data) do

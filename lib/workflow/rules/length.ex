@@ -4,9 +4,7 @@ defmodule Exvalidate.Rules.Length do
   string or exact number of items in the lisdt. Allowed values are 
   non-negative integers.
   """
-  @behaviour Exvalidate.Rules.IRules
-  
-  @spec validating(map, String.t(), map) :: {:ok, map} | {:error, String.t()}
+  use Exvalidate.Rules.IRules
 
   def validating(%{"length" => length}, field, data)
       when is_integer(length) and length > 0 do

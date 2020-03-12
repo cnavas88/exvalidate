@@ -22,9 +22,7 @@ defmodule Exvalidate do
   @spec validate_allowed_params(map(), map()) :: :ok | {:error, String.t()}
 
   defp validate_allowed_params(data, schema) do
-    result = Map.keys(schema) -- Map.keys(data)
-
-    case result do
+    case Map.keys(schema) -- Map.keys(data) do
       [] -> :ok
       [field | _rest] -> {:error, "#{field} is not allowed"}
     end

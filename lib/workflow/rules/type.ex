@@ -11,9 +11,7 @@ defmodule Exvalidate.Rules.Type do
 
   The :number type includes the types :float and :integer.
   """
-  @behaviour Exvalidate.Rules.IRules
-  
-  @spec validating(map, String.t(), map) :: {:ok, map} | {:error, String.t()}
+  use Exvalidate.Rules.IRules
 
   @doc """
   # Validate the atom
