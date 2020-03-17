@@ -4,8 +4,7 @@ defmodule Exvalidate.Rules.In do
   """
   use Exvalidate.Rules.IRules
 
-  def validating(%{"in" => list}, field, data)
-      when is_list(list) do
+  def validating(%{"in" => list}, field, data) when is_list(list) do
     case is_into(list, Map.get(data, field)) do
       {:ok, true} ->
         {:ok, data}
@@ -22,8 +21,7 @@ defmodule Exvalidate.Rules.In do
 
   @spec is_into(list, any) :: {:ok, boolean} | {:error, String.t()}
 
-  defp is_into(list, value)
-       when is_binary(value) or is_number(value) do
+  defp is_into(list, value) when is_binary(value) or is_number(value) do
     if value in list do
       {:ok, true}
     else
@@ -31,8 +29,7 @@ defmodule Exvalidate.Rules.In do
     end
   end
 
-  defp is_into(list, value)
-       when is_list(value) do
+  defp is_into(list, value) when is_list(value) do
     {:ok, Enum.reduce_while(value, %{}, &is_in_list(&1, &2, list))}
   end
 

@@ -4,42 +4,46 @@ defmodule Exvalidate do
   """
   alias Exvalidate.Validate
 
-  @deps %{
-    validate: &Validate.rules/3
-  }
+  @validate_fn &Validate.rules/3
 
-  @spec validate(map(), map(), map()) :: {:ok, map()} | {:error, String.t()}
+  @spec validate(map(), map(), function()) :: 
+    {:ok, map()} | {:error, String.t()}
 
-  def validate(data, schema, deps \\ @deps) do
-    with :ok <- validate_allowed_params(data, schema),
-         {:ok, new_data} <- validate_schema(data, schema, deps) do
+  def validate(data, schema, validate_fn \\ @validate_fn) do
+    with :ok              <- validate_allowed_params(data, schema),
+         {:ok, new_data}  <- validate_schema(data, schema, validate_fn) 
+    do
       {:ok, new_data}
     else
       {:error, msg} -> {:error, msg}
     end
   end
 
-  @spec validate_allowed_params(map(), map()) :: :ok | {:error, String.t()}
-
   defp validate_allowed_params(data, schema) do
     case Map.keys(schema) -- Map.keys(data) do
-      [] -> :ok
-      [field | _rest] -> {:error, "#{field} is not allowed"}
+      [] -> 
+        :ok
+
+      [field | _rest] -> 
+        {:error, "#{field} is not allowed"}
     end
   end
 
-  @spec validate_schema(map(), map(), map()) ::
-          {:ok, map()} | {:error, String.t()}
+  defp validate_schema(data, schema, validate_fn) do
+    Enum.reduce_while(schema, {:ok, data}, &validating(&1, &2, validate_fn))
+  end
 
-  defp validate_schema(data, schema, deps) do
-    Enum.reduce_while(schema, {:ok, data}, fn {field, rules}, {:ok, modified_data} ->
-      case deps.validate.(field, rules, modified_data) do
-        {:ok, new_data} ->
-          {:cont, {:ok, new_data}}
+  defp validating({key, rules}, {:ok, data}, validate_fn) do
+    parse_key = Atom.to_string(key)
+    data_to_validate = Map.get(data, parse_key)
+    
+    case validate_fn.(key, rules, data_to_validate) do
+      {:ok, data_validate} ->
+        modified_data = Map.put(data, parse_key, data_validate)
+        {:cont, {:ok, modified_data}}
 
-        {:error, msg} ->
-          {:halt, {:error, msg}}
-      end
-    end)
+      {:error, msg} ->
+        {:halt, {:error, msg}}
+    end
   end
 end
