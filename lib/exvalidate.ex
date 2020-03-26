@@ -4,7 +4,7 @@ defmodule Exvalidate do
   """
   alias Exvalidate.Validate
 
-  @validate_fn &Validate.rules/3
+  @validate_fn &Validate.rules/1
 
   @spec validate(map(), map(), function()) :: 
     {:ok, map()} | {:error, String.t()}
@@ -20,24 +20,39 @@ defmodule Exvalidate do
   end
 
   defp validate_allowed_params(data, schema) do
-    case Map.keys(schema) -- Map.keys(data) do
+    case Keyword.keys(schema) -- keys_to_atom(Map.keys(data)) do
       [] -> 
         :ok
 
       [field | _rest] -> 
-        {:error, "#{field} is not allowed"}
+        {:error, "#{field} is not allowed."}
     end
   end
 
-  defp validate_schema(data, schema, validate_fn) do
+  defp keys_to_atom(keys) do
+    Enum.map(keys, &(String.to_atom(&1)))
+  end
+
+  def validate_schema(data, schema, validate_fn) do
+    data = %{
+      "id" => "1234",
+      "name" => "Carlos",
+      "lastname" => "Navas Buzon"
+    }
+
+    schema = [
+      lastname: [:required, length: 24],
+      id: [:required],
+      name: [:required]
+    ]
+
     Enum.reduce_while(schema, {:ok, data}, &validating(&1, &2, validate_fn))
   end
 
   defp validating({key, rules}, {:ok, data}, validate_fn) do
     parse_key = Atom.to_string(key)
-    data_to_validate = Map.get(data, parse_key)
-    
-    case validate_fn.(key, rules, data_to_validate) do
+
+    case validate_fn.(rules, Map.get(data, parse_key)) do
       {:ok, data_validate} ->
         modified_data = Map.put(data, parse_key, data_validate)
         {:cont, {:ok, modified_data}}

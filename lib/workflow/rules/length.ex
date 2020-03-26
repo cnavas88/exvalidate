@@ -1,40 +1,47 @@
 defmodule Exvalidate.Rules.Length do
   @moduledoc """
-  This rules Specifies the exact number of characters allowed in the
-  string or exact number of items in the lisdt. Allowed values are 
-  non-negative integers.
+  This rules Specifies the exact length of value, the allowed types are:
+  - String: Number of characters allowed.
+  - List: exact number of items in the list.
+  - Tuple: exact number of items in the tuple.
   """
   use Exvalidate.Rules.IRules
 
-  def validating(%{"length" => length}, field, data)
-      when is_integer(length) and length > 0 do
-    case exact_length(length, Map.get(data, field)) do
+  @type value_types :: tuple | list | String.t
+
+  @spec validating({:length, number}, value_types) :: 
+    {:ok, value_types} |
+    {:error, :length_not_equal} |
+    {:error, :rule_length_not_integer}
+
+  def validating({:length, length}, value) when is_integer(length) do
+    case exact_length(length, value) do
       {:ok, true} ->
-        {:ok, data}
+        {:ok, value}
 
       {:ok, false} ->
-        {:error, "#{field} must be equal than #{length}."}
+        {:error, :length_not_equal} # "#{field} must be equal than #{length}."
 
       {:error, msg} ->
         {:error, msg}
     end
   end
 
-  def validating(_, _, _), do: {:error, "The rule length is wrong."}
+  def validating(_, _), do: {:error, :rule_length_not_integer}
 
-  @spec exact_length(number, any) :: {:ok, boolean} | {:error, String.t()}
-
-  defp exact_length(length, value)
-       when is_binary(value) do
+  defp exact_length(length, value) when is_binary(value) do
     {:ok, String.length(value) == length}
   end
 
-  defp exact_length(length, value)
-       when is_list(value) do
+  defp exact_length(length, value) when is_list(value) do
     {:ok, Enum.count(value) == length}
   end
 
+  defp exact_length(length, value) when is_tuple(value) do
+    {:ok, tuple_size(value) == length}
+  end
+
   defp exact_length(_length, _value) do
-    {:error, "The field has to be a String or list."}
+    {:error, :length_value_type_wrong} # "The field has to be a String or list."
   end
 end

@@ -5,53 +5,50 @@ defmodule Exvalidate.Validate do
   """
   @route "Elixir.Exvalidate.Rules."
 
-  @spec rules(String.t(), map, map) :: {:ok, map} | {:error, String.t()}
+  @spec rules(list, any) :: {:ok, any} | {:error, String.t()}
 
   @doc """
   This is the mean function, this function go through the rules, generate
   the module and execute this module if exists, if doesn't exists return error
   with a message.
-
-  Parameters:
-  - field: is a enter parameter to check.
-  - rules: map with the rules assign to field element to check.
-  - data: map with the all validate data.
   """
-  def rules(field, rules, data) do
-    Enum.reduce_while(ordering_rules(rules), %{}, fn {key, _value}, _acc ->
-      case get_module(key) do
-        {:ok, module} ->
-          execute_module(rules, field, data, module)
-
-        {:error, msg} ->
-          {:halt, {:error, msg}}
-      end
-    end)
+  def rules(rules, data) do
+    Enum.reduce_while(rules, %{}, &filter_rule(&1, &2, data))
   end
 
-  @spec ordering_rules(map) :: list
+  defp filter_rule({key_rule, _value} = rule, _acc, data) do
+    case get_module(key_rule) do
+      {:ok, module} ->
+        execute_module(rule, data, module)
 
-  defp ordering_rules(map = %{"type" => type}) do
-    new_map = Map.delete(map, "type")
-    unordered_list = Map.to_list(new_map)
-    List.insert_at(unordered_list, 0, {"type", type})
+      {:error, msg} ->
+        {:halt, {:error, msg}}
+    end
   end
-  defp ordering_rules(map), do: Map.to_list(map)
+  defp filter_rule(rule, _acc, data) do
+    case get_module(rule) do
+      {:ok, module} ->
+        execute_module(rule, data, module)
 
-  @spec get_module(String.t()) :: {:ok, module} | {:error, String.t()}
+      {:error, msg} ->
+        {:halt, {:error, msg}}
+    end
+  end
 
   defp get_module(key) do
-    {:ok, String.to_existing_atom(@route <> Macro.camelize(key))}
+    string_key =
+      key
+      |> Atom.to_string()
+      |> Macro.camelize()
+
+    {:ok, String.to_existing_atom(@route <> string_key)}
   rescue
     _ex ->
       {:error, "The rule '#{key}' doesn't exists."}
   end
 
-  @spec execute_module(map, String.t(), map, atom) ::
-          {:cont, {:ok, map}} | {:halt, {:error, String.t()}}
-
-  defp execute_module(rules, field, data, module) do
-    case module.validating(rules, field, data) do
+  defp execute_module(rule, data, module) do
+    case module.validating(rule, data) do
       {:ok, data} ->
         {:cont, {:ok, data}}
 

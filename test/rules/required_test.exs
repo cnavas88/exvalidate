@@ -4,65 +4,52 @@ defmodule Exvalidate.Rules.RequiredTest do
 
   alias Exvalidate.Rules.Required
 
-  describe "validating/3." do
-    test "Required with FALSE value." do
-      rules = %{"required" => false}
-      data = %{"id" => 1234}
-      field = "id"
+  describe "validating/3 return ok." do
+    test "value is integer." do
+      rule = :required
+      value = 1324
 
-      result = Required.validating(rules, field, data)
+      result = Required.validating(rule, value)
 
-      assert result == {:ok, data}
+      assert result == {:ok, value}
     end
 
-    test "Required with TRUE value and good field." do
-      rules = %{"required" => true}
-      data = %{"id" => 1234}
-      field = "id"
+    test "value is string." do
+      rule = :required
+      value = "1234"
 
-      result = Required.validating(rules, field, data)
+      result = Required.validating(rule, value)
 
-      assert result == {:ok, data}
+      assert result == {:ok, value}
+    end
+  end
+
+  describe "validating/3 return error." do
+    test "value is nil." do
+      rule = :required
+      value = nil
+
+      result = Required.validating(rule, value)
+
+      assert result == {:error, :required_value_wrong}
     end
 
-    test "Required with TRUE value and field id nil." do
-      rules = %{"required" => true}
-      data = %{"id" => nil}
-      field = "id"
+    test "value is empty string." do
+      rule = :required
+      value = ""
 
-      result = Required.validating(rules, field, data)
+      result = Required.validating(rule, value)
 
-      assert result == {:error, "id is required."}
+      assert result == {:error, :required_value_wrong}
     end
 
-    test "Required with TRUE value and field id empty string." do
-      rules = %{"required" => true}
-      data = %{"id" => ""}
-      field = "id"
+    test "rule required wrong." do
+      rule = :requiredd
+      value = ""
 
-      result = Required.validating(rules, field, data)
+      result = Required.validating(rule, value)
 
-      assert result == {:error, "id is required."}
-    end
-
-    test "Required with TRUE value and field id doesnt exists." do
-      rules = %{"required" => true}
-      data = %{"name" => "Son goku"}
-      field = "id"
-
-      result = Required.validating(rules, field, data)
-
-      assert result == {:error, "id is required."}
-    end
-
-    test "Required with a wrong value." do
-      rules = %{"required" => "yes"}
-      data = %{"name" => "Son goku"}
-      field = "id"
-
-      result = Required.validating(rules, field, data)
-
-      assert result == {:error, "Rule required is wrong."}
+      assert result == {:error, :required_rule_wrong}
     end
   end
 end
