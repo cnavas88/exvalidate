@@ -35,15 +35,14 @@ defmodule Exvalidate do
 
   def validate_schema(data, schema, validate_fn) do
     data = %{
-      "id" => "",
-      "name" => "Carlos",
+      "id" => "1234",
       "lastname" => "Navas Buzon"
     }
 
     schema = [
       lastname: [:required, length: 11],
       id: [:required],
-      name: [:required]
+      name: [default: "Carlos"]
     ]
 
     Enum.reduce_while(schema, {:ok, data}, &validating(&1, &2, validate_fn))

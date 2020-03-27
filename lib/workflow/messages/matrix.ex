@@ -5,7 +5,17 @@ defmodule Exvalidate.Messages.Matrix do
 
   @matrix %{
     :required_rule_wrong => "The rule required is wrong.",
-    :required_value_wrong => "The value '%VALUE%' is required."
+    :required_value_wrong => "The value '%VALUE%' is required.",
+    
+    :in_not_in_list => "",
+    :in_rule_wrong => "",
+    :in_bad_type_value => "",
+
+    :length_not_equal => "",
+    :length_rule_wrong => "",
+    :length_value_type_wrong => "",
+
+    :default_rule_wrong => ""
   }
 
   def get_message(a_message, value) do

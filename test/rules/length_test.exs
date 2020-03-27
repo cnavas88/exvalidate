@@ -11,7 +11,7 @@ defmodule Exvalidate.Rules.LengthTest do
 
       result = Length.validating(rules, value)
 
-      assert result == {:error, :rule_length_not_integer}
+      assert result == {:error, :length_rule_wrong}
     end
   end
 

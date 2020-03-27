@@ -14,7 +14,8 @@ defmodule Exvalidate.Rules.Length do
   @spec validating({:length, number}, input) :: 
     {:ok, input} |
     {:error, :length_not_equal} |
-    {:error, :rule_length_not_integer}
+    {:error, :length_rule_wrong} |
+    {:error, :length_value_type_wrong}
 
   def validating({:length, length}, value) when is_integer(length) do
     case exact_length(length, value) do
@@ -30,7 +31,7 @@ defmodule Exvalidate.Rules.Length do
     end
   end
 
-  def validating(_, _), do: {:error, :rule_length_not_integer}
+  def validating(_, _), do: {:error, :length_rule_wrong}
 
   defp exact_length(length, value) when is_binary(value) do
     {:ok, String.length(value) == length}
