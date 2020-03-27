@@ -7,7 +7,7 @@ defmodule Exvalidate.Rules.Required do
   """
   use Exvalidate.Rules.IRules
 
-  @spec validating(any, any) :: 
+  @spec validating(:required, any) :: 
     {:ok, any} | 
     {:error, :required_rule_wrong} | 
     {:error, :required_value_wrong}

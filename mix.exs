@@ -67,7 +67,6 @@ defmodule Exvalidate.MixProject do
   defp deps do
     [
       {:credo, "~> 1.0.5", only: [:dev, :test], runtime: false},
-      {:defmodulep, "~> 0.1", github: "josevalim/defmodulep"},
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.11", only: :test},
       {:jason, "~> 1.1.2"},

@@ -4,13 +4,15 @@ defmodule Exvalidate.Rules.Length do
   - String: Number of characters allowed.
   - List: exact number of items in the list.
   - Tuple: exact number of items in the tuple.
+
+  For see examples go to the tests: test/rules/length_test.exs
   """
   use Exvalidate.Rules.IRules
 
-  @type value_types :: tuple | list | String.t
+  @type input :: tuple | list | String.t
 
-  @spec validating({:length, number}, value_types) :: 
-    {:ok, value_types} |
+  @spec validating({:length, number}, input) :: 
+    {:ok, input} |
     {:error, :length_not_equal} |
     {:error, :rule_length_not_integer}
 
@@ -20,7 +22,8 @@ defmodule Exvalidate.Rules.Length do
         {:ok, value}
 
       {:ok, false} ->
-        {:error, :length_not_equal} # "#{field} must be equal than #{length}."
+        {:error, :length_not_equal} 
+        # TODO - FOR TRANSLATIONS: "#{field} must be equal than #{length}."
 
       {:error, msg} ->
         {:error, msg}
@@ -42,6 +45,7 @@ defmodule Exvalidate.Rules.Length do
   end
 
   defp exact_length(_length, _value) do
-    {:error, :length_value_type_wrong} # "The field has to be a String or list."
+    {:error, :length_value_type_wrong} 
+    # TODO - FOR TRANSLATIONS: "The field has to be a String or list."
   end
 end

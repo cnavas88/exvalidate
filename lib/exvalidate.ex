@@ -4,7 +4,7 @@ defmodule Exvalidate do
   """
   alias Exvalidate.Validate
 
-  @validate_fn &Validate.rules/1
+  @validate_fn &Validate.rules/2
 
   @spec validate(map(), map(), function()) :: 
     {:ok, map()} | {:error, String.t()}
@@ -35,13 +35,13 @@ defmodule Exvalidate do
 
   def validate_schema(data, schema, validate_fn) do
     data = %{
-      "id" => "1234",
+      "id" => "",
       "name" => "Carlos",
       "lastname" => "Navas Buzon"
     }
 
     schema = [
-      lastname: [:required, length: 24],
+      lastname: [:required, length: 11],
       id: [:required],
       name: [:required]
     ]

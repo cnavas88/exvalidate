@@ -4,79 +4,81 @@ defmodule Exvalidate.Rules.InTest do
 
   alias Exvalidate.Rules.In
 
-  describe "validating/3 in is not a string or list" do
+  describe "validating/3 in is not a list" do
     test "is a number" do
-      rules = %{"in" => 6}
-      data = %{"name" => "Vegeta"}
-      field = "name"
+      rules = {:in, 6}
+      value = "Vegeta"
 
-      result = In.validating(rules, field, data)
+      result = In.validating(rules, value)
 
-      assert result == {:error, "The rule 'in' is wrong."}
+      assert result == {:error, :in_rule_wrong}
     end
   end
 
   describe "validating/3 value as a string or number." do
     test "value is string and is into the list." do
-      rules = %{"in" => ["Vegeta", "Kakarot"]}
-      data = %{"name" => "Vegeta"}
-      field = "name"
+      rules = {:in, ["Vegeta", "Kakarot"]}
+      value = "Vegeta"
 
-      result = In.validating(rules, field, data)
+      result = In.validating(rules, value)
 
-      assert result == {:ok, %{"name" => "Vegeta"}}
+      assert result == {:ok, "Vegeta"}
     end
 
     test "Value is string and is not into the list." do
-      rules = %{"in" => ["Vegeta", "Kakarot"]}
-      data = %{"name" => "Boo"}
-      field = "name"
+      rules = {:in, ["Vegeta", "Kakarot"]}
+      value = "Boo"
 
-      result = In.validating(rules, field, data)
+      result = In.validating(rules, value)
 
-      assert result == {:error, "name hasn't into the list."}
+      assert result == {:error, :in_not_in_list}
     end
 
     test "Value is a number and is into the list." do
-      rules = %{"in" => [1, 10]}
-      data = %{"id" => 10}
-      field = "id"
+      rules = {:in, [1, 10.1]}
+      value = 10.1
 
-      result = In.validating(rules, field, data)
+      result = In.validating(rules, value)
 
-      assert result == {:ok, %{"id" => 10}}
+      assert result == {:ok, 10.1}
     end
 
-    test "Value is a num ber and is not into the list." do
-      rules = %{"in" => [1, 10]}
-      data = %{"id" => 5}
-      field = "id"
+    test "Value is a number and is not into the list." do
+      rules = {:in, [1, 10]}
+      value = 5
 
-      result = In.validating(rules, field, data)
+      result = In.validating(rules, value)
 
-      assert result == {:error, "id hasn't into the list."}
+      assert result == {:error, :in_not_in_list}
+    end
+
+    test "Value is not a number, string or list" do
+      rules = {:in, ["Vegeta", "Kakarot"]}
+      value = {:boo, :vegeta}
+
+      result = In.validating(rules, value)
+
+      assert result == {:error, :in_bad_type_value}
     end
   end
 
   describe "validating/3 value as a list." do
     test "values is into the list." do
-      rules = %{"in" => ["Vegeta", "Kakarot", "Picolo", "Boo"]}
-      data = %{"names" => ["Vegeta", "Boo"]}
-      field = "names"
+      rules = {:in, ["Vegeta", "Kakarot", "Picolo", "Boo"]}
+      value = ["Vegeta", "Boo"]
 
-      result = In.validating(rules, field, data)
+      result = In.validating(rules, value)
 
-      assert result == {:ok, %{"names" => ["Vegeta", "Boo"]}}
+      assert result == {:ok,["Vegeta", "Boo"]}
     end
 
     test "values isn't into the list." do
-      rules = %{"in" => ["Vegeta", "Kakarot", "Picolo", "Boo"]}
-      data = %{"names" => ["Vegeta", "Lufi", "Boo"]}
-      field = "names"
+      rules = {:in, ["Vegeta", "Kakarot", "Picolo", "Boo"]}
+      value =["Vegeta", "Lufi", "Boo"]
 
-      result = In.validating(rules, field, data)
+      result = In.validating(rules, value)
 
-      assert result == {:error, "names hasn't into the list."}
+      assert result == {:error, :in_not_in_list}
     end
   end
 end
