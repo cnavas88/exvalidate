@@ -6,97 +6,99 @@ defmodule Exvalidate.Rules.MaxLengthTest do
 
   describe "validating/3 max_length is not a number" do
     test "is a string" do
-      rules = %{"max_length" => "6"}
-      data = %{"name" => "Vegeta"}
-      field = "name"
+      rules = {:max_length, "6"}
+      value = "Vegeta"
 
-      result = MaxLength.validating(rules, field, data)
+      result = MaxLength.validating(rules, value)
 
-      assert result == {:error, "The rules max_length is wrong."}
+      assert result == {:error, :max_length_rule_wrong}
     end
   end
 
   describe "validating/3 max_length string." do
     test "string length is lower than maxlength field." do
-      rules = %{"max_length" => 20}
-      data = %{"name" => "Vegeta"}
-      field = "name"
+      rules = {:max_length, 20}
+      value = "Vegeta"
 
-      result = MaxLength.validating(rules, field, data)
+      result = MaxLength.validating(rules, value)
 
-      assert result == {:ok, %{"name" => "Vegeta"}}
+      assert result == {:ok, "Vegeta"}
     end
 
     test "string length is equal than maxlength field." do
-      rules = %{"max_length" => 3}
-      data = %{"name" => "Boo"}
-      field = "name"
+      rules = {:max_length, 3}
+      value = "Boo"
 
-      result = MaxLength.validating(rules, field, data)
+      result = MaxLength.validating(rules, value)
 
-      assert result == {:ok, %{"name" => "Boo"}}
+      assert result == {:ok, "Boo"}
     end
 
     test "string validation is wrong." do
-      rules = %{"max_length" => 4}
-      data = %{"name" => "Vegeta"}
-      field = "name"
+      rules = {:max_length, 4}
+      value = "Vegeta"
 
-      result = MaxLength.validating(rules, field, data)
+      result = MaxLength.validating(rules, value)
 
-      assert result == {:error, "name must be lower than or equal to 4."}
-    end
-
-    test "The field isn't string or list." do
-      rules = %{"max_length" => 2}
-      data = %{"id" => 67}
-      field = "id"
-
-      result = MaxLength.validating(rules, field, data)
-
-      assert result == {:error, "The field has to be a String or list."}
+      assert result == {:error, :max_length_greater_than_max}
     end
   end
 
   describe "validating/3 max_length list." do
     test "list length is equal max_length." do
-      rules = %{"max_length" => 2}
-      data = %{"name" => ["Vegeta", "Picolo"]}
-      field = "name"
+      rules = {:max_length, 2}
+      value = ["Vegeta", "Picolo"]
 
-      result = MaxLength.validating(rules, field, data)
+      result = MaxLength.validating(rules, value)
 
-      assert result == {:ok, %{"name" => ["Vegeta", "Picolo"]}}
+      assert result == {:ok, ["Vegeta", "Picolo"]}
     end
 
     test "list legnth is lower than max length." do
-      rules = %{"max_length" => 5}
-      data = %{"name" => ["Vegeta", "Picolo", "Bulma"]}
-      field = "name"
+      rules = {:max_length, 5}
+      value = ["Vegeta", "Picolo", "Bulma"]
 
-      result = MaxLength.validating(rules, field, data)
+      result = MaxLength.validating(rules, value)
 
-      assert result == {:ok, %{"name" => ["Vegeta", "Picolo", "Bulma"]}}
+      assert result == {:ok, ["Vegeta", "Picolo", "Bulma"]}
     end
 
     test "list validation is wrong." do
-      rules = %{"max_length" => 1}
-      data = %{"name" => ["Vegeta", "Bulma"]}
-      field = "name"
+      rules = {:max_length, 1}
+      value = ["Vegeta", "Bulma"]
 
-      result = MaxLength.validating(rules, field, data)
+      result = MaxLength.validating(rules, value)
 
-      assert result == {:error, "name must be lower than or equal to 1."}
+      assert result == {:error, :max_length_greater_than_max}
+    end
+  end
+
+  describe "validating/3 max_length tuple." do
+    test "tuple length is equal max_length." do
+      rules = {:max_length, 2}
+      value = {"Vegeta", "Picolo"}
+
+      result = MaxLength.validating(rules, value)
+
+      assert result == {:ok, {"Vegeta", "Picolo"}}
     end
 
-    test "The field isn't string or list." do
-      rules = %{"max_length" => 2}
-      data = %{"id" => 67}
-      field = "id"
+    test "tuple legnth is lower than max length." do
+      rules = {:max_length, 5}
+      value = {"Vegeta", "Picolo", "Bulma"}
 
-      result = MaxLength.validating(rules, field, data)
+      result = MaxLength.validating(rules, value)
 
-      assert result == {:error, "The field has to be a String or list."}
+      assert result == {:ok, {"Vegeta", "Picolo", "Bulma"}}
+    end
+
+    test "tuple validation is wrong." do
+      rules = {:max_length, 1}
+      value = {"Vegeta", "Bulma"}
+
+      result = MaxLength.validating(rules, value)
+
+      assert result == {:error, :max_length_greater_than_max}
     end
   end
 end
