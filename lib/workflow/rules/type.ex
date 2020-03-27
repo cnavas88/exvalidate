@@ -13,6 +13,12 @@ defmodule Exvalidate.Rules.Type do
   """
   use Exvalidate.Rules.IRules
 
+  @spec validating({:type, number}, any) :: 
+    {:ok, any} |
+    {:error, :type_value_wrong} |
+    {:error, :type_rule_wrong} |
+    {:error, :type_value_is_not_supported}
+
   @doc """
   # Validate the atom
     if you want validate an atom you use the :atom. 
@@ -21,41 +27,42 @@ defmodule Exvalidate.Rules.Type do
     return this value.
 
   ## Examples
-    > validating(%{"type" => :atom}, "name", %{"name" => :saiyajin})
-    {:ok, %{"name" => :saiyajin}}
+    > validating({:type, :atom}, :saiyajin)
+    {:ok, :saiyajin}
 
-    > validating(%{"type" => :atom}, "name", %{"name" => "saiyajin"})
-    {:ok, %{"name" => :saiyajin}}
+    > validating({:type, :atom}, "saiyajin")
+    {:ok, :saiyajin}
 
   # Validate the string
     if you want validate an atom you use the :string. 
     For :string validation you can send an binary.
 
   ## Examples
-    > validating(%{"type" => :string}, "name", %{"name" => "saiyajin"})
-    {:ok, %{"name" => "saiyajin"}}
+    > validating({:type, :string}, "saiyajin")
+    {:ok, "saiyajin"}
+
+
+  For see examples go to the tests: test/rules/type_test.exs  
   """
-  def validating(%{"type" => type}, field, data)
-      when is_atom(type) do
-    case is_this_type(type, Map.get(data, field)) do
+  def validating({:type, type}, value) when is_atom(type) do
+    case is_this_type(type, value) do
       {:ok, :valid} ->
-        {:ok, data}
+        {:ok, value}
 
       {:ok, :not_valid} ->
-        {:error, "#{field} must be type #{type}."}
+        {:error, :type_value_wrong}
+        # TODO - "#{field} must be type #{type}."
 
-      {:ok, value} ->
-        {:ok, Map.put(data, field, value)}
+      {:ok, typed_value} ->
+        {:ok, typed_value}
 
       {:error, msg} ->
         {:error, msg}
     end
   end
 
-  def validating(_, _, _), do: {:error, "The type rule must be an atom."}
-
-  @spec is_this_type(atom, any) ::
-          {:ok, :valid} | {:ok, :not_valid} | {:ok, any} | {:error, String.t()}
+  def validating(_, _), do: {:error, :type_rule_wrong}
+  # TODO - "The type rule must be an atom."
 
   defp is_this_type(:atom, value) when is_atom(value), do: {:ok, :valid}
 
@@ -127,8 +134,8 @@ defmodule Exvalidate.Rules.Type do
 
   defp is_this_type(:float, _value), do: {:ok, :not_valid}
 
-  defp is_this_type(_min, _value) do
-    {:error, "The field must be the next type: :atom, :string, :list, :map, 
-    :tuple, :number, :boolean, :integer, :float."}
+  defp is_this_type(_type, _value) do
+    {:error, :type_value_is_not_supported}
+    # TODO - "The field must be the next type: :atom, :string, :list, :map, :tuple, :number, :boolean, :integer, :float."
   end
 end
