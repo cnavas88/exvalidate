@@ -19,7 +19,11 @@ defmodule Exvalidate.Messages.Matrix do
 
     :max_length_greater_than_max => "",
     :max_length_rule_wrong => "",
-    :max_length_value_type_wrong => ""
+    :max_length_value_type_wrong => "",
+
+    :min_length_lower_than_min => "",
+    :min_length_rule_wrong => "",
+    :min_length_value_type_wrong => ""
   }
 
   def get_message(a_message, value) do

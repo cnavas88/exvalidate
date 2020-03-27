@@ -15,6 +15,19 @@ defmodule Exvalidate.Rules.MaxLengthTest do
     end
   end
 
+  describe "validating/3 value is can't be evaluated" do
+    test "is not a type valid." do
+      rules = {:max_length, 6}
+      value = %{
+        "name" => "Vegeta"
+      }
+
+      result = MaxLength.validating(rules, value)
+
+      assert result == {:error, :max_length_value_type_wrong}
+    end
+  end
+
   describe "validating/3 max_length string." do
     test "string length is lower than maxlength field." do
       rules = {:max_length, 20}
