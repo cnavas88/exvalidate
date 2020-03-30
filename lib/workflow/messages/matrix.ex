@@ -27,7 +27,10 @@ defmodule Exvalidate.Messages.Matrix do
 
     :type_value_wrong => "",
     :type_rule_wrong => "",
-    :type_value_is_not_supported => ""
+    :type_value_is_not_supported => "",
+
+    :email_invalid => "",
+    :email_rule_wrong => ""
   }
 
   def get_message(a_message, value) do

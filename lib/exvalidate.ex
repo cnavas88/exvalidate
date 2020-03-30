@@ -37,13 +37,15 @@ defmodule Exvalidate do
     data = %{
       "id" => "1234",
       "lastname" => "Navas Buzon",
-      "name" => "Carlos"
+      "name" => "Carlos",
+      "email" => "dante@gmail.com"
     }
 
     schema = [
       lastname: [:required, length: 11],
-      id: [:required],
-      name: [:required, max_length: 10]
+      id: [:required, type: :integer],
+      name: [:required, max_length: 10],
+      email: [:email]
     ]
 
     Enum.reduce_while(schema, {:ok, data}, &validating(&1, &2, validate_fn))
