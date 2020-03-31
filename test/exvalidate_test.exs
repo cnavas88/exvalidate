@@ -26,8 +26,8 @@ defmodule ExvalidateTest do
         "name" => ""
       }
 
-      validate_fn = fn _, _, _ -> 
-        {:error, "Name is required."} 
+      validate_fn = fn _, _ -> 
+        {:error, {:required, :required_value_wrong}} 
       end
 
       schema = [
@@ -36,7 +36,7 @@ defmodule ExvalidateTest do
 
       result = Exvalidate.validate(data, schema, validate_fn)
 
-      assert result == {:error, "Name is required."}
+      assert result == {:error, {:required, :required_value_wrong}}
     end
 
     test "Allowed params and validate schema" do
@@ -49,7 +49,7 @@ defmodule ExvalidateTest do
         name: [:required]
       ]
 
-      validate_fn = fn _, _, _ ->
+      validate_fn = fn _, _ ->
         {:ok, "Vegeta"} 
       end
 

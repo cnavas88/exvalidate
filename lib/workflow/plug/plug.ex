@@ -30,28 +30,23 @@ defmodule Exvalidate.Plug do
     end
   end
 
-  @spec validate_params(%Plug.Conn{}) ::
-          {:ok, %Plug.Conn{}} | {:error, String.t()}
-
-  defp validate_params(conn = %Plug.Conn{private: %{validate_query: schema}}) do
-    case Exvalidate.validate(conn.query_params, schema) do
-      {:ok, new_params} ->
-        {:ok, %Plug.Conn{conn | query_params: new_params}}
-
-      {:error, message} ->
-        {:error, message}
-    end
+  defp validate_params(%Plug.Conn{private: %{validate_query: schema}} = conn) do
+    call_to_validate(conn.query_params, schema, conn)
   end
 
-  defp validate_params(conn = %Plug.Conn{private: %{validate_body: schema}}) do
-    case Exvalidate.validate(conn.body_params, schema) do
-      {:ok, new_params} ->
-        {:ok, %Plug.Conn{conn | query_params: new_params}}
-
-      {:error, message} ->
-        {:error, message}
-    end
+  defp validate_params(%Plug.Conn{private: %{validate_body: schema}} = conn) do
+    call_to_validate(conn.body_params, schema, conn)
   end
   
-  defp validate_params(conn), do: {:error, :invalid_validate}
+  defp validate_params(_conn), do: {:error, :invalid_validate}
+
+  defp call_to_validate(params, schema, conn) do
+    case Exvalidate.validate(params, schema) do
+      {:ok, new_params} ->
+        {:ok, %Plug.Conn{conn | query_params: new_params}}
+
+      {:error, {_field, message}} ->
+        {:error, message}
+    end
+  end
 end

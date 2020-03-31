@@ -33,21 +33,7 @@ defmodule Exvalidate do
     Enum.map(keys, &(String.to_atom(&1)))
   end
 
-  def validate_schema(data, schema, validate_fn) do
-    data = %{
-      "id" => "1234",
-      "lastname" => "Navas Buzon",
-      "name" => "Carlos",
-      "email" => "dante@gmail.com"
-    }
-
-    schema = [
-      lastname: [:required, length: 11],
-      id: [:required, type: :integer],
-      name: [:required, max_length: 10],
-      email: [:email]
-    ]
-
+  defp validate_schema(data, schema, validate_fn) do
     Enum.reduce_while(schema, {:ok, data}, &validating(&1, &2, validate_fn))
   end
 
@@ -59,8 +45,8 @@ defmodule Exvalidate do
         modified_data = Map.put(data, parse_key, data_validate)
         {:cont, {:ok, modified_data}}
 
-      {:error, msg} ->
-        {:halt, {:error, key, msg}}
+      {:error, error} ->
+        {:halt, {:error, error}}
     end
   end
 end

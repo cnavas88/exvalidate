@@ -44,7 +44,7 @@ defmodule Exvalidate.Validate do
     {:ok, String.to_existing_atom(@route <> string_key)}
   rescue
     _ex ->
-      {:error, "The rule '#{key}' doesn't exists."}
+      {:error, {key, :rule_doesnt_exists}}
   end
 
   defp execute_module(rule, data, module) do
@@ -53,7 +53,7 @@ defmodule Exvalidate.Validate do
         {:cont, {:ok, data}}
 
       {:error, msg} ->
-        {:halt, {:error, msg}}
+        {:halt, {:error, {rule, msg}}}
     end
   end
 end

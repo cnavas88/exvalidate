@@ -30,7 +30,9 @@ defmodule Exvalidate.Messages.Matrix do
     :type_value_is_not_supported => "",
 
     :email_invalid => "",
-    :email_rule_wrong => ""
+    :email_rule_wrong => "",
+    
+    :rule_doesnt_exists => ""
   }
 
   def get_message(a_message, value) do

@@ -7,47 +7,41 @@ defmodule Exvalidate.ValidateTest do
   # Integration test
 
   test "Validate String and return ok" do
-    field = "name"
+    rules = [
+      :required,
+      max_length: 10,
+      min_length: 3
+    ]
 
-    rules = %{
-      "required" => true,
-      "max_length" => 10,
-      "min_length" => 3
-    }
+    data = "Carlos"
+    result = Validate.rules(rules, data)
 
-    data = %{"name" => "Carlos"}
-    result = Validate.rules(field, rules, data)
-
-    assert result == {:ok, %{"name" => "Carlos"}}
+    assert result == {:ok, "Carlos"}
   end
 
   test "Validate but the rule doesn't exists" do
-    field = "name"
+    rules = [
+      :required,
+      satan_city: 10,
+      min_length: 3
+    ]
 
-    rules = %{
-      "required" => true,
-      "satan_city" => 10,
-      "min_length" => 3
-    }
+    data = "Carlos"
+    result = Validate.rules(rules, data)
 
-    data = %{"name" => "Carlos"}
-    result = Validate.rules(field, rules, data)
-
-    assert result == {:error, "The rule 'satan_city' doesn't exists."}
+    assert result == {:error, {:satan_city, :rule_doesnt_exists}}
   end
 
   test "Validate is wrong" do
-    field = "name"
+    rules = [
+      :required,
+      max_length: 4,
+      min_length: 1
+    ]
 
-    rules = %{
-      "required" => true,
-      "max_length" => 4,
-      "min_length" => 1
-    }
+    data = "Carlos"
+    result = Validate.rules(rules, data)
 
-    data = %{"name" => "Carlos"}
-    result = Validate.rules(field, rules, data)
-
-    assert result == {:error, "name must be lower than or equal to 4."}
+    assert result == {:error, {{:max_length, 4}, :max_length_greater_than_max}}
   end
 end
