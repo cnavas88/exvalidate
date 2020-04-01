@@ -11,6 +11,7 @@ defmodule Exvalidate.Plug do
   be: "private: %{validate_body: @schema}"
   where @schema is the map schema with the rules.
   """
+  use Exvalidate
 
   @spec init(list) :: list
 
@@ -41,7 +42,7 @@ defmodule Exvalidate.Plug do
   defp validate_params(_conn), do: {:error, :invalid_validate}
 
   defp call_to_validate(params, schema, conn) do
-    case Exvalidate.validate(params, schema) do
+    case validate(params, schema) do
       {:ok, new_params} ->
         {:ok, %Plug.Conn{conn | query_params: new_params}}
 

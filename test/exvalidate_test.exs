@@ -2,7 +2,7 @@ defmodule ExvalidateTest do
   use ExUnit.Case
   doctest Exvalidate
 
-  alias Exvalidate
+  use Exvalidate
 
   describe "validate/3." do
     test "Not allowed params." do
@@ -15,7 +15,7 @@ defmodule ExvalidateTest do
         name: [:required, length: 6]
       ]
 
-      result = Exvalidate.validate(data, schema)
+      result = validate(data, schema)
 
       assert result == {:error, "id is not allowed."}
     end
@@ -34,7 +34,7 @@ defmodule ExvalidateTest do
         name: [:required]
       ]
 
-      result = Exvalidate.validate(data, schema, validate_fn)
+      result = validate(data, schema, validate_fn)
 
       assert result == {:error, {:required, :required_value_wrong}}
     end
@@ -53,7 +53,7 @@ defmodule ExvalidateTest do
         {:ok, "Vegeta"} 
       end
 
-      result = Exvalidate.validate(data, schema, validate_fn)
+      result = validate(data, schema, validate_fn)
 
       assert result == {:ok, data}
     end
