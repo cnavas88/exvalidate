@@ -37,7 +37,9 @@ defmodule Exvalidate.Messages.Matrix do
     :accepted_rule_wrong => "",
     :not_accepted => "",
 
-    :between_rule_wrong => ""
+    :between_rule_wrong => "",
+    :between_value_invalid => "",
+    :not_between_min_max => ""
   }
 
   def get_message(a_message, value) do
