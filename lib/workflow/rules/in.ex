@@ -10,13 +10,13 @@ defmodule Exvalidate.Rules.In do
   """
   use Exvalidate.Rules.IRules
 
-  @type input :: number | list | String.t
+  @type input :: number | list | String.t()
 
-  @spec validating({:in, list}, input) :: 
-    {:ok, input} |
-    {:error, :in_not_in_list} |
-    {:error, :in_rule_wrong} |
-    {:error, :in_bad_type_value}
+  @spec validating({:in, list}, input) ::
+          {:ok, input}
+          | {:error, :in_not_in_list}
+          | {:error, :in_rule_wrong}
+          | {:error, :in_bad_type_value}
 
   def validating({:in, list}, value) when is_list(list) do
     case is_in(list, value) do
@@ -25,7 +25,8 @@ defmodule Exvalidate.Rules.In do
 
       {:ok, false} ->
         {:error, :in_not_in_list}
-        # TODO - "#{field} hasn't into the list."
+
+      # TODO - "#{field} hasn't into the list."
 
       {:error, msg} ->
         {:error, msg}

@@ -9,13 +9,13 @@ defmodule Exvalidate.Rules.Length do
   """
   use Exvalidate.Rules.IRules
 
-  @type input :: tuple | list | String.t
+  @type input :: tuple | list | String.t()
 
-  @spec validating({:length, number}, input) :: 
-    {:ok, input} |
-    {:error, :length_not_equal} |
-    {:error, :length_rule_wrong} |
-    {:error, :length_value_type_wrong}
+  @spec validating({:length, number}, input) ::
+          {:ok, input}
+          | {:error, :length_not_equal}
+          | {:error, :length_rule_wrong}
+          | {:error, :length_value_type_wrong}
 
   def validating({:length, length}, value) when is_integer(length) do
     case exact_length(length, value) do
@@ -23,8 +23,9 @@ defmodule Exvalidate.Rules.Length do
         {:ok, value}
 
       {:ok, false} ->
-        {:error, :length_not_equal} 
-        # TODO - FOR TRANSLATIONS: "#{field} must be equal than #{length}."
+        {:error, :length_not_equal}
+
+      # TODO - FOR TRANSLATIONS: "#{field} must be equal than #{length}."
 
       {:error, msg} ->
         {:error, msg}
@@ -46,7 +47,7 @@ defmodule Exvalidate.Rules.Length do
   end
 
   defp exact_length(_length, _value) do
-    {:error, :length_value_type_wrong} 
+    {:error, :length_value_type_wrong}
     # TODO - FOR TRANSLATIONS: "The field has to be a String or list."
   end
 end

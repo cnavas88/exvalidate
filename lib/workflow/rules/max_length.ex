@@ -9,13 +9,13 @@ defmodule Exvalidate.Rules.MaxLength do
   """
   use Exvalidate.Rules.IRules
 
-  @type input :: tuple | list | String.t
+  @type input :: tuple | list | String.t()
 
-  @spec validating({:max_length, number}, input) :: 
-    {:ok, input} |
-    {:error, :max_length_greater_than_max} |
-    {:error, :max_length_rule_wrong} |
-    {:error, :max_length_value_type_wrong}
+  @spec validating({:max_length, number}, input) ::
+          {:ok, input}
+          | {:error, :max_length_greater_than_max}
+          | {:error, :max_length_rule_wrong}
+          | {:error, :max_length_value_type_wrong}
 
   def validating({:max_length, max}, value) when is_integer(max) do
     case is_lower_than(max, value) do
@@ -24,7 +24,8 @@ defmodule Exvalidate.Rules.MaxLength do
 
       {:ok, false} ->
         {:error, :max_length_greater_than_max}
-        # TODO - "#{field} must be lower than or equal to #{max}."
+
+      # TODO - "#{field} must be lower than or equal to #{max}."
 
       {:error, msg} ->
         {:error, msg}

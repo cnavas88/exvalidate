@@ -18,6 +18,7 @@ defmodule Exvalidate.Rules.MaxLengthTest do
   describe "validating/3 value is can't be evaluated" do
     test "is not a type valid." do
       rules = {:max_length, 6}
+
       value = %{
         "name" => "Vegeta"
       }

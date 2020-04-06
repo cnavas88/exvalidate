@@ -18,6 +18,7 @@ defmodule Exvalidate.Rules.BetweenTest do
   describe "validating/3 value is can't be evaluated" do
     test "is not a type valid." do
       rules = {:between, {6, 10}}
+
       value = %{
         "name" => "Vegeta"
       }

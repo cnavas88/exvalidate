@@ -38,7 +38,7 @@ defmodule Exvalidate.Plug do
   defp validate_params(%Plug.Conn{private: %{validate_body: schema}} = conn) do
     call_to_validate(conn.body_params, schema, conn)
   end
-  
+
   defp validate_params(_conn), do: {:error, :invalid_validate}
 
   defp call_to_validate(params, schema, conn) do

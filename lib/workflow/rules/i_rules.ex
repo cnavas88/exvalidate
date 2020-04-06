@@ -16,7 +16,7 @@ defmodule Exvalidate.Rules.IRules do
         raise "validating/2 Not implemented."
       end
 
-      defoverridable [validating: 2]
+      defoverridable validating: 2
     end
   end
 end

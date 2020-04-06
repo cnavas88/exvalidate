@@ -9,13 +9,13 @@ defmodule Exvalidate.Rules.MinLength do
   """
   use Exvalidate.Rules.IRules
 
-  @type input :: tuple | list | String.t
+  @type input :: tuple | list | String.t()
 
-  @spec validating({:min_length, number}, input) :: 
-    {:ok, input} |
-    {:error, :min_length_lower_than_min} |
-    {:error, :min_length_rule_wrong} |
-    {:error, :min_length_value_type_wrong}
+  @spec validating({:min_length, number}, input) ::
+          {:ok, input}
+          | {:error, :min_length_lower_than_min}
+          | {:error, :min_length_rule_wrong}
+          | {:error, :min_length_value_type_wrong}
 
   def validating({:min_length, min}, value) when is_integer(min) do
     case is_greater_than(min, value) do
@@ -24,7 +24,8 @@ defmodule Exvalidate.Rules.MinLength do
 
       {:ok, false} ->
         {:error, :min_length_lower_than_min}
-        # TODO - "#{field} must be greater than or equal to #{min}."
+
+      # TODO - "#{field} must be greater than or equal to #{min}."
 
       {:error, msg} ->
         {:error, msg}
@@ -38,7 +39,7 @@ defmodule Exvalidate.Rules.MinLength do
     {:ok, String.length(value) >= min}
   end
 
-  defp is_greater_than(min, value) when is_list(value) do 
+  defp is_greater_than(min, value) when is_list(value) do
     {:ok, Enum.count(value) >= min}
   end
 

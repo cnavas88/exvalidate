@@ -69,12 +69,12 @@ defmodule Exvalidate.Rules.InTest do
 
       result = In.validating(rules, value)
 
-      assert result == {:ok,["Vegeta", "Boo"]}
+      assert result == {:ok, ["Vegeta", "Boo"]}
     end
 
     test "values isn't into the list." do
       rules = {:in, ["Vegeta", "Kakarot", "Picolo", "Boo"]}
-      value =["Vegeta", "Lufi", "Boo"]
+      value = ["Vegeta", "Lufi", "Boo"]
 
       result = In.validating(rules, value)
 

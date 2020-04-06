@@ -25,6 +25,7 @@ defmodule Exvalidate.Validate do
         {:halt, {:error, msg}}
     end
   end
+
   defp filter_rule(rule, _acc, data) do
     case get_module(rule) do
       {:ok, module} ->

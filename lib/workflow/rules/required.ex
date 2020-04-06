@@ -7,14 +7,14 @@ defmodule Exvalidate.Rules.Required do
   """
   use Exvalidate.Rules.IRules
 
-  @spec validating(:required, any) :: 
-    {:ok, any} | 
-    {:error, :required_rule_wrong} | 
-    {:error, :required_value_wrong}
+  @spec validating(:required, any) ::
+          {:ok, any}
+          | {:error, :required_rule_wrong}
+          | {:error, :required_value_wrong}
 
-  def validating(:required, value) 
-    when is_nil(value) or byte_size(value) == 0, do: 
-      {:error, :required_value_wrong}
+  def validating(:required, value)
+      when is_nil(value) or byte_size(value) == 0,
+      do: {:error, :required_value_wrong}
 
   def validating(:required, value), do: {:ok, value}
 
