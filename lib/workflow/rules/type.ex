@@ -138,6 +138,7 @@ defmodule Exvalidate.Rules.Type do
   defp is_this_type(_type, _value) do
     {:error, :type_value_is_not_supported}
 
-    # TODO - "The field must be the next type: :atom, :string, :list, :map, :tuple, :number, :boolean, :integer, :float."
+    # TODO - "The field must be the next type: :atom, 
+    # :string, :list, :map, :tuple, :number, :boolean, :integer, :float."
   end
 end
