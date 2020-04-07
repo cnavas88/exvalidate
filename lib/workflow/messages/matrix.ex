@@ -6,10 +6,10 @@ defmodule Exvalidate.Messages.Matrix do
   @matrix %{
     :required_rule_wrong => "The 'rule' required is wrong.",
     :required_value_wrong => "The field '%FIELD%' is required.",
-    :in_not_in_list => "'%FIELD%' hasn't into the list '%LIST%'.",
+    :in_not_in_list => "'%FIELD%' hasn't into the list '%RULE_OPTS%'.",
     :in_rule_wrong => "The rule 'in' is wrong.",
     :in_bad_type_value => "The field '%FIELD%' has to be a String, number or list.",
-    :length_not_equal => "'%FIELD%' length must be equal than LENGTH",
+    :length_not_equal => "'%FIELD%' length must be equal than '%RULE_OPTS%'",
     :length_rule_wrong => "The rule 'length' is wrong.",
     :length_value_type_wrong => "The field '%FIELD%' has to be a String or list.",
     :default_rule_wrong => "",
