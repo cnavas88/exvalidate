@@ -59,7 +59,96 @@ defmodule ExvalidateTest do
     end
   end
   
-  describe "message testing" do
-    # MESSAGES
+  describe "error message testing" do
+    test ":in rule, Wrong list." do
+      data = %{
+        "id" => 12_345,
+        "name" => "Vegeta"
+      }
+
+      schema = [
+        name: [in: 6]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The rule 'in' is wrong."}
+    end
+
+    test ":in rule, Not in list." do
+      data = %{
+        "id" => 12_345,
+        "name" => "Vegeta"
+      }
+
+      schema = [
+        name: [in: ["Son goku", "Picolo"]]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "'name' hasn't into the list '[\"Son goku\", \"Picolo\"]'."}
+    end
+
+    test ":in rule, bad value type." do
+      data = %{
+        "id" => 12_345,
+        "name" => :picolo
+      }
+
+      schema = [
+        name: [in: ["Son goku", "Picolo"]]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The field 'name' has to be a String, number or list."}
+    end
+
+    test ":length rule, not equal." do
+      data = %{
+        "id" => 12_345,
+        "name" => "Vegeta"
+      }
+
+      schema = [
+        name: [length: 7]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "'name' length must be equal than '7'"}
+    end
+
+    test ":length rule, wrong value rule." do
+      data = %{
+        "id" => 12_345,
+        "name" => "Vegeta"
+      }
+
+      schema = [
+        name: [length: {7}]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The rule 'length' is wrong."}
+    end
+
+    test ":length rule, bad value type." do
+      data = %{
+        "id" => 12_345,
+        "name" => :picolo
+      }
+
+      schema = [
+        name: [length: 7]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The field 'name' has to be a String or list."}
+    end
   end
+
 end
