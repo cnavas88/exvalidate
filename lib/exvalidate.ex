@@ -3,6 +3,8 @@ defmodule Exvalidate do
   Enter point for validate data structure.
   """
 
+  alias Exvalidate.Messages
+
   defmacro __using__(_) do
     quote do
       alias Exvalidate.Validate
@@ -47,14 +49,15 @@ defmodule Exvalidate do
 
   defp validating({key, rules}, {:ok, data}, validate_fn) do
     parse_key = Atom.to_string(key)
+    rule_data = Map.get(data, parse_key)
 
-    case validate_fn.(rules, Map.get(data, parse_key)) do
+    case validate_fn.(rules, rule_data) do
       {:ok, data_validate} ->
         modified_data = Map.put(data, parse_key, data_validate)
         {:cont, {:ok, modified_data}}
 
       {:error, error} ->
-        {:halt, {:error, error}}
+        {:halt, {:error, Messages.get(error, rule_data, key)}}
     end
   end
 end

@@ -90,7 +90,7 @@ defmodule Exvalidate.PlugTest do
       assert conn.state == :sent
       assert conn.status == 400
       assert conn.query_params == %{"id" => "", "name" => "Boo"}
-      assert Jason.decode!(conn.resp_body) == %{"error" => "required_value_wrong"}
+      assert Jason.decode!(conn.resp_body) == %{"error" => "The field 'id' is required."}
     end
 
     test "Body validation with valid body params" do
@@ -113,7 +113,7 @@ defmodule Exvalidate.PlugTest do
       assert conn.state == :sent
       assert conn.status == 400
       assert conn.body_params == %{"id" => ""}
-      assert Jason.decode!(conn.resp_body) == %{"error" => "required_value_wrong"}
+      assert Jason.decode!(conn.resp_body) == %{"error" => "The field 'id' is required."}
     end
   end
 
@@ -139,7 +139,7 @@ defmodule Exvalidate.PlugTest do
       assert conn.state == :sent
       assert conn.status == 400
       assert conn.query_params == %{"id" => "", "name" => "Boo"}
-      assert conn.resp_body == "required_value_wrong"
+      assert conn.resp_body == "The field 'id' is required."
     end
 
     test "Body validation with valid body params" do
@@ -162,7 +162,7 @@ defmodule Exvalidate.PlugTest do
       assert conn.state == :sent
       assert conn.status == 400
       assert conn.body_params == %{"id" => ""}
-      assert conn.resp_body == "required_value_wrong"
+      assert conn.resp_body == "The field 'id' is required."
     end
   end
 
@@ -176,7 +176,7 @@ defmodule Exvalidate.PlugTest do
       assert conn.state == :sent
       assert conn.status == 400
       assert conn.query_params == %{"id" => "", "name" => "Boo"}
-      assert conn.resp_body == "required_value_wrong CUSTOM"
+      assert conn.resp_body == "The field 'id' is required. CUSTOM"
     end
 
     test "Body validation error" do
@@ -188,7 +188,7 @@ defmodule Exvalidate.PlugTest do
       assert conn.state == :sent
       assert conn.status == 400
       assert conn.body_params == %{"id" => ""}
-      assert conn.resp_body == "required_value_wrong CUSTOM"
+      assert conn.resp_body == "The field 'id' is required. CUSTOM"
     end
   end
 
@@ -197,7 +197,7 @@ defmodule Exvalidate.PlugTest do
   def custom_error(conn, error_message) do
     conn
     |> Plug.Conn.put_resp_header("content-type", "text/plain")
-    |> Plug.Conn.send_resp(400, Atom.to_string(error_message) <> " CUSTOM")
+    |> Plug.Conn.send_resp(400, error_message <> " CUSTOM")
     |> Plug.Conn.halt()
   end
 end

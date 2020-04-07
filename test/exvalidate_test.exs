@@ -36,7 +36,7 @@ defmodule ExvalidateTest do
 
       result = validate(data, schema, validate_fn)
 
-      assert result == {:error, {:required, :required_value_wrong}}
+      assert result == {:error, "The field 'name' is required."}
     end
 
     test "Allowed params and validate schema" do
@@ -57,5 +57,9 @@ defmodule ExvalidateTest do
 
       assert result == {:ok, data}
     end
+  end
+  
+  describe "message testing" do
+    # MESSAGES
   end
 end

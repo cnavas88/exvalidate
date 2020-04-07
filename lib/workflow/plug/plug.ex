@@ -46,7 +46,7 @@ defmodule Exvalidate.Plug do
       {:ok, new_params} ->
         {:ok, %Plug.Conn{conn | query_params: new_params}}
 
-      {:error, {_field, message}} ->
+      {:error, message} ->
         {:error, message}
     end
   end

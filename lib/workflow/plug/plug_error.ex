@@ -27,7 +27,7 @@ defmodule Exvalidate.PlugError do
   def plain_error(conn, error_message) do
     conn
     |> Plug.Conn.put_resp_header("content-type", "text/plain")
-    |> Plug.Conn.send_resp(400, Atom.to_string(error_message))
+    |> Plug.Conn.send_resp(400, error_message)
     |> Plug.Conn.halt()
   end
 

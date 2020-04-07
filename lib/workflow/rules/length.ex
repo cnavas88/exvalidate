@@ -25,8 +25,6 @@ defmodule Exvalidate.Rules.Length do
       {:ok, false} ->
         {:error, :length_not_equal}
 
-      # TODO - FOR TRANSLATIONS: "#{field} must be equal than #{length}."
-
       {:error, msg} ->
         {:error, msg}
     end
@@ -48,6 +46,5 @@ defmodule Exvalidate.Rules.Length do
 
   defp exact_length(_length, _value) do
     {:error, :length_value_type_wrong}
-    # TODO - FOR TRANSLATIONS: "The field has to be a String or list."
   end
 end

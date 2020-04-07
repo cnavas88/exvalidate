@@ -4,14 +4,14 @@ defmodule Exvalidate.Messages.Matrix do
   """
 
   @matrix %{
-    :required_rule_wrong => "The rule required is wrong.",
-    :required_value_wrong => "The value '%VALUE%' is required.",
-    :in_not_in_list => "",
-    :in_rule_wrong => "",
-    :in_bad_type_value => "",
-    :length_not_equal => "",
-    :length_rule_wrong => "",
-    :length_value_type_wrong => "",
+    :required_rule_wrong => "The 'rule' required is wrong.",
+    :required_value_wrong => "The field '%FIELD%' is required.",
+    :in_not_in_list => "'%FIELD%' hasn't into the list '%LIST%'.",
+    :in_rule_wrong => "The rule 'in' is wrong.",
+    :in_bad_type_value => "The field '%FIELD%' has to be a String, number or list.",
+    :length_not_equal => "'%FIELD%' length must be equal than LENGTH",
+    :length_rule_wrong => "The rule 'length' is wrong.",
+    :length_value_type_wrong => "The field '%FIELD%' has to be a String or list.",
     :default_rule_wrong => "",
     :max_length_greater_than_max => "",
     :max_length_rule_wrong => "",
@@ -32,8 +32,5 @@ defmodule Exvalidate.Messages.Matrix do
     :not_between_min_max => ""
   }
 
-  def get_message(a_message, value) do
-    message = Map.get(@matrix, a_message)
-    String.replace(message, "'%VALUE%'", value)
-  end
+  def get_message(a_message), do: Map.get(@matrix, a_message)
 end
