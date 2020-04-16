@@ -25,15 +25,12 @@ defmodule Exvalidate.Rules.MinLength do
       {:ok, false} ->
         {:error, :min_length_lower_than_min}
 
-      # TODO - "#{field} must be greater than or equal to #{min}."
-
       {:error, msg} ->
         {:error, msg}
     end
   end
 
   def validating(_, _), do: {:error, :min_length_rule_wrong}
-  # TODO - "The rules min_length is wrong."
 
   defp is_greater_than(min, value) when is_binary(value) do
     {:ok, String.length(value) >= min}
@@ -49,6 +46,5 @@ defmodule Exvalidate.Rules.MinLength do
 
   defp is_greater_than(_min, _value) do
     {:error, :min_length_value_type_wrong}
-    # TODO - "The field has to be a String or list."
   end
 end

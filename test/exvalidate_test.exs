@@ -149,6 +149,96 @@ defmodule ExvalidateTest do
 
       assert result == {:error, "The field 'name' has to be a String or list."}
     end
+
+    test ":max_length rule not validate." do
+      data = %{
+        "id" => 12_345,
+        "name" => "picolo"
+      }
+
+      schema = [
+        name: [max_length: 3]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "'name' field must be lower than or equal to '3'."}
+    end
+
+    test ":max_length rule wrong." do
+      data = %{
+        "id" => 12_345,
+        "name" => "picolo"
+      }
+
+      schema = [
+        name: [max_length: "3"]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The rule 'max_length' is wrong."}
+    end
+
+    test ":max_length value type wrong." do
+      data = %{
+        "id" => 12_345,
+        "name" => 34
+      }
+
+      schema = [
+        name: [max_length: 3]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The field 'name' has to be a String or list."}
+    end
+
+    test ":min_length rule not validate." do
+      data = %{
+        "id" => 12_345,
+        "name" => "picolo"
+      }
+
+      schema = [
+        name: [min_length: 10]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "'name' field must be greater than or equal to '10'."}
+    end
+
+    test ":min_length rule wrong." do
+      data = %{
+        "id" => 12_345,
+        "name" => "picolo"
+      }
+
+      schema = [
+        name: [min_length: "3"]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The rule 'min_length' is wrong."}
+    end
+
+    test ":min_length value type wrong." do
+      data = %{
+        "id" => 12_345,
+        "name" => 34
+      }
+
+      schema = [
+        name: [min_length: 3]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The field 'name' has to be a String or list."}
+    end
   end
 
 end

@@ -25,8 +25,6 @@ defmodule Exvalidate.Rules.MaxLength do
       {:ok, false} ->
         {:error, :max_length_greater_than_max}
 
-      # TODO - "#{field} must be lower than or equal to #{max}."
-
       {:error, msg} ->
         {:error, msg}
     end
@@ -49,6 +47,5 @@ defmodule Exvalidate.Rules.MaxLength do
 
   defp is_lower_than(_max, _value) do
     {:error, :max_length_value_type_wrong}
-    # TODO - "The field has to be a String or list."
   end
 end

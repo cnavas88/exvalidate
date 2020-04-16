@@ -6,6 +6,10 @@ defmodule Exvalidate.Messages do
   alias Exvalidate.Messages.Matrix
 
   def get({{rule, rule_opts}, error}, data, field) do
+    IO.puts "RULE :: #{inspect rule}"
+    IO.puts "RULE OPTS :: #{inspect rule_opts}"
+    IO.puts "DATA :: #{inspect data}"
+    
     error
     |> Matrix.get_message()
     |> String.replace("%FIELD%", "#{field}")
