@@ -239,6 +239,36 @@ defmodule ExvalidateTest do
 
       assert result == {:error, "The field 'name' has to be a String or list."}
     end
+
+    test ":email validate wrong." do
+      data = %{
+        "id" => 12_345,
+        "name" => "picolo@picolo"
+      }
+
+      schema = [
+        name: [:email]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "'picolo@picolo' is not an email."}
+    end
+
+    test ":email rule wrong." do
+      data = %{
+        "id" => 12_345,
+        "name" => 34
+      }
+
+      schema = [
+        name: [:email]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "Email rule wrong, type 'name' is not a string."}
+    end
   end
 
 end
