@@ -49,15 +49,6 @@ defmodule Exvalidate.Rules.AcceptedTest do
 
       assert result == {:error, :not_accepted}
     end
-
-    test "Error passing first parameter." do
-      rules = :accepte
-      value = "Nooop"
-
-      result = Accepted.validating(rules, value)
-
-      assert result == {:error, :accepted_rule_wrong}
-    end
   end
 
   describe "validating/3. Accepted" do

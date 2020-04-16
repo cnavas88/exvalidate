@@ -269,6 +269,36 @@ defmodule ExvalidateTest do
 
       assert result == {:error, "Email rule wrong, type 'name' is not a string."}
     end
+
+    test "The rule doesn't exists." do
+      data = %{
+        "id" => 12_345,
+        "name" => 34
+      }
+
+      schema = [
+        name: [:wrong_rule]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The rule 'wrong_rule' doesn't exists."}
+    end
+
+    test "Not accepted rule wrong." do
+      data = %{
+        "id" => 12_345,
+        "name" => :vegeta
+      }
+
+      schema = [
+        name: [:accepted]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The field 'name' is not accepted."}
+    end
   end
 
 end

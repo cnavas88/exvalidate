@@ -24,9 +24,8 @@ defmodule Exvalidate.Messages.Matrix do
     :type_value_is_not_supported => "",
     :email_invalid => "'%DATA%' is not an email.",
     :email_rule_wrong => "Email rule wrong, type '%FIELD%' is not a string.",
-    :rule_doesnt_exists => "",
-    :accepted_rule_wrong => "",
-    :not_accepted => "",
+    :rule_doesnt_exists => "The rule '%RULE%' doesn't exists.",
+    :not_accepted => "The field '%FIELD%' is not accepted.",
     :between_rule_wrong => "",
     :between_value_invalid => "",
     :not_between_min_max => ""

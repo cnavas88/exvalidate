@@ -8,7 +8,6 @@ defmodule Exvalidate.Rules.Accepted do
 
   @spec validating(:accepted, any) ::
           {:ok, true}
-          | {:error, :accepted_rule_wrong}
           | {:error, :not_accepted}
 
   def validating(:accepted, 1), do: {:ok, 1}
@@ -31,5 +30,4 @@ defmodule Exvalidate.Rules.Accepted do
 
   def validating(:accepted, _), do: {:error, :not_accepted}
 
-  def validating(_, _), do: {:error, :accepted_rule_wrong}
 end

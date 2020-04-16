@@ -70,7 +70,7 @@ defmodule Exvalidate.MixProject do
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
       {:excoveralls, "~> 0.11", only: :test},
       {:jason, "~> 1.1.2"},
-      {:plug, "~> 1.8.0", optional: true}
+      {:plug, "~> 1.8.0"}
     ]
   end
 end
