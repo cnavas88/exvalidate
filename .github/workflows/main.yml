@@ -48,7 +48,7 @@ jobs:
       run: mix credo --strict
       
     - name: dialyzir
-        run: mix dialyzer --halt-exit-status --no-compile
+      run: mix dialyzer --halt-exit-status --no-compile
 
   run_test:
     runs-on: ubuntu-18.04
