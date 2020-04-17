@@ -35,11 +35,6 @@ jobs:
       run: |
         mix compile --warnings-as-errors
 
-  analize_code:
-    runs-on: ubuntu-18.04
-    name: Analize Code
-    needs: set_up
-    steps:
     - name: Format code
       run: mix format --check-formatted
         
@@ -49,10 +44,5 @@ jobs:
     - name: dialyzir
       run: mix dialyzer --halt-exit-status --no-compile
 
-  run_test:
-    runs-on: ubuntu-18.04
-    name: Run tests
-    needs: analize_code
-    steps:
     - name: Tests
       run: mix test
