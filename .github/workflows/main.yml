@@ -36,6 +36,7 @@ jobs:
         mix compile --warnings-as-errors
 
   analize_code:
+    runs-on: ubuntu-18.04
     name: Analize Code
     needs: set_up
     steps:
