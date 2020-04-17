@@ -1,3 +1,5 @@
+![Elixir CI](https://github.com/cnavas88/exvalidate/workflows/Elixir%20CI/badge.svg?branch=master)
+
 # Exvalidate
 
 **TODO: Add description**
