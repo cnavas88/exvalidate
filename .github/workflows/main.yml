@@ -36,17 +36,18 @@ jobs:
         mix compile --warnings-as-errors
 
   analize_code:
-    runs-on: ubuntu-18.04
     name: Analize Code
     needs: set_up
     steps:
-      - name: Format code
-        run: mix format --check-formatted
+    - uses: actions/checkout@v2
+    - uses: actions/setup-elixir@v1
+    - name: Format code
+      run: mix format --check-formatted
         
-      - name: credo
-        run: mix credo --strict
+    - name: credo
+      run: mix credo --strict
       
-      - name: dialyzir
+    - name: dialyzir
         run: mix dialyzer --halt-exit-status --no-compile
 
   run_test:
@@ -54,5 +55,5 @@ jobs:
     name: Run tests
     needs: analize_code
     steps:
-      - name: Tests
-        run: mix test
+    - name: Tests
+      run: mix test
