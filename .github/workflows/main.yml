@@ -40,8 +40,6 @@ jobs:
     name: Analize Code
     needs: set_up
     steps:
-    - uses: actions/set_up
-
     - name: Format code
       run: mix format --check-formatted
         
