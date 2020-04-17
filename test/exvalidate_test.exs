@@ -330,7 +330,6 @@ defmodule ExvalidateTest do
       assert result == {:error, "The type rule must be an atom."}
     end
 
-
     test "Type value not supported." do
       data = %{
         "id" => 12_345,
@@ -345,6 +344,50 @@ defmodule ExvalidateTest do
 
       assert result == {:error, "The field must be the next type: :atom, :string, :list, :map, :tuple, :number, :boolean, :integer, :float."}
     end
-  end
 
+    test "Between rule wrong." do
+      data = %{
+        "id" => 12_345,
+        "name" => "Vegeta"
+      }
+
+      schema = [
+        name: [between: {"2", "16"}]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The 'between' rule is wrong."}
+    end
+
+    test "Between value invalid." do
+      data = %{
+        "id" => 12_345,
+        "name" => :vegeta
+      }
+
+      schema = [
+        name: [between: {2, 16}]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "Between value has to be :string, :tuple, :numeric, :list."}
+    end
+
+    test "Value not between message." do
+      data = %{
+        "id" => 12_345,
+        "name" => "Krilin"
+      }
+
+      schema = [
+        name: [between: {10, 16}]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The field 'name' is not between '{10, 16}'."}
+    end
+  end
 end

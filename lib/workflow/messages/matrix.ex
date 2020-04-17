@@ -26,9 +26,9 @@ defmodule Exvalidate.Messages.Matrix do
     :email_rule_wrong => "Email rule wrong, type '%FIELD%' is not a string.",
     :rule_doesnt_exists => "The rule '%RULE%' doesn't exists.",
     :not_accepted => "The field '%FIELD%' is not accepted.",
-    :between_rule_wrong => "",
-    :between_value_invalid => "",
-    :not_between_min_max => ""
+    :between_rule_wrong => "The 'between' rule is wrong.",
+    :between_value_invalid => "Between value has to be :string, :tuple, :numeric, :list.",
+    :not_between_min_max => "The field '%FIELD%' is not between '%RULE_OPTS%'."
   }
 
   def get_message(a_message), do: Map.get(@matrix, a_message)

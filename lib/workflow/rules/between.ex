@@ -30,6 +30,8 @@ defmodule Exvalidate.Rules.Between do
     end
   end
 
+  def validating(_, _), do: {:error, :between_rule_wrong}
+
   defp is_between(min, max, value)
        when is_number(value) do
     {:ok, value >= min and value <= max}
@@ -52,5 +54,4 @@ defmodule Exvalidate.Rules.Between do
 
   defp is_between(_, _, _), do: {:error, :between_value_invalid}
 
-  def validating(_, _), do: {:error, :between_rule_wrong}
 end
