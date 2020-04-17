@@ -40,8 +40,8 @@ jobs:
     name: Analize Code
     needs: set_up
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-elixir@v1
+    - uses: actions/set_up
+
     - name: Format code
       run: mix format --check-formatted
         
