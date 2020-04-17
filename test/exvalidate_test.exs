@@ -299,6 +299,52 @@ defmodule ExvalidateTest do
 
       assert result == {:error, "The field 'name' is not accepted."}
     end
+
+    test "Type validate value wrong." do
+      data = %{
+        "id" => 12_345,
+        "name" => "Vegeta"
+      }
+
+      schema = [
+        name: [type: :float]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "'name' must be type ':float'."}
+    end
+
+    test "Type validate wrong." do
+      data = %{
+        "id" => 12_345,
+        "name" => "Vegeta"
+      }
+
+      schema = [
+        name: [type: "float"]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The type rule must be an atom."}
+    end
+
+
+    test "Type value not supported." do
+      data = %{
+        "id" => 12_345,
+        "name" => "Vegeta"
+      }
+
+      schema = [
+        name: [type: :function]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The field must be the next type: :atom, :string, :list, :map, :tuple, :number, :boolean, :integer, :float."}
+    end
   end
 
 end

@@ -52,8 +52,6 @@ defmodule Exvalidate.Rules.Type do
       {:ok, :not_valid} ->
         {:error, :type_value_wrong}
 
-      # TODO - "#{field} must be type #{type}."
-
       {:ok, typed_value} ->
         {:ok, typed_value}
 
@@ -63,7 +61,6 @@ defmodule Exvalidate.Rules.Type do
   end
 
   def validating(_, _), do: {:error, :type_rule_wrong}
-  # TODO - "The type rule must be an atom."
 
   defp is_this_type(:atom, value) when is_atom(value), do: {:ok, :valid}
 
@@ -137,8 +134,5 @@ defmodule Exvalidate.Rules.Type do
 
   defp is_this_type(_type, _value) do
     {:error, :type_value_is_not_supported}
-
-    # TODO - "The field must be the next type: :atom, 
-    # :string, :list, :map, :tuple, :number, :boolean, :integer, :float."
   end
 end
