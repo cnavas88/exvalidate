@@ -14,7 +14,7 @@ defmodule Exvalidate.Rules.Default do
       when is_nil(value) or byte_size(value) == 0,
       do: {:ok, default}
 
-  def validating({:default, default}, value), do: {:ok, value}
+  def validating({:default, _default}, value), do: {:ok, value}
 
   def validating(_, _), do: {:error, :default_rule_wrong}
 end

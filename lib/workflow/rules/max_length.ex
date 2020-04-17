@@ -31,7 +31,6 @@ defmodule Exvalidate.Rules.MaxLength do
   end
 
   def validating(_, _), do: {:error, :max_length_rule_wrong}
-  # TODO - "The rules max_length is wrong."
 
   defp is_lower_than(max, value) when is_binary(value) do
     {:ok, String.length(value) <= max}

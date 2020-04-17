@@ -29,5 +29,4 @@ defmodule Exvalidate.Rules.Accepted do
   end
 
   def validating(:accepted, _), do: {:error, :not_accepted}
-
 end

@@ -53,5 +53,4 @@ defmodule Exvalidate.Rules.Between do
   end
 
   defp is_between(_, _, _), do: {:error, :between_value_invalid}
-
 end

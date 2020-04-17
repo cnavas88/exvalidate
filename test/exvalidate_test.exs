@@ -58,7 +58,7 @@ defmodule ExvalidateTest do
       assert result == {:ok, data}
     end
   end
-  
+
   describe "error message testing" do
     test ":in rule, Wrong list." do
       data = %{
@@ -342,7 +342,9 @@ defmodule ExvalidateTest do
 
       result = validate(data, schema)
 
-      assert result == {:error, "The field must be the next type: :atom, :string, :list, :map, :tuple, :number, :boolean, :integer, :float."}
+      assert result ==
+               {:error,
+                "The field must be the next type: :atom, :string, :list, :map, :tuple, :number, :boolean, :integer, :float."}
     end
 
     test "Between rule wrong." do
