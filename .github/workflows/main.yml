@@ -11,7 +11,7 @@ on:
 jobs:
   set_up:
     runs-on: ubuntu-18.04
-    name: OTP ${{ matrix.otp }} | Elixir ${{ matrix.elixir }} | OS ${{ matrix.os }}
+    name: Set up - OTP ${{ matrix.otp }} | Elixir ${{ matrix.elixir }} | OS ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-18.04]
@@ -37,6 +37,7 @@ jobs:
 
   analize_code:
     runs-on: ubuntu-18.04
+    name: Analize Code
     needs: set_up
     steps:
       - name: Format code
@@ -50,6 +51,7 @@ jobs:
 
   run_test:
     runs-on: ubuntu-18.04
+    name: Run tests
     needs: analize_code
     steps:
       - name: Tests
