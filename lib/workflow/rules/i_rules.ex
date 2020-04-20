@@ -3,7 +3,7 @@ defmodule Exvalidate.Rules.IRules do
   Interface pattern for the all rules
   """
 
-  @callback validating(tuple | atom, any) :: {:ok, map}
+  @callback validating(tuple | atom, any) :: {:ok, any}
 
   defmacro __using__(_) do
     quote do

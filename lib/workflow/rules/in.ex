@@ -12,12 +12,6 @@ defmodule Exvalidate.Rules.In do
 
   @type input :: number | list | String.t()
 
-  @spec validating({:in, list}, input) ::
-          {:ok, input}
-          | {:error, :in_not_in_list}
-          | {:error, :in_rule_wrong}
-          | {:error, :in_bad_type_value}
-
   def validating({:in, list}, value) when is_list(list) do
     case is_in(list, value) do
       {:ok, true} ->

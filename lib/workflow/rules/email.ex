@@ -8,11 +8,6 @@ defmodule Exvalidate.Rules.Email do
 
   @regex ~r/^[A-Za-z0-9._%+-+']+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/
 
-  @spec validating({:email, any}, any) ::
-          {:ok, any}
-          | {:error, :email_rule_wrong}
-          | {:error, :email_invalid}
-
   def validating(:email, email) when is_binary(email) do
     case Regex.run(@regex, email) do
       nil ->

@@ -6,10 +6,6 @@ defmodule Exvalidate.Rules.Accepted do
   """
   use Exvalidate.Rules.IRules
 
-  @spec validating(:accepted, any) ::
-          {:ok, true}
-          | {:error, :not_accepted}
-
   def validating(:accepted, 1), do: {:ok, 1}
 
   def validating(:accepted, true), do: {:ok, true}

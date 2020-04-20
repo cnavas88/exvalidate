@@ -13,12 +13,6 @@ defmodule Exvalidate.Rules.Type do
   """
   use Exvalidate.Rules.IRules
 
-  @spec validating({:type, number}, any) ::
-          {:ok, any}
-          | {:error, :type_value_wrong}
-          | {:error, :type_rule_wrong}
-          | {:error, :type_value_is_not_supported}
-
   @doc """
   # Validate the atom
     if you want validate an atom you use the :atom. 

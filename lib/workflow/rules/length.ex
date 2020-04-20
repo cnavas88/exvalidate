@@ -11,12 +11,6 @@ defmodule Exvalidate.Rules.Length do
 
   @type input :: tuple | list | String.t()
 
-  @spec validating({:length, number}, input) ::
-          {:ok, input}
-          | {:error, :length_not_equal}
-          | {:error, :length_rule_wrong}
-          | {:error, :length_value_type_wrong}
-
   def validating({:length, length}, value) when is_integer(length) do
     case exact_length(length, value) do
       {:ok, true} ->

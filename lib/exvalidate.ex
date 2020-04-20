@@ -17,7 +17,7 @@ defmodule Exvalidate do
     end
   end
 
-  @spec run_validate(map(), map(), function()) ::
+  @spec run_validate(map(), list(), function()) ::
           {:ok, map()} | {:error, String.t()}
 
   def run_validate(data, schema, validate_fn) do

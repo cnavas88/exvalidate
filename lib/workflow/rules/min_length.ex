@@ -11,12 +11,6 @@ defmodule Exvalidate.Rules.MinLength do
 
   @type input :: tuple | list | String.t()
 
-  @spec validating({:min_length, number}, input) ::
-          {:ok, input}
-          | {:error, :min_length_lower_than_min}
-          | {:error, :min_length_rule_wrong}
-          | {:error, :min_length_value_type_wrong}
-
   def validating({:min_length, min}, value) when is_integer(min) do
     case is_greater_than(min, value) do
       {:ok, true} ->

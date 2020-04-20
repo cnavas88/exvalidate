@@ -7,9 +7,6 @@ defmodule Exvalidate.Rules.Default do
   """
   use Exvalidate.Rules.IRules
 
-  @spec validating({:default, any}, any) ::
-          {:ok, any} | {:error, :default_rule_wrong}
-
   def validating({:default, default}, value)
       when is_nil(value) or byte_size(value) == 0,
       do: {:ok, default}

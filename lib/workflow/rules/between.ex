@@ -10,12 +10,6 @@ defmodule Exvalidate.Rules.Between do
   """
   use Exvalidate.Rules.IRules
 
-  @spec validating({:between, {number, number}}, any) ::
-          {:ok, String.t() | number | tuple | list}
-          | {:error, :between_rule_wrong}
-          | {:error, :between_value_invalid}
-          | {:error, :not_between_min_max}
-
   def validating({:between, {min, max}}, value)
       when is_number(min) and is_number(max) do
     case is_between(min, max, value) do
