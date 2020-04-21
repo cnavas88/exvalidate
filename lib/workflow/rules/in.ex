@@ -6,6 +6,39 @@ defmodule Exvalidate.Rules.In do
   2. Number.
   3. List.
 
+  ### Examples String
+  ```
+  iex(3)> Exvalidate.Rules.In.validating({:in, ["Vegeta", "Kakarot"]}, "Vegeta")
+  {:ok, "Vegeta"}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.In.validating({:in, ["Vegeta", "Kakarot"]}, "Boo")
+  {:error, :in_not_in_list}
+  ```
+
+  ### Examples Number
+  ```
+  iex(3)> Exvalidate.Rules.In.validating({:in, [1, 10.1]}, 10.1)
+  {:ok, 10.1}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.In.validating({:in, [1, 10.1]}, 10)
+  {:error, :in_not_in_list}
+  ```
+
+  ### Examples List
+  ```
+  iex(3)> Exvalidate.Rules.In.validating({:in, ["Vegeta", "Kakarot", "Picolo", "Boo"]}, ["Vegeta", "Boo"])
+  {:ok, ["Vegeta", "Boo"]}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.In.validating({:in, ["Vegeta", "Kakarot", "Picolo", "Boo"]}, ["Vegeta", "Lufi", "Boo"])
+  {:error, :in_not_in_list}
+  ```
+
   For see examples go to the tests: test/rules/in_test.exs
   """
   use Exvalidate.Rules.IRules

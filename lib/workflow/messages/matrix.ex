@@ -1,7 +1,5 @@
 defmodule Exvalidate.Messages.Matrix do
-  @moduledoc """
-  Matrix contains the all messages for errors.
-  """
+  @moduledoc false
 
   @matrix %{
     :required_rule_wrong => "The rule 'required' is wrong.",
@@ -34,5 +32,8 @@ defmodule Exvalidate.Messages.Matrix do
     :not_between_min_max => "The field '%FIELD%' is not between '%RULE_OPTS%'."
   }
 
+  @spec get_message(atom) :: String.t
+
+  @doc false
   def get_message(a_message), do: Map.get(@matrix, a_message)
 end

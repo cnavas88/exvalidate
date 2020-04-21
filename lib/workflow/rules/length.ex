@@ -5,6 +5,39 @@ defmodule Exvalidate.Rules.Length do
   - List: exact number of items in the list.
   - Tuple: exact number of items in the tuple.
 
+  ### Examples string
+  ```
+  iex(3)> Exvalidate.Rules.Length.validating({:length, 6}, "Vegeta")
+  {:ok, "Vegeta"}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Length.validating({:length, 1}, "Vegeta")
+  {:error, :length_not_equal}
+  ```
+
+  ### Examples list
+  ```
+  iex(3)> Exvalidate.Rules.Length.validating({:length, 2}, ["Vegeta", "Picolo"])
+  {:ok, ["Vegeta", "Picolo"]}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Length.validating({:length, 2}, ["Vegeta", "Picolo", "Bulma"])
+  {:error, :length_not_equal}
+  ```
+
+  ### Examples tuple
+  ```
+  iex(3)> Exvalidate.Rules.Length.validating({:length, 3}, {"Vegeta", "Piccolo", "Krilin"})
+  {:ok, {"Vegeta", "Piccolo", "Krilin"}}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Length.validating({:length, 3}, {"Vegeta"})
+  {:error, :length_not_equal}
+  ```
+
   For see examples go to the tests: test/rules/length_test.exs
   """
   use Exvalidate.Rules.IRules

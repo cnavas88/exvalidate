@@ -2,6 +2,17 @@ defmodule Exvalidate.Rules.Email do
   @moduledoc """
   Validate email rule, return ok if email is valid, an error if is invalid.
 
+  ### Examples
+  ```
+  iex(3)> Exvalidate.Rules.Email.validating(:email, "songoku.dragonball@gmail.com")
+  {:ok, "songoku.dragonball@gmail.com"}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Email.validating(:email, "Son gohan")
+  {:error, :email_invalid}
+  ```
+
   For see examples go to the tests: test/rules/email_test.exs  
   """
   use Exvalidate.Rules.IRules

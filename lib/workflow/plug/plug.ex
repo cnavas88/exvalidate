@@ -1,24 +1,47 @@
 defmodule Exvalidate.Plug do
   @moduledoc """
   Plug for validate request into the router file. For validate the request
-  we need create a schema map with the rules assigned to params. 
-  - Uses:
-  - if the request contains query string (for GET request) the validation 
-  will be: "private: %{validate_query: @schema}"
-  where @schema is the map schema with the rules.
+  we need create a schema keywordlist with the rules assigned to params. 
+  
+  ## Uses
+  1- To add the exvalidate middleware in your plug file:
+  ```
+  plug(:match)
+  plug(PlugValidate, on_error: &PlugError.json_error/2)
+  plug(:dispatch)
+  ```
 
-  - if the request container body params (for POST request) the validation will
+  2- Schema example:
+  ```
+  @schema = [
+    name: [between: {2, 16}]
+  ]
+  ```
+
+  3a- if the request contains query string (for GET request) the validation 
+  will be: "private: %{validate_query: @schema}"
+  
+  ```
+  get "/test", private: %{validate_query: @schema} do
+  ```
+
+  3b- if the request container body params (for POST request) the validation will
   be: "private: %{validate_body: @schema}"
-  where @schema is the map schema with the rules.
+  
+  ```
+  post "/test", private: %{validate_body: @schema} do
+  ```
   """
   use Exvalidate
 
   @spec init(list) :: list
 
+  @doc false
   def init(opts), do: opts
 
   @spec call(%Plug.Conn{}, list) :: %Plug.Conn{}
 
+  @doc false
   def call(conn, opts) do
     conn = Plug.Conn.fetch_query_params(conn)
 

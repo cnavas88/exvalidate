@@ -1,10 +1,11 @@
 defmodule Exvalidate.Messages do
-  @moduledoc """
-  Module for get the string message
-  """
+  @moduledoc false
 
   alias Exvalidate.Messages.Matrix
 
+  @spec get(tuple, any, atom) :: String.t
+  
+  @doc false
   def get({{rule, rule_opts}, error}, _data, field) do
     error
     |> Matrix.get_message()

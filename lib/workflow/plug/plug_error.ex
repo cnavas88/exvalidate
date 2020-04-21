@@ -8,13 +8,18 @@ defmodule Exvalidate.PlugError do
   If you want create a custom error function, you can define this function
   in a module and then call the plug validate:
 
+  ```
   plug(PlugValidate, on_error: &PlugError.json_error/2)
+  ```
 
   You set the "on_error" param with the your custom function.
   """
 
   @spec json_error(%Plug.Conn{}, String.t()) :: %Plug.Conn{}
 
+  @doc """
+  return the error in json format.
+  """
   def json_error(conn, error_message) do
     conn
     |> Plug.Conn.put_resp_header("content-type", "application/json")
@@ -24,6 +29,9 @@ defmodule Exvalidate.PlugError do
 
   @spec plain_error(%Plug.Conn{}, String.t()) :: %Plug.Conn{}
 
+  @doc """
+  return the error in text plain format.
+  """
   def plain_error(conn, error_message) do
     conn
     |> Plug.Conn.put_resp_header("content-type", "text/plain")

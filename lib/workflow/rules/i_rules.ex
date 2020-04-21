@@ -1,7 +1,5 @@
 defmodule Exvalidate.Rules.IRules do
-  @moduledoc """
-  Interface pattern for the all rules
-  """
+  @moduledoc false
 
   @callback validating(tuple | atom, any) :: {:ok, any}
 
@@ -12,6 +10,7 @@ defmodule Exvalidate.Rules.IRules do
       @behaviour IRules
 
       @impl IRules
+      @doc false
       def validating(_, _) do
         raise "validating/2 Not implemented."
       end

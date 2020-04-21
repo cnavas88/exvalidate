@@ -5,6 +5,39 @@ defmodule Exvalidate.Rules.MinLength do
   2. Tuple.
   3. List.
 
+  ### Examples string
+  ```
+  iex(3)> Exvalidate.Rules.MinLength.validating({:min_length, 3}, "Boo")
+  {:ok, "Boo"}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.MinLength.validating({:min_length, 20}, "Vegeta")
+  {:error, :min_length_lower_than_min}
+  ```
+
+  ### Examples list
+  ```
+  iex(3)> Exvalidate.Rules.MinLength.validating({:min_length, 2}, ["Vegeta", "Picolo", "Bulma"])
+  {:ok, ["Vegeta", "Picolo", "Bulma"]}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.MinLength.validating({:min_length, 20}, ["Vegeta"])
+  {:error, :min_length_lower_than_min}
+  ```
+
+  ### Examples tuple
+  ```
+  iex(3)> Exvalidate.Rules.MinLength.validating({:min_length, 5}, {"Vegeta", "Picolo", "Bulma"})
+  {:ok, {"Vegeta", "Picolo", "Bulma"}}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.MinLength.validating({:min_length, 1}, {"Vegeta", "Bulma"})
+  {:error, :min_length_lower_than_min}
+  ```
+
   For see examples go to the tests: test/rules/min_length_test.exs  
   """
   use Exvalidate.Rules.IRules

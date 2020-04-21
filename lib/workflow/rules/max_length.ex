@@ -1,9 +1,42 @@
 defmodule Exvalidate.Rules.MaxLength do
   @moduledoc """
-  This module validate the length of list and strings. Value types:
+  This module validate the max length of list and strings. Value types:
   1. String.
   2. Tuple.
   3. List.
+
+  ### Examples string
+  ```
+  iex(3)> Exvalidate.Rules.MaxLength.validating({:max_length, 3}, "Boo")
+  {:ok, "Boo"}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.MaxLength.validating({:max_length, 1}, "Vegeta")
+  {:error, :max_length_greater_than_max}
+  ```
+
+  ### Examples list
+  ```
+  iex(3)> Exvalidate.Rules.MaxLength.validating({:max_length, 2}, ["Vegeta", "Picolo"])
+  {:ok, ["Vegeta", "Picolo"]}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.MaxLength.validating({:max_length, 2}, ["Vegeta", "Picolo", "Bulma"])
+  {:error, :max_length_greater_than_max}
+  ```
+
+  ### Examples tuple
+  ```
+  iex(3)> Exvalidate.Rules.MaxLength.validating({:max_length, 3}, {"Vegeta", "Piccolo", "Krilin"})
+  {:ok, {"Vegeta", "Piccolo", "Krilin"}}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.MaxLength.validating({:max_length, 3}, {"Vegeta"})
+  {:error, :max_length_greater_than_max}
+  ```
 
   For see examples go to the tests: test/rules/max_length_test.exs  
   """
