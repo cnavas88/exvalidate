@@ -9,7 +9,7 @@ defmodule Exvalidate.Rules.Type do
   - :integer => 23, 4, -4, 
   - :float => 2.3, 0.9, -0.9.
   - :atom => :vegeta, :picolo
-  - :boolean => 
+  - :boolean => true, false
 
   ### Examples atom
   ```
