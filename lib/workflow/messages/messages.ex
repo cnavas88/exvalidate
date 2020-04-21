@@ -3,8 +3,8 @@ defmodule Exvalidate.Messages do
 
   alias Exvalidate.Messages.Matrix
 
-  @spec get(tuple, any, atom) :: String.t
-  
+  @spec get(tuple, any, atom) :: String.t()
+
   @doc false
   def get({{rule, rule_opts}, error}, _data, field) do
     error

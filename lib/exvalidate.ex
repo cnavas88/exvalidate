@@ -35,7 +35,7 @@ defmodule Exvalidate do
   if the required fault, return this error an not continue with the validation.
 
   the rules that are available right now are:
-  
+
   - :accepted.
   - between: {min, max}, where min and max are integers.
   - default: default_value.

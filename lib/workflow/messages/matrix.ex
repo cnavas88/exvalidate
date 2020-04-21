@@ -32,7 +32,7 @@ defmodule Exvalidate.Messages.Matrix do
     :not_between_min_max => "The field '%FIELD%' is not between '%RULE_OPTS%'."
   }
 
-  @spec get_message(atom) :: String.t
+  @spec get_message(atom) :: String.t()
 
   @doc false
   def get_message(a_message), do: Map.get(@matrix, a_message)

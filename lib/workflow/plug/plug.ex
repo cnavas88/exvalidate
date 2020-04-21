@@ -2,7 +2,7 @@ defmodule Exvalidate.Plug do
   @moduledoc """
   Plug for validate request into the router file. For validate the request
   we need create a schema keywordlist with the rules assigned to params. 
-  
+
   ## Uses
   1- To add the exvalidate middleware in your plug file:
   ```
@@ -20,14 +20,14 @@ defmodule Exvalidate.Plug do
 
   3a- if the request contains query string (for GET request) the validation 
   will be: "private: %{validate_query: @schema}"
-  
+
   ```
   get "/test", private: %{validate_query: @schema} do
   ```
 
   3b- if the request container body params (for POST request) the validation will
   be: "private: %{validate_body: @schema}"
-  
+
   ```
   post "/test", private: %{validate_body: @schema} do
   ```
