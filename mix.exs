@@ -11,7 +11,6 @@ defmodule Exvalidate.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       aliases: aliases(),
-      # elixirc_options: [warnings_as_errors: true],
       elixirc_paths: elixirc_paths(Mix.env()),
       description: description(),
       package: package(),
@@ -68,7 +67,9 @@ defmodule Exvalidate.MixProject do
     [
       {:credo, "~> 1.0.5", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 0.5", only: [:dev, :test], runtime: false},
+      {:earmark, "~> 1.2", only: :dev},
       {:excoveralls, "~> 0.11", only: :test},
+      {:ex_doc, "~> 0.19", only: :dev},
       {:jason, "~> 1.1.2"},
       {:plug, "~> 1.8.0"}
     ]

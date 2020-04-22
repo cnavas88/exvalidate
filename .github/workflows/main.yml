@@ -9,9 +9,9 @@ on:
     branches: [ master, develop ]
 
 jobs:
-  Set up:
+  set_up:
     runs-on: ubuntu-18.04
-    name: OTP ${{ matrix.otp }} | Elixir ${{ matrix.elixir }} | OS ${{ matrix.os }}
+    name: Set up
     strategy:
       matrix:
         os: [ubuntu-18.04]
@@ -35,22 +35,11 @@ jobs:
       run: |
         mix compile --warnings-as-errors
 
-  Analize Code:
-    runs-on: ubuntu-18.04
-    needs: Set up
-    steps:
-      - name: Format code
-        run: mix format --check-formatted
+    - name: Format code
+      run: mix format --check-formatted
         
-      - name: credo
-        run: mix credo --strict
-      
-      - name: dialyzir
-        run: mix dialyzer --halt-exit-status --no-compile
+    - name: credo
+      run: mix credo --strict
 
-  Run Test:
-    runs-on: ubuntu-18.04
-    needs: Analize Code
-    steps:
-      - name: Tests
-        run: mix test
+    - name: Tests
+      run: mix test

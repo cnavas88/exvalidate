@@ -8,42 +8,182 @@ defmodule Exvalidate.Rules.Type do
   - :number => 23, 2.3, 4, 0.9, -0.9, -4, 
   - :integer => 23, 4, -4, 
   - :float => 2.3, 0.9, -0.9.
+  - :atom => :vegeta, :picolo
+  - :boolean => true, false
+
+  ### Examples atom
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :atom}, :Saiyajin)
+  {:ok, :Saiyajin}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :atom}, 33)
+  {:error, :type_value_wrong}
+  ```
+
+  ### Examples string
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :string}, "Saiyajin")
+  {:ok, "Boo"}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :string}, "Saiyajin")
+  {:error, :type_value_wrong}
+  ```
+
+  ### Examples list
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :list}, ["Saiyajin", "Namek"])
+  {:ok, ["Saiyajin", "Namek"]}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :list}, "Saiyajin")
+  {:error, :type_value_wrong}
+  ```
+
+  ### Examples map
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :map}, %{"Saiyajin" => "Vegetta"})
+  {:ok, %{"Saiyajin" => "Vegetta"}}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :map}, "Saiyajin")
+  {:error, :type_value_wrong}
+  ```
+
+  ### Examples tuple
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :tuple}, {"Saiyajin", "Namek"})
+  {:ok, {"Saiyajin", "Namek"}}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :tuple}, "Saiyajin")
+  {:error, :type_value_wrong}
+  ```
+
+  ### Examples number
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :number}, 3)
+  {:ok, 3}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :number}, 3.3)
+  {:ok, 3.3}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :number}, "3")
+  {:ok, 3}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :number}, "3.3")
+  {:ok, 3.3}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :number}, "Thr.ee")
+  {:error, :type_value_wrong}
+  ```
+
+  ### Examples float
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :float}, 3.3)
+  {:ok, 3.3}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :float}, "3.3")
+  {:ok, 3.3}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :float}, "Vegeta")
+  {:error, :type_value_wrong}
+  ```
+
+  ### Examples integer
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :integer}, 3)
+  {:ok, 3}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :integer}, "3")
+  {:ok, 3}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :integer}, "Vegeta")
+  {:error, :type_value_wrong}
+  ```
+
+  ### Examples boolean
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :boolean}, true)
+  {:ok, true}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :boolean}, false)
+  {:ok, false}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :boolean}, "true")
+  {:ok, true}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :boolean}, "false")
+  {:ok, false}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :boolean}, "TRUE")
+  {:ok, true}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :boolean}, "FALSE")
+  {:ok, false}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :boolean}, "1")
+  {:ok, true}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :boolean}, "0")
+  {:ok, false}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :boolean}, 1)
+  {:ok, true}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :boolean}, 0)
+  {:ok, false}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Type.validating({:type, :boolean}, "Vegeta")
+  {:error, :type_value_wrong}
+  ```
 
   The :number type includes the types :float and :integer.
   """
   use Exvalidate.Rules.IRules
 
-  @spec validating({:type, number}, any) ::
-          {:ok, any}
-          | {:error, :type_value_wrong}
-          | {:error, :type_rule_wrong}
-          | {:error, :type_value_is_not_supported}
-
-  @doc """
-  # Validate the atom
-    if you want validate an atom you use the :atom. 
-    For :atom validation you can send an atom or a binary (for the request plug)
-    if send a binary the validation type :atom converts the binary to atom and
-    return this value.
-
-  ## Examples
-    > validating({:type, :atom}, :saiyajin)
-    {:ok, :saiyajin}
-
-    > validating({:type, :atom}, "saiyajin")
-    {:ok, :saiyajin}
-
-  # Validate the string
-    if you want validate an atom you use the :string. 
-    For :string validation you can send an binary.
-
-  ## Examples
-    > validating({:type, :string}, "saiyajin")
-    {:ok, "saiyajin"}
-
-
-  For see examples go to the tests: test/rules/type_test.exs  
-  """
   def validating({:type, type}, value) when is_atom(type) do
     case is_this_type(type, value) do
       {:ok, :valid} ->
@@ -51,8 +191,6 @@ defmodule Exvalidate.Rules.Type do
 
       {:ok, :not_valid} ->
         {:error, :type_value_wrong}
-
-      # TODO - "#{field} must be type #{type}."
 
       {:ok, typed_value} ->
         {:ok, typed_value}
@@ -63,7 +201,6 @@ defmodule Exvalidate.Rules.Type do
   end
 
   def validating(_, _), do: {:error, :type_rule_wrong}
-  # TODO - "The type rule must be an atom."
 
   defp is_this_type(:atom, value) when is_atom(value), do: {:ok, :valid}
 
@@ -137,8 +274,5 @@ defmodule Exvalidate.Rules.Type do
 
   defp is_this_type(_type, _value) do
     {:error, :type_value_is_not_supported}
-
-    # TODO - "The field must be the next type: :atom, 
-    # :string, :list, :map, :tuple, :number, :boolean, :integer, :float."
   end
 end

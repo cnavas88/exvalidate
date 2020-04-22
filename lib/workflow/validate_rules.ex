@@ -1,17 +1,10 @@
 defmodule Exvalidate.Validate do
-  @moduledoc """
-  This module validate the data map with the schema map structure.
-  contains the error control module for the rules.
-  """
+  @moduledoc false
   @route "Elixir.Exvalidate.Rules."
 
   @spec rules(list, any) :: {:ok, any} | {:error, String.t()}
 
-  @doc """
-  This is the mean function, this function go through the rules, generate
-  the module and execute this module if exists, if doesn't exists return error
-  with a message.
-  """
+  @doc false
   def rules(rules, data) do
     Enum.reduce_while(rules, %{}, &filter_rule(&1, &2, data))
   end

@@ -2,13 +2,35 @@ defmodule Exvalidate.Rules.Accepted do
   @moduledoc """
   The field under validation must be "yes", "on", 1, or true. 
 
+  ### Examples
+  ```
+  iex(3)> Exvalidate.Rules.Accepted.validating(:accepted, nil)
+  {:error, :not_accepted}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Accepted.validating(:accepted, "yes")
+  {:ok, "yes"}
+  ```
+
+    ```
+  iex(3)> Exvalidate.Rules.Accepted.validating(:accepted, "on")
+  {:ok, "on"}
+  ```
+
+    ```
+  iex(3)> Exvalidate.Rules.Accepted.validating(:accepted, 1)
+  {:ok, 1}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Accepted.validating(:accepted, true)
+  {:ok, true}
+  ```
+
   For see examples go to the tests: test/rules/accepted_test.exs  
   """
   use Exvalidate.Rules.IRules
-
-  @spec validating(:accepted, any) ::
-          {:ok, true}
-          | {:error, :not_accepted}
 
   def validating(:accepted, 1), do: {:ok, 1}
 
@@ -29,5 +51,4 @@ defmodule Exvalidate.Rules.Accepted do
   end
 
   def validating(:accepted, _), do: {:error, :not_accepted}
-
 end

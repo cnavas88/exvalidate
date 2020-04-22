@@ -5,17 +5,44 @@ defmodule Exvalidate.Rules.MinLength do
   2. Tuple.
   3. List.
 
+  ### Examples string
+  ```
+  iex(3)> Exvalidate.Rules.MinLength.validating({:min_length, 3}, "Boo")
+  {:ok, "Boo"}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.MinLength.validating({:min_length, 20}, "Vegeta")
+  {:error, :min_length_lower_than_min}
+  ```
+
+  ### Examples list
+  ```
+  iex(3)> Exvalidate.Rules.MinLength.validating({:min_length, 2}, ["Vegeta", "Picolo", "Bulma"])
+  {:ok, ["Vegeta", "Picolo", "Bulma"]}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.MinLength.validating({:min_length, 20}, ["Vegeta"])
+  {:error, :min_length_lower_than_min}
+  ```
+
+  ### Examples tuple
+  ```
+  iex(3)> Exvalidate.Rules.MinLength.validating({:min_length, 5}, {"Vegeta", "Picolo", "Bulma"})
+  {:ok, {"Vegeta", "Picolo", "Bulma"}}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.MinLength.validating({:min_length, 1}, {"Vegeta", "Bulma"})
+  {:error, :min_length_lower_than_min}
+  ```
+
   For see examples go to the tests: test/rules/min_length_test.exs  
   """
   use Exvalidate.Rules.IRules
 
   @type input :: tuple | list | String.t()
-
-  @spec validating({:min_length, number}, input) ::
-          {:ok, input}
-          | {:error, :min_length_lower_than_min}
-          | {:error, :min_length_rule_wrong}
-          | {:error, :min_length_value_type_wrong}
 
   def validating({:min_length, min}, value) when is_integer(min) do
     case is_greater_than(min, value) do

@@ -5,17 +5,44 @@ defmodule Exvalidate.Rules.Length do
   - List: exact number of items in the list.
   - Tuple: exact number of items in the tuple.
 
+  ### Examples string
+  ```
+  iex(3)> Exvalidate.Rules.Length.validating({:length, 6}, "Vegeta")
+  {:ok, "Vegeta"}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Length.validating({:length, 1}, "Vegeta")
+  {:error, :length_not_equal}
+  ```
+
+  ### Examples list
+  ```
+  iex(3)> Exvalidate.Rules.Length.validating({:length, 2}, ["Vegeta", "Picolo"])
+  {:ok, ["Vegeta", "Picolo"]}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Length.validating({:length, 2}, ["Vegeta", "Picolo", "Bulma"])
+  {:error, :length_not_equal}
+  ```
+
+  ### Examples tuple
+  ```
+  iex(3)> Exvalidate.Rules.Length.validating({:length, 3}, {"Vegeta", "Piccolo", "Krilin"})
+  {:ok, {"Vegeta", "Piccolo", "Krilin"}}
+  ```
+
+  ```
+  iex(3)> Exvalidate.Rules.Length.validating({:length, 3}, {"Vegeta"})
+  {:error, :length_not_equal}
+  ```
+
   For see examples go to the tests: test/rules/length_test.exs
   """
   use Exvalidate.Rules.IRules
 
   @type input :: tuple | list | String.t()
-
-  @spec validating({:length, number}, input) ::
-          {:ok, input}
-          | {:error, :length_not_equal}
-          | {:error, :length_rule_wrong}
-          | {:error, :length_value_type_wrong}
 
   def validating({:length, length}, value) when is_integer(length) do
     case exact_length(length, value) do
