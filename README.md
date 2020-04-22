@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/cnavas88/exvalidate.svg?branch=master)](https://travis-ci.com/github/cnavas88/exvalidate)
+![Build CI](https://github.com/cnavas88/exvalidate/workflows/Elixir%20CI/badge.svg?branch=master)
 
 # Exvalidate
  
