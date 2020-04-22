@@ -1,4 +1,4 @@
-https://travis-ci.com/cnavas88/exvalidate.svg?branch=master
+[![Build Status](https://travis-ci.com/cnavas88/exvalidate.svg?branch=master)](https://travis-ci.com/github/cnavas88/exvalidate)
 
 # Exvalidate
  
