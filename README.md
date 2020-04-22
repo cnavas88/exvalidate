@@ -1,5 +1,5 @@
-# Exvalidate
-
+# Exvalidate
+ 
 exvalidate is a dependency that validates data in the form of maps from a data scheme. 
 It is intended to make two types of validations. The first one is plug validation, 
 in which there is created a middleware that we insert in our router and simply 
@@ -8,7 +8,7 @@ the data before they enter the controller. What makes that our controller only
 gets data correctly validated. The second part is to be able to validate the data 
 in any part of a module, for this part there is the macro "validate".
 
-## Installation
+## Installation
 
 The package can be installed by adding `exvalidate` to your list of dependencies
  in `mix.exs`:
@@ -21,7 +21,7 @@ def deps do
 end
 ```
 
-## Use as a Plug
+## Use as a Plug
 
 If you want use `exvalidate` as a plug, add the next lines to your plug router 
 file:
@@ -35,7 +35,7 @@ file:
   plug(:dispatch)
 ```
 
-You can change the `on_error` handler function according your requirements:
+You can change the `on_error` handler function according your requirements: 
 - return a json: `&PlugError.json_error/2`
 - return plain text: `&PlugError.plain_error/2`
 - custom: you can use a custom function. This function has to return a 
@@ -56,7 +56,7 @@ router api:
   get "/test", private: %{validate_body: @schema}
 ```
 
-## Validate data
+## Validate data
 
 If you only want to validate data you can do so by:
 
@@ -73,7 +73,7 @@ and the schema is the validate schema to use for data validation:
 validate(data, schema)
 ```
 
-## Validation rules (SCHEMA)
+## Validation rules (SCHEMA)
 
 You can use the following rules to validate data:
 
