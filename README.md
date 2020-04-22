@@ -18,7 +18,7 @@ The package can be installed by adding `exvalidate` to your list of 
 ```elixir
 def deps do
   [
-    {:exvalidate, git: "https://github.com/cnavas88/exvalidate.git"}
+    {:exvalidate, "~> 0.0.1"}
   ]
 end
 ```
