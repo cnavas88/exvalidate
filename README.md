@@ -1,3 +1,5 @@
+![Elixir CI](https://github.com/cnavas88/exvalidate/workflows/Elixir%20CI/badge.svg?branch=master)
+
 # Exvalidate
  
 exvalidate is a dependency that validates data in the form of maps from a data scheme. 
