@@ -166,6 +166,14 @@ when a field is not present or the value is `nil` or `""`. 
 ]
 ```
 
+- nullable: Validate a field is nil or empty string.
+
+```elixir
+[
+    name: [:nullable]
+]
+```
+
 ## Complete example
 
 ```elixir
