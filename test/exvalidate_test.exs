@@ -391,5 +391,20 @@ defmodule ExvalidateTest do
 
       assert result == {:error, "The field 'name' is not between '{10, 16}'."}
     end
+
+    test "Not nullable message." do
+      data = %{
+        "id" => 12_345,
+        "name" => "Krilin"
+      }
+
+      schema = [
+        name: [:nullable]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, "The 'name' is not nullable."}      
+    end
   end
 end

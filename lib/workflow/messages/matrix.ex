@@ -29,7 +29,8 @@ defmodule Exvalidate.Messages.Matrix do
     :not_accepted => "The field '%FIELD%' is not accepted.",
     :between_rule_wrong => "The 'between' rule is wrong.",
     :between_value_invalid => "Between value has to be :string, :tuple, :numeric, :list.",
-    :not_between_min_max => "The field '%FIELD%' is not between '%RULE_OPTS%'."
+    :not_between_min_max => "The field '%FIELD%' is not between '%RULE_OPTS%'.",
+    :not_nullable => "The '%FIELD%' is not nullable."
   }
 
   @spec get_message(atom) :: String.t()
