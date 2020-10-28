@@ -62,7 +62,8 @@ defmodule ExvalidateTest do
   describe "when we got an error of validator, we test show and hide message options." do
     setup do
       previous_env = Application.get_env(:exvalidate, :show_messages)
-      on_exit(fn ->  
+
+      on_exit(fn ->
         Application.put_env(:exvalidate, :show_messages, previous_env)
       end)
     end
@@ -423,7 +424,7 @@ defmodule ExvalidateTest do
 
       result = validate(data, schema)
 
-      assert result == {:error, "The 'name' is not nullable."}      
+      assert result == {:error, "The 'name' is not nullable."}
     end
   end
 end

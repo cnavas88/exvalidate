@@ -50,5 +50,4 @@ defmodule Exvalidate.Rules.NullableTest do
       assert result == {:error, :nullable_rule_wrong}
     end
   end
-
 end
