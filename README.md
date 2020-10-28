@@ -174,6 +174,14 @@ when a field is not present or the value is `nil` or `""`. 
 ]
 ```
 
+## Error messages
+
+we return an string of an error, however you want to receive the atom code, you can add to your config file the next line:
+
+```elixir
+config :exvalidate, show_messages: true
+```
+
 ## Complete example
 
 ```elixir
