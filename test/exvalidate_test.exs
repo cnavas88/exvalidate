@@ -4,6 +4,13 @@ defmodule ExvalidateTest do
 
   use Exvalidate
 
+  setup do
+    previous_env = Application.get_env(:exvalidate, :show_messages)
+    on_exit(fn ->  
+      Application.put_env(:exvalidate, :show_messages, previous_env)
+    end)
+  end
+
   describe "validate/3." do
     test "Not allowed params." do
       data = %{
@@ -73,6 +80,23 @@ defmodule ExvalidateTest do
       result = validate(data, schema)
 
       assert result == {:error, "The rule 'in' is wrong."}
+    end
+
+    test ":in rule, Wrong list NO message." do
+      Application.put_env(:exvalidate, :show_messages, false)
+
+      data = %{
+        "id" => 12_345,
+        "name" => "Vegeta"
+      }
+
+      schema = [
+        name: [in: 6]
+      ]
+
+      result = validate(data, schema)
+
+      assert result == {:error, :in_rule_wrong}
     end
 
     test ":in rule, Not in list." do
