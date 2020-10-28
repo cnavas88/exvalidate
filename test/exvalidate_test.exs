@@ -4,13 +4,6 @@ defmodule ExvalidateTest do
 
   use Exvalidate
 
-  setup do
-    previous_env = Application.get_env(:exvalidate, :show_messages)
-    on_exit(fn ->  
-      Application.put_env(:exvalidate, :show_messages, previous_env)
-    end)
-  end
-
   describe "validate/3." do
     test "Not allowed params." do
       data = %{
@@ -66,8 +59,27 @@ defmodule ExvalidateTest do
     end
   end
 
-  describe "error message testing" do
-    test ":in rule, Wrong list." do
+  describe "when we got an error of validator, we test show and hide message options." do
+    setup do
+      previous_env = Application.get_env(:exvalidate, :show_messages)
+      on_exit(fn ->  
+        Application.put_env(:exvalidate, :show_messages, previous_env)
+      end)
+    end
+
+    test "we don't want to translate a atom error to message" do
+      Application.put_env(:exvalidate, :show_messages, false)
+
+      data = %{"id" => 12_345, "name" => "Vegeta"}
+
+      schema = [name: [in: 6]]
+
+      result = validate(data, schema)
+
+      assert result == {:error, :in_rule_wrong}
+    end
+
+    test ":in rule, wrong list." do
       data = %{
         "id" => 12_345,
         "name" => "Vegeta"
@@ -82,24 +94,7 @@ defmodule ExvalidateTest do
       assert result == {:error, "The rule 'in' is wrong."}
     end
 
-    test ":in rule, Wrong list NO message." do
-      Application.put_env(:exvalidate, :show_messages, false)
-
-      data = %{
-        "id" => 12_345,
-        "name" => "Vegeta"
-      }
-
-      schema = [
-        name: [in: 6]
-      ]
-
-      result = validate(data, schema)
-
-      assert result == {:error, :in_rule_wrong}
-    end
-
-    test ":in rule, Not in list." do
+    test ":in rule, not value in a list." do
       data = %{
         "id" => 12_345,
         "name" => "Vegeta"
@@ -114,7 +109,7 @@ defmodule ExvalidateTest do
       assert result == {:error, "'name' hasn't into the list '[\"Son goku\", \"Picolo\"]'."}
     end
 
-    test ":in rule, bad value type." do
+    test ":in rule, the value type is bad." do
       data = %{
         "id" => 12_345,
         "name" => :picolo
@@ -129,7 +124,7 @@ defmodule ExvalidateTest do
       assert result == {:error, "The field 'name' has to be a String, number or list."}
     end
 
-    test ":length rule, not equal." do
+    test ":length rule, isn't equal." do
       data = %{
         "id" => 12_345,
         "name" => "Vegeta"
