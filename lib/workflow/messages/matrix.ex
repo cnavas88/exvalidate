@@ -30,7 +30,9 @@ defmodule Exvalidate.Messages.Matrix do
     :between_rule_wrong => "The 'between' rule is wrong.",
     :between_value_invalid => "Between value has to be :string, :tuple, :numeric, :list.",
     :not_between_min_max => "The field '%FIELD%' is not between '%RULE_OPTS%'.",
-    :not_nullable => "The '%FIELD%' is not nullable."
+    :not_nullable => "The '%FIELD%' is not nullable.",
+    :bad_ipv4 => "The '%FIELD%' is not a IPV4.",
+    :ipv4_bad_type => "The type for IPV4 has be string."
   }
 
   @spec get_message(atom) :: String.t()
