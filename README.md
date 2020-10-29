@@ -198,14 +198,6 @@ or
 ]
 ```
 
-or 
-
-```elixir
-[
-    ip: [:ipv4]
-]
-```
-
 ## Error messages
 
 we return an string of an error, however you want to receive the atom code, you can add to your config file the next line:
