@@ -37,7 +37,9 @@ defmodule Exvalidate.Rules.Password do
       end
   end
 
-  def match_regex(value, regex \\ @regex) do
+  def validating(_, _), do: {:error, :bad_password}
+
+  defp match_regex(value, regex \\ @regex) do
     if String.match?(value, regex) do
       {:ok, value}
     else
@@ -45,5 +47,4 @@ defmodule Exvalidate.Rules.Password do
     end      
   end
 
-  def validating(:password, _), do: {:error, :bad_password}
 end
