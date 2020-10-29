@@ -6,46 +6,31 @@ defmodule Exvalidate.Rules.AcceptedTest do
 
   describe "validating/3. Not accepted" do
     test "with value is nil." do
-      rules = :accepted
-      value = nil
-
-      result = Accepted.validating(rules, value)
+      result = Accepted.validating(:accepted, nil)
 
       assert result == {:error, :not_accepted}
     end
 
     test "with value is false." do
-      rules = :accepted
-      value = false
-
-      result = Accepted.validating(rules, value)
+      result = Accepted.validating(:accepted, false)
 
       assert result == {:error, :not_accepted}
     end
 
     test "with value is 'off'." do
-      rules = :accepted
-      value = "off"
-
-      result = Accepted.validating(rules, value)
+      result = Accepted.validating(:accepted, "off")
 
       assert result == {:error, :not_accepted}
     end
 
     test "with value is 0." do
-      rules = :accepted
-      value = 0
-
-      result = Accepted.validating(rules, value)
+      result = Accepted.validating(:accepted, 0)
 
       assert result == {:error, :not_accepted}
     end
 
     test "with value is 'no'." do
-      rules = :accepted
-      value = "no"
-
-      result = Accepted.validating(rules, value)
+      result = Accepted.validating(:accepted, "no")
 
       assert result == {:error, :not_accepted}
     end
@@ -53,39 +38,35 @@ defmodule Exvalidate.Rules.AcceptedTest do
 
   describe "validating/3. Accepted" do
     test "with value is true." do
-      rules = :accepted
       value = true
 
-      result = Accepted.validating(rules, value)
+      result = Accepted.validating(:accepted, value)
 
-      assert result == {:ok, true}
+      assert result == {:ok, value}
     end
 
     test "with value is 'on'." do
-      rules = :accepted
       value = "on"
 
-      result = Accepted.validating(rules, value)
+      result = Accepted.validating(:accepted, value)
 
-      assert result == {:ok, "on"}
+      assert result == {:ok, value}
     end
 
     test "with value is 1." do
-      rules = :accepted
       value = 1
 
-      result = Accepted.validating(rules, value)
+      result = Accepted.validating(:accepted, value)
 
-      assert result == {:ok, 1}
+      assert result == {:ok, value}
     end
 
     test "with value is 'yes'." do
-      rules = :accepted
       value = "yes"
 
-      result = Accepted.validating(rules, value)
+      result = Accepted.validating(:accepted, value)
 
-      assert result == {:ok, "yes"}
+      assert result == {:ok, value}
     end
   end
 end

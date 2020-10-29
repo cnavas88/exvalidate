@@ -22,7 +22,7 @@ defmodule Exvalidate.Rules.IpV4 do
   """
   use Exvalidate.Rules.IRules
 
-  @regex ~r/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])/
+  @regex ~r/^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$/
 
   def validating(:ipv4, value)
       when is_binary(value) and byte_size(value) > 0 do
