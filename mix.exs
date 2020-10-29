@@ -6,7 +6,7 @@ defmodule Exvalidate.MixProject do
   def project do
     [
       app: :exvalidate,
-      version: "0.0.2",
+      version: "0.1.1",
       elixir: "~> 1.9",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
