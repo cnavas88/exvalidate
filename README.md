@@ -174,6 +174,38 @@ when a field is not present or the value is `nil` or `""`. 
 ]
 ```
 
+- password: Validate a field is a valid password.
+
+```elixir
+[
+    password: [:password]
+]
+```
+
+or 
+
+```elixir
+[
+    password: [password: :CUSTOM_REGEX]
+]
+```
+
+- IpV4: Validate a field is a ip v4 valid.
+
+```elixir
+[
+    ip: [:ipv4]
+]
+```
+
+or 
+
+```elixir
+[
+    ip: [:ipv4]
+]
+```
+
 ## Error messages
 
 we return an string of an error, however you want to receive the atom code, you can add to your config file the next line:
