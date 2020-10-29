@@ -4,12 +4,14 @@ defmodule Exvalidate.Rules.InTest do
 
   alias Exvalidate.Rules.In
 
+  @validate_fn &In.validating/2
+
   describe "validating/3 in is not a list" do
     test "is a number" do
       rules = {:in, 6}
       value = "Vegeta"
 
-      result = In.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :in_rule_wrong}
     end
@@ -20,16 +22,16 @@ defmodule Exvalidate.Rules.InTest do
       rules = {:in, ["Vegeta", "Kakarot"]}
       value = "Vegeta"
 
-      result = In.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, "Vegeta"}
+      assert result == {:ok, value}
     end
 
     test "Value is string and is not into the list." do
       rules = {:in, ["Vegeta", "Kakarot"]}
       value = "Boo"
 
-      result = In.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :in_not_in_list}
     end
@@ -38,16 +40,16 @@ defmodule Exvalidate.Rules.InTest do
       rules = {:in, [1, 10.1]}
       value = 10.1
 
-      result = In.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, 10.1}
+      assert result == {:ok, value}
     end
 
     test "Value is a number and is not into the list." do
       rules = {:in, [1, 10]}
       value = 5
 
-      result = In.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :in_not_in_list}
     end
@@ -56,7 +58,7 @@ defmodule Exvalidate.Rules.InTest do
       rules = {:in, ["Vegeta", "Kakarot"]}
       value = {:boo, :vegeta}
 
-      result = In.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :in_bad_type_value}
     end
@@ -67,16 +69,16 @@ defmodule Exvalidate.Rules.InTest do
       rules = {:in, ["Vegeta", "Kakarot", "Picolo", "Boo"]}
       value = ["Vegeta", "Boo"]
 
-      result = In.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, ["Vegeta", "Boo"]}
+      assert result == {:ok, value}
     end
 
     test "values isn't into the list." do
       rules = {:in, ["Vegeta", "Kakarot", "Picolo", "Boo"]}
       value = ["Vegeta", "Lufi", "Boo"]
 
-      result = In.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :in_not_in_list}
     end

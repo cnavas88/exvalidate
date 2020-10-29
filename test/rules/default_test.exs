@@ -4,12 +4,14 @@ defmodule Exvalidate.Rules.DefaultTest do
 
   alias Exvalidate.Rules.Default
 
+  @validate_fn &Default.validating/2
+
   describe "validating/3." do
     test "with value a nil." do
       rules = {:default, "Son goku"}
       value = nil
 
-      result = Default.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, "Son goku"}
     end
@@ -18,7 +20,7 @@ defmodule Exvalidate.Rules.DefaultTest do
       rules = {:default, "Son goku"}
       value = ""
 
-      result = Default.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, "Son goku"}
     end
@@ -27,7 +29,7 @@ defmodule Exvalidate.Rules.DefaultTest do
       rules = {:default, "Son goku"}
       value = "Son gohan"
 
-      result = Default.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, value}
     end
@@ -36,7 +38,7 @@ defmodule Exvalidate.Rules.DefaultTest do
       rules = {:default}
       value = "Son gohan"
 
-      result = Default.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :default_rule_wrong}
     end

@@ -4,12 +4,14 @@ defmodule Exvalidate.Rules.BetweenTest do
 
   alias Exvalidate.Rules.Between
 
+  @validate_fn &Between.validating/2
+
   describe "validating/3 between is not a number" do
     test "is a string" do
       rules = {:between, {"6", "10"}}
       value = "Vegeta"
 
-      result = Between.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :between_rule_wrong}
     end
@@ -23,7 +25,7 @@ defmodule Exvalidate.Rules.BetweenTest do
         "name" => "Vegeta"
       }
 
-      result = Between.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :between_value_invalid}
     end
@@ -34,16 +36,16 @@ defmodule Exvalidate.Rules.BetweenTest do
       rules = {:between, {4, 20}}
       value = "Vegeta"
 
-      result = Between.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, "Vegeta"}
+      assert result == {:ok, value}
     end
 
     test "string length is not between min and max." do
       rules = {:between, {3, 5}}
       value = "Vegeta"
 
-      result = Between.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :not_between_min_max}
     end
@@ -54,16 +56,16 @@ defmodule Exvalidate.Rules.BetweenTest do
       rules = {:between, {4, 20}}
       value = ["Vegeta", "Goku", "Picolo", "Krilin"]
 
-      result = Between.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, ["Vegeta", "Goku", "Picolo", "Krilin"]}
+      assert result == {:ok, value}
     end
 
     test "list length is not between min and max." do
       rules = {:between, {3, 5}}
       value = ["Vegeta", "Krilin"]
 
-      result = Between.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :not_between_min_max}
     end
@@ -74,16 +76,16 @@ defmodule Exvalidate.Rules.BetweenTest do
       rules = {:between, {4, 20}}
       value = {"Vegeta", "Goku", "Picolo", "Krilin"}
 
-      result = Between.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, {"Vegeta", "Goku", "Picolo", "Krilin"}}
+      assert result == {:ok, value}
     end
 
     test "tuple length is not between min and max." do
       rules = {:between, {3, 5}}
       value = {"Vegeta", "Krilin"}
 
-      result = Between.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :not_between_min_max}
     end
@@ -94,16 +96,16 @@ defmodule Exvalidate.Rules.BetweenTest do
       rules = {:between, {4, 20}}
       value = 7
 
-      result = Between.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, 7}
+      assert result == {:ok, value}
     end
 
     test "number is not between min and max." do
       rules = {:between, {3, 5}}
       value = 35
 
-      result = Between.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :not_between_min_max}
     end

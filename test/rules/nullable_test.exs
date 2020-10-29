@@ -4,39 +4,38 @@ defmodule Exvalidate.Rules.NullableTest do
 
   alias Exvalidate.Rules.Nullable
 
+  @validate_key :nullable
+  @validate_fn &Nullable.validating/2
+
   describe "validating/3. Nullable" do
     test "with value is nil." do
-      rules = :nullable
       value = nil
 
-      result = Nullable.validating(rules, value)
+      result = @validate_fn.(@validate_key, value)
 
-      assert result == {:ok, nil}
+      assert result == {:ok, value}
     end
 
     test "with value is empty string." do
-      rules = :nullable
       value = ""
 
-      result = Nullable.validating(rules, value)
+      result = @validate_fn.(@validate_key, value)
 
-      assert result == {:ok, ""}
+      assert result == {:ok, value}
     end
 
     test "with value is a full string." do
-      rules = :nullable
       value = "krilin"
 
-      result = Nullable.validating(rules, value)
+      result = @validate_fn.(@validate_key, value)
 
       assert result == {:error, :not_nullable}
     end
 
     test "with value is a number." do
-      rules = :nullable
       value = 0
 
-      result = Nullable.validating(rules, value)
+      result = @validate_fn.(@validate_key, value)
 
       assert result == {:error, :not_nullable}
     end
@@ -45,7 +44,7 @@ defmodule Exvalidate.Rules.NullableTest do
       rules = :goku
       value = "picolo"
 
-      result = Nullable.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :nullable_rule_wrong}
     end

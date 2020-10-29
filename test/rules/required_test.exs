@@ -4,21 +4,22 @@ defmodule Exvalidate.Rules.RequiredTest do
 
   alias Exvalidate.Rules.Required
 
+  @validate_key :required
+  @validate_fn &Required.validating/2
+
   describe "validating/3 return ok." do
     test "value is integer." do
-      rule = :required
       value = 1324
 
-      result = Required.validating(rule, value)
+      result = @validate_fn.(@validate_key, value)
 
       assert result == {:ok, value}
     end
 
     test "value is string." do
-      rule = :required
       value = "1234"
 
-      result = Required.validating(rule, value)
+      result = @validate_fn.(@validate_key, value)
 
       assert result == {:ok, value}
     end
@@ -26,19 +27,17 @@ defmodule Exvalidate.Rules.RequiredTest do
 
   describe "validating/3 return error." do
     test "value is nil." do
-      rule = :required
       value = nil
 
-      result = Required.validating(rule, value)
+      result = @validate_fn.(@validate_key, value)
 
       assert result == {:error, :required_value_wrong}
     end
 
     test "value is empty string." do
-      rule = :required
       value = ""
 
-      result = Required.validating(rule, value)
+      result = @validate_fn.(@validate_key, value)
 
       assert result == {:error, :required_value_wrong}
     end
@@ -47,7 +46,7 @@ defmodule Exvalidate.Rules.RequiredTest do
       rule = :requiredd
       value = ""
 
-      result = Required.validating(rule, value)
+      result = @validate_fn.(rule, value)
 
       assert result == {:error, :required_rule_wrong}
     end
