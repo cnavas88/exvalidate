@@ -15,7 +15,7 @@ defmodule Exvalidate.Rules.EmailTest do
 
       assert result == {:ok, value}
     end
-    
+
     test "witha value not supported." do
       value = nil
 
