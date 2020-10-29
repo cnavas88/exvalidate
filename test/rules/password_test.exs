@@ -10,7 +10,6 @@ defmodule Exvalidate.Rules.PasswordTest do
   @custom_regex ~r/^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$/
 
   describe "validating/3 with a exvalidate regex." do
-
     test "When I want validate a valid password." do
       password = "This_4_p2ssw0rd"
 
@@ -30,11 +29,9 @@ defmodule Exvalidate.Rules.PasswordTest do
 
       assert result == {:error, :bad_password}
     end
-
   end
 
   describe "validating/3 with a custom regex." do
-
     test "When I want validate a valid password." do
       password = "This4Pass"
 
@@ -54,6 +51,5 @@ defmodule Exvalidate.Rules.PasswordTest do
 
       assert result == {:error, :bad_password}
     end
-
   end
 end

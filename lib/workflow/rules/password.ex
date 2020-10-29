@@ -28,13 +28,13 @@ defmodule Exvalidate.Rules.Password do
   @regex ~r/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{8,32}$/
 
   def validating(rule, value)
-    when is_binary(value) and byte_size(value) > 0 do
-      if is_tuple(rule) do
-        {:password, regex} = rule
-        match_regex(value, regex)
-      else   
-        match_regex(value)
-      end
+      when is_binary(value) and byte_size(value) > 0 do
+    if is_tuple(rule) do
+      {:password, regex} = rule
+      match_regex(value, regex)
+    else
+      match_regex(value)
+    end
   end
 
   def validating(_, _), do: {:error, :bad_password}
@@ -44,7 +44,6 @@ defmodule Exvalidate.Rules.Password do
       {:ok, value}
     else
       {:error, :bad_password}
-    end      
+    end
   end
-
 end
