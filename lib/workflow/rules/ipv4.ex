@@ -15,7 +15,7 @@ defmodule Exvalidate.Rules.IpV4 do
 
   ```
   iex(3)> Exvalidate.Rules.IpV4.validating(:ipv4, 1)
-  {:ok, :ipv4_bad_type}
+  {:error, :ipv4_bad_type}
   ```
 
   For see examples go to the tests: test/rules/ipv4_test.exs  

@@ -22,7 +22,7 @@ defmodule Exvalidate.Rules.IpV4Test do
     test "Validating a bad IP." do
       result = IpV4.validating(:ipv4, "127.0.0.0.1")
 
-      assert result == {:error, :bad_ipv4}      
+      assert result == {:error, :bad_ipv4}
     end
   end
 end
