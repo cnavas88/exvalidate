@@ -18,7 +18,7 @@ The package can be installed by adding `exvalidate` to your list of 
 ```elixir
 def deps do
   [
-    {:exvalidate, "~> 0.0.1"}
+    {:exvalidate, "~> 0.0.2"}
   ]
 end
 ```
