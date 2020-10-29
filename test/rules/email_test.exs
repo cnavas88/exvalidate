@@ -4,30 +4,30 @@ defmodule Exvalidate.Rules.EmailTest do
 
   alias Exvalidate.Rules.Email
 
+  @validate_key :email
+  @validate_fn &Email.validating/2
+
   describe "validating/3." do
+    test "with value supported and pass validation." do
+      value = "songoku.draognball@gmail.com"
+
+      result = @validate_fn.(@validate_key, value)
+
+      assert result == {:ok, value}
+    end
+
     test "witha value not supported." do
-      rules = :email
       value = nil
 
-      result = Email.validating(rules, value)
+      result = @validate_fn.(@validate_key, value)
 
       assert result == {:error, :email_rule_wrong}
     end
 
-    test "with value supported and pass validation." do
-      rules = :email
-      value = "songoku.draognball@gmail.com"
-
-      result = Email.validating(rules, value)
-
-      assert result == {:ok, "songoku.draognball@gmail.com"}
-    end
-
     test "with value supported and not pass validation" do
-      rules = :email
       value = "Son gohan"
 
-      result = Email.validating(rules, value)
+      result = @validate_fn.(@validate_key, value)
 
       assert result == {:error, :email_invalid}
     end

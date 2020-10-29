@@ -4,12 +4,14 @@ defmodule Exvalidate.Rules.MinLengthTest do
 
   alias Exvalidate.Rules.MinLength
 
+  @validate_fn &MinLength.validating/2
+
   describe "validating/3 min_length is not a number" do
     test "is a string" do
       rules = {:min_length, "6"}
       value = "Vegeta"
 
-      result = MinLength.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :min_length_rule_wrong}
     end
@@ -23,7 +25,7 @@ defmodule Exvalidate.Rules.MinLengthTest do
         "name" => "Vegeta"
       }
 
-      result = MinLength.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :min_length_value_type_wrong}
     end
@@ -34,25 +36,25 @@ defmodule Exvalidate.Rules.MinLengthTest do
       rules = {:min_length, 2}
       value = "Vegeta"
 
-      result = MinLength.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, "Vegeta"}
+      assert result == {:ok, value}
     end
 
     test "string length is equal than minlength field." do
       rules = {:min_length, 3}
       value = "Boo"
 
-      result = MinLength.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, "Boo"}
+      assert result == {:ok, value}
     end
 
     test "string validation is wrong." do
       rules = {:min_length, 20}
       value = "Vegeta"
 
-      result = MinLength.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :min_length_lower_than_min}
     end
@@ -63,25 +65,25 @@ defmodule Exvalidate.Rules.MinLengthTest do
       rules = {:min_length, 2}
       value = ["Vegeta", "Picolo"]
 
-      result = MinLength.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, ["Vegeta", "Picolo"]}
+      assert result == {:ok, value}
     end
 
     test "list legnth is more than min length." do
       rules = {:min_length, 2}
       value = ["Vegeta", "Picolo", "Bulma"]
 
-      result = MinLength.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, ["Vegeta", "Picolo", "Bulma"]}
+      assert result == {:ok, value}
     end
 
     test "list validation is wrong." do
       rules = {:min_length, 20}
       value = ["Vegeta"]
 
-      result = MinLength.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :min_length_lower_than_min}
     end
@@ -92,25 +94,25 @@ defmodule Exvalidate.Rules.MinLengthTest do
       rules = {:min_length, 2}
       value = {"Vegeta", "Picolo"}
 
-      result = MinLength.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, {"Vegeta", "Picolo"}}
+      assert result == {:ok, value}
     end
 
     test "tuple legnth is lower than min length." do
       rules = {:min_length, 5}
       value = {"Vegeta", "Picolo", "Bulma"}
 
-      result = MinLength.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, {"Vegeta", "Picolo", "Bulma"}}
+      assert result == {:ok, value}
     end
 
     test "tuple validation is wrong." do
       rules = {:min_length, 1}
       value = {"Vegeta", "Bulma"}
 
-      result = MinLength.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :min_length_lower_than_min}
     end

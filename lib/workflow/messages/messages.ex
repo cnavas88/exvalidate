@@ -6,7 +6,17 @@ defmodule Exvalidate.Messages do
   @spec get(tuple, any, atom) :: String.t()
 
   @doc false
-  def get({{rule, rule_opts}, error}, _data, field) do
+  def get(opts, data, field) do
+    if Application.get_env(:exvalidate, :show_messages, true) do
+      do_get(opts, data, field)
+    else
+      opts
+      |> Tuple.to_list()
+      |> List.last()
+    end
+  end
+
+  def do_get({{rule, rule_opts}, error}, _data, field) do
     error
     |> Matrix.get_message()
     |> String.replace("%FIELD%", "#{field}")
@@ -14,7 +24,7 @@ defmodule Exvalidate.Messages do
     |> String.replace("%RULE%", "#{rule}")
   end
 
-  def get({rule, error}, data, field) do
+  def do_get({rule, error}, data, field) do
     error
     |> Matrix.get_message()
     |> String.replace("%FIELD%", "#{field}")

@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.2] - 2020-10-29
+### Added
+- Password rule with exvalidate regex with test.
+- Password rule with custom regex with test.
+- IpV4 rule with test.
+- Nullable rule with test.
+- Option to show error messages or to show atom messages in config file.
+
+### Changed
+- Refactor all test files.
+
 ## [0.0.1] - 2020-04-##
 ### Added
 - Middleware for validation plug routes get and post.
@@ -27,4 +38,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Matrix messages errors.
 - Parsing atom errors to messages string errors.
 - Return friendly errors.
-

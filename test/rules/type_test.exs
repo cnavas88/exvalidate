@@ -4,21 +4,23 @@ defmodule Exvalidate.Rules.TypeTest do
 
   alias Exvalidate.Rules.Type
 
+  @validate_fn &Type.validating/2
+
   describe "Type is an atom." do
     test "Atom validation pass." do
       rules = {:type, :atom}
       value = :Saiyajin
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, :Saiyajin}
+      assert result == {:ok, value}
     end
 
     test "Atom validation get wrong." do
       rules = {:type, :atom}
       value = 33
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
@@ -27,7 +29,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :atom}
       value = "Saiyajin"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, :Saiyajin}
     end
@@ -38,16 +40,16 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :string}
       value = "Saiyajin"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, "Saiyajin"}
+      assert result == {:ok, value}
     end
 
     test "String validation get wrong." do
       rules = {:type, :string}
       value = 33
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
@@ -58,16 +60,16 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :list}
       value = ["Saiyajin", "Namek"]
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, ["Saiyajin", "Namek"]}
+      assert result == {:ok, value}
     end
 
     test "List validation get wrong." do
       rules = {:type, :list}
       value = "Saiyajin"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
@@ -78,16 +80,16 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :map}
       value = %{"Saiyajin" => "Vegetta"}
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, %{"Saiyajin" => "Vegetta"}}
+      assert result == {:ok, value}
     end
 
     test "Map validation get wrong." do
       rules = {:type, :map}
       value = "Saiyajin"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
@@ -98,16 +100,16 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :tuple}
       value = {"Saiyajin", "Namek"}
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, {"Saiyajin", "Namek"}}
+      assert result == {:ok, value}
     end
 
     test "Tuple validation get wrong." do
       rules = {:type, :tuple}
       value = "Saiyajin"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
@@ -118,25 +120,25 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :boolean}
       value = true
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, true}
+      assert result == {:ok, value}
     end
 
     test "Boolean false validation pass." do
       rules = {:type, :boolean}
       value = false
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, false}
+      assert result == {:ok, value}
     end
 
     test "String 'true' validation pass and convert." do
       rules = {:type, :boolean}
       value = "true"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, true}
     end
@@ -145,7 +147,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :boolean}
       value = "false"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, false}
     end
@@ -154,7 +156,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :boolean}
       value = "TRUE"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, true}
     end
@@ -163,7 +165,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :boolean}
       value = "FALSE"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, false}
     end
@@ -172,7 +174,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :boolean}
       value = "1"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, true}
     end
@@ -181,7 +183,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :boolean}
       value = "0"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, false}
     end
@@ -190,7 +192,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :boolean}
       value = "kakarot"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
@@ -199,7 +201,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :boolean}
       value = 1
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, true}
     end
@@ -208,7 +210,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :boolean}
       value = 0
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, false}
     end
@@ -217,7 +219,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :boolean}
       value = %{}
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
@@ -228,16 +230,16 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :integer}
       value = 3
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, 3}
+      assert result == {:ok, value}
     end
 
     test "Integer validation get wrong." do
       rules = {:type, :integer}
       value = [3]
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
@@ -246,7 +248,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :integer}
       value = "3"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, 3}
     end
@@ -255,7 +257,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :integer}
       value = "Three"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
@@ -266,16 +268,16 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :float}
       value = 3.5
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, 3.5}
+      assert result == {:ok, value}
     end
 
     test "Float validation get wrong." do
       rules = {:type, :float}
       value = [3]
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
@@ -284,7 +286,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :float}
       value = "3.3"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, 3.3}
     end
@@ -293,7 +295,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :float}
       value = "Three"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
@@ -304,25 +306,25 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :number}
       value = 3
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, 3}
+      assert result == {:ok, value}
     end
 
     test "Float validation pass." do
       rules = {:type, :number}
       value = 3.5
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
-      assert result == {:ok, 3.5}
+      assert result == {:ok, value}
     end
 
     test "String validation integer pass." do
       rules = {:type, :number}
       value = "3"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, 3}
     end
@@ -331,7 +333,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :number}
       value = "Three"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
@@ -340,7 +342,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :number}
       value = "3.3"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:ok, 3.3}
     end
@@ -349,7 +351,7 @@ defmodule Exvalidate.Rules.TypeTest do
       rules = {:type, :number}
       value = "Thr.ee"
 
-      result = Type.validating(rules, value)
+      result = @validate_fn.(rules, value)
 
       assert result == {:error, :type_value_wrong}
     end
