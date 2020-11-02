@@ -32,7 +32,8 @@ defmodule Exvalidate.Messages.Matrix do
     :not_between_min_max => "The field '%FIELD%' is not between '%RULE_OPTS%'.",
     :not_nullable => "The '%FIELD%' is not nullable.",
     :bad_ipv4 => "The '%FIELD%' is not a IPV4.",
-    :ipv4_bad_type => "The type for IPV4 has be string."
+    :ipv4_bad_type => "The type for IPV4 has be string.",
+    :bad_password => "The password is wrong."
   }
 
   @spec get_message(atom) :: String.t()
