@@ -24,7 +24,7 @@ defmodule Exvalidate.Rules.IpV4 do
 
   def validating(:ipv4, value)
       when is_binary(value) and byte_size(value) > 0 do
-    ip
+    value
     |> to_charlist()
     |> :inet.parse_ipv4strict_address()
   end
