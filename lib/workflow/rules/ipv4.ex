@@ -5,7 +5,7 @@ defmodule Exvalidate.Rules.IpV4 do
   ### Examples
   ```
   iex(3)> Exvalidate.Rules.IpV4.validating(:ipv4, "124.0")
-  {:error, :bad_ipv4}
+  {:error, :einval}
   ```
 
   ```
