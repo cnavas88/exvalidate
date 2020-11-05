@@ -13,7 +13,7 @@ defmodule Exvalidate.Rules.IpV4Test do
 
       result = @validate_fn.(@validate_key, ip)
 
-      assert result == {:ok, ip}
+      assert result == {:ok, {127, 0, 0, 1}}
     end
 
     test "The data is not accepted." do
@@ -25,7 +25,7 @@ defmodule Exvalidate.Rules.IpV4Test do
     test "Validating a bad IP." do
       result = @validate_fn.(@validate_key, "127.0.0.0.1")
 
-      assert result == {:error, :bad_ipv4}
+      assert result == {:error, :einval}
     end
   end
 end
